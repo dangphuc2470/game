@@ -30,9 +30,15 @@ typedef CGameObject * LPGAMEOBJECT;
 
 class CBrick : public CGameObject
 {
+	float vx;
+	float vy;
 public:
-	CBrick(float x, float y, LPTEXTURE texture): CGameObject(x,y,texture) {}
-	void Update(DWORD dt) {}; 
+	CBrick(float x, float y, float vx, float vy, LPTEXTURE texture): CGameObject(x,y,texture) {
+		this->vx = vx;
+		this->vy = vy;
+	}
+	void Update(DWORD dt); 
+	void SetVelocity(float vx, float vy);
 };
 
 class CMario : public CGameObject

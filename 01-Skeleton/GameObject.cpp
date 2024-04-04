@@ -26,6 +26,7 @@ CGameObject::~CGameObject()
 
 #define MARIO_VX 0.1f
 #define MARIO_WIDTH 14
+#define BRICK_WIDTH 14
 
 void CMario::Update(DWORD dt)
 {
@@ -45,4 +46,30 @@ void CMario::Update(DWORD dt)
 			x = (float)(BackBufferWidth - MARIO_WIDTH);
 		}
 	}
+}
+
+void CBrick::Update(DWORD dt)
+{
+	x += vx * dt;
+
+	int BackBufferWidth = CGame::GetInstance()->GetBackBufferWidth();
+	if (x <= 0 || x >= BackBufferWidth - BRICK_WIDTH) {
+
+		vx = -vx;
+
+		if (x <= 0)
+		{
+			x = 0;
+		}
+		else if (x >= BackBufferWidth - BRICK_WIDTH)
+		{
+			x = (float)(BackBufferWidth - BRICK_WIDTH);
+		}
+	}
+}
+
+void CBrick::SetVelocity(float vx, float vy)
+{
+	this->vx = vx;
+	this->vy = vy;
 }

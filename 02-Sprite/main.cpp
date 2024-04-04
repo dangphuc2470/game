@@ -26,6 +26,7 @@
 
 
 #include "Mario.h"
+#include "Koopa.h"
 
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
@@ -41,7 +42,7 @@
 #define ID_TEX_MISC 20
 
 #define TEXTURES_DIR L"textures"
-#define TEXTURE_PATH_MARIO TEXTURES_DIR "\\mario.png"
+#define TEXTURE_PATH_MARIO TEXTURES_DIR "\\mario_transparent.png"
 #define TEXTURE_PATH_MISC TEXTURES_DIR "\\misc_transparent.png"
 #define TEXTURE_PATH_ENEMIES TEXTURES_DIR "\\enemies.png"
 
@@ -51,6 +52,8 @@ CMario *mario;
 #define MARIO_START_VX 0.1f
 
 CBrick *brick;
+
+CKoopa *koopa;
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -75,6 +78,7 @@ void LoadResources()
 
 	textures->Add(ID_TEX_MARIO, TEXTURE_PATH_MARIO);
 	//textures->Add(ID_ENEMY_TEXTURE, TEXTURE_PATH_ENEMIES, D3DCOLOR_XRGB(156, 219, 239));
+	textures->Add(ID_TEX_ENEMY, TEXTURE_PATH_ENEMIES);
 	textures->Add(ID_TEX_MISC, TEXTURE_PATH_MISC);
 
 
@@ -112,10 +116,10 @@ void LoadResources()
 
 
 	LPTEXTURE texMisc = textures->Get(ID_TEX_MISC);
-	sprites->Add(20001, 300, 117, 317, 133, texMisc);
-	sprites->Add(20002, 318, 117, 335, 133, texMisc);
-	sprites->Add(20003, 336, 117, 353, 133, texMisc);
-	sprites->Add(20004, 354, 117, 371, 133, texMisc);
+	sprites->Add(20001, 300, 135, 317, 151, texMisc);
+	sprites->Add(20002, 318, 135, 335, 151, texMisc);
+	sprites->Add(20003, 336, 135, 353, 151, texMisc);
+	sprites->Add(20004, 354, 135, 371, 151, texMisc);
 
 	ani = new CAnimation(100);
 	ani->Add(20001,1000);
@@ -124,9 +128,26 @@ void LoadResources()
 	ani->Add(20004);
 	animations->Add(510, ani);
 	
+	LPTEXTURE texEnemies = textures->Get(ID_TEX_ENEMY);
+	sprites->Add(30001, 6, 130, 21, 155, texEnemies);
+	sprites->Add(30002, 28, 130, 43, 155, texEnemies);
+	ani = new CAnimation(100);
+	ani->Add(30001);
+	ani->Add(30002);
+	animations->Add(530, ani);
+
+	sprites->Add(30003, 938, 130, 953, 155, texEnemies);
+	sprites->Add(30004, 916, 130, 931, 155, texEnemies);
+	ani = new CAnimation(100);
+	ani->Add(30003);
+	ani->Add(30004);
+	animations->Add(540, ani);
+
 	
 	mario = new CMario(MARIO_START_X, MARIO_START_Y, MARIO_START_VX);
 	brick = new CBrick(100.0f, 100.0f);
+	koopa = new CKoopa(50.0f, 100.0f, MARIO_START_VX);
+	
 }
 
 /*
@@ -136,6 +157,7 @@ void LoadResources()
 void Update(DWORD dt)
 {
 	mario->Update(dt);
+	koopa->Update(dt);
 }
 
 void Render()
@@ -160,7 +182,7 @@ void Render()
 
 		brick->Render();
 		mario->Render();
-
+		koopa->Render();
 		// Uncomment this line to see how to draw a porttion of a texture  
 		//g->Draw(10, 10, texMisc, 300, 117, 316, 133);
 
