@@ -34,6 +34,7 @@
 #include "Mario.h"
 #include "Brick.h"
 #include "Goomba.h"
+#include "Mushroom.h"
 #include "Coin.h"
 #include "Platform.h"
 
@@ -305,8 +306,32 @@ void LoadAssetsGoomba()
 	ani = new CAnimation(100);
 	ani->Add(ID_SPRITE_GOOMBA_DIE + 1);
 	animations->Add(ID_ANI_GOOMBA_DIE, ani);
+}
+
+void LoadAssetsMushroom()
+{
+	CTextures* textures = CTextures::GetInstance();
+	CSprites* sprites = CSprites::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
+
+	LPTEXTURE texEnemy = textures->Get(ID_TEX_ENEMY);
+
+	sprites->Add(ID_SPRITE_MUSHROOM_WALK + 1, 4, 13, 22, 30, texEnemy);
+	sprites->Add(ID_SPRITE_MUSHROOM_WALK + 2, 24, 13, 42, 30, texEnemy);
+
+	sprites->Add(ID_SPRITE_MUSHROOM_DIE + 1, 44, 19, 62, 30, texEnemy);
+
+	LPANIMATION ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MUSHROOM_WALK + 1);
+	ani->Add(ID_SPRITE_MUSHROOM_WALK + 2);
+	animations->Add(ID_ANI_MUSHROOM_WALKING, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_MUSHROOM_DIE + 1);
+	animations->Add(ID_ANI_MUSHROOM_WALKING, ani);
 
 }
+
 void LoadAssetsBrick()
 {
 	CTextures* textures = CTextures::GetInstance();
@@ -320,6 +345,7 @@ void LoadAssetsBrick()
 	ani->Add(ID_SPRITE_BRICK + 1);
 	animations->Add(ID_ANI_BRICK, ani);
 }
+
 void LoadAssetsCoin()
 {
 	CTextures* textures = CTextures::GetInstance();
@@ -369,6 +395,7 @@ void LoadResources()
 	LoadAssetsMario();
 	LoadAssetsGoomba();
 	LoadAssetsBrick();
+	LoadAssetsMushroom();
 	LoadAssetsCoin();
 	LoadAssetsOther();
 }
@@ -388,6 +415,8 @@ void ClearScene()
 
 #define BRICK_X 0.0f
 #define GOOMBA_X 200.0f
+#define MUSHROOM_X 20.0f
+
 #define COIN_X 100.0f
 
 #define BRICK_Y GROUND_Y + 20.0f
@@ -455,6 +484,12 @@ void Reload()
 	{
 		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f);
 		objects.push_back(goomba);
+	}
+
+	for (int j = 0; j < 2; j++)
+	{
+		CMushroom* mushroom = new CMushroom(MUSHROOM_X + j * 60, GROUND_Y - 120.0f);
+		objects.push_back(mushroom);
 	}
 
 	// COINS 

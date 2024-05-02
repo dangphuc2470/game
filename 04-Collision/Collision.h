@@ -55,9 +55,9 @@ public:
 		float dx,			// 
 		float dy,			// 
 		float sl,			// static left
-		float st,
-		float sr,
-		float sb,
+		float st,			// static top
+		float sr,			// static right
+		float sb,			// static bottom
 		float& t,
 		float& nx,
 		float& ny);
@@ -81,7 +81,7 @@ public:
 		int filterX,
 		int filterY);
 
-	void Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* coObjects); // Kiem tra xem co va cham voi danh sach 1 hoac nhieu doi tuong
 
 	static CCollision* GetInstance();
 };
