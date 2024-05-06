@@ -145,13 +145,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float cell_width = (float)atof(tokens[3].c_str());
 		float cell_height = (float)atof(tokens[4].c_str());
 		int length = atoi(tokens[5].c_str());
-		int sprite = atoi(tokens[6].c_str());
+		int sprite_begin = atoi(tokens[6].c_str());
+		int sprite_middle = atoi(tokens[7].c_str());
+		int sprite_end = atoi(tokens[8].c_str());
 
 		obj = new CBrickPlatform(
 			x, y,
 			cell_width, cell_height, length,
-			sprite
+			sprite_begin, sprite_middle, sprite_end
 		);
+
 
 		break;
 	}

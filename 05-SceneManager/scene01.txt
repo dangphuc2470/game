@@ -34,8 +34,8 @@ brick_platform.txt
 
 #Brick Platform
 #ID Left Top Width Height Length 
-6	22	180	47	30	1	60000
-6	138	180	47	30	1	60000
+6	8	180	15	30	42	61000	62000	63000
+6	639	165	15	30	31	61000	62000	63000
 
 #Portal 
 50	300	110	316	140	2
