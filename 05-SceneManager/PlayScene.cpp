@@ -121,10 +121,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
-	case OBJECT_TYPE_LARGE_BRUSH_1: obj = new CLargeBrush1(x, y); break;
-	case OBJECT_TYPE_LARGE_BRUSH_2: obj = new CLargeBrush2(x, y); break;
+	case OBJECT_TYPE_LARGE_BUSH_1: obj = new CLargeBush1(x, y); break;
+	case OBJECT_TYPE_LARGE_BUSH_2: obj = new CLargeBush2(x, y); break;
 	case OBJECT_TYPE_CLOUD_1: obj = new CCloud1(x, y); break;
 	case OBJECT_TYPE_CLOUD_2: obj = new CCloud2(x, y); break;
+	case OBJECT_TYPE_SMALL_BUSH:
+	{
+		int length = atoi(tokens[3].c_str());
+		obj = new CSmallBush(x, y, length);
+		break;
+	
+	}
 
 	case OBJECT_TYPE_PLATFORM:
 	{

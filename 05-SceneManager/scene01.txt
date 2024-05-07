@@ -6,10 +6,11 @@ coin.txt
 goomba.txt
 cloud.txt
 brick_platform.txt
-large_brush_1.txt
-large_brush_2.txt
+large_bush_1.txt
+large_bush_2.txt
 cloud_1.txt
 cloud_2.txt
+small_bush.txt
 
 #
 [OBJECTS]
@@ -45,10 +46,15 @@ cloud_2.txt
 #  x, y, right, bottom
 50	60	170	130	180	2   
 
-#Large brush
-100	900	168
-110	805	160
+#Large bush
+100	1000	168
+110	905	160
 110	90	175
+
+#Small bush
+140	180	199	3
+140	679	184	6
+140	1050	184	2
 
 #Cloud
 120	345	130
