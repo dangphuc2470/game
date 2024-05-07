@@ -8,6 +8,8 @@ cloud.txt
 brick_platform.txt
 large_brush_1.txt
 large_brush_2.txt
+cloud_1.txt
+cloud_2.txt
 
 #
 [OBJECTS]
@@ -16,6 +18,7 @@ large_brush_2.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
+#0	20	10
 0	20	10
 # BRICKS
 
@@ -34,14 +37,26 @@ large_brush_2.txt
 #ID Left Top Width Height Length 
 
 #Brick Platform
-#ID Left Top Width Height Length 
-6	8	180	15	30	42	61000	62000	63000
-6	639	165	15	30	31	61000	62000	63000
+#ID x  y  Width Height Length 
+6	8	222	15	30	42	61000	62000	63000
+6	639	207	15	30	31	61000	62000	63000
 
-#Portal 
-50	300	110	316	140	2
+#Portal 
+#  x, y, right, bottom
+50	60	170	130	180	2   
 
 #Large brush
-100	200	141
+100	900	168
+110	805	160
+110	90	175
 
-110	90	133
+#Cloud
+120	345	130
+120	666	70
+120	1192	70
+120	2346	70
+
+
+130	144	60
+130	761	80
+130	1685	40

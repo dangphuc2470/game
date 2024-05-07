@@ -163,5 +163,7 @@
     <Text Include="scene_1.txt" />
     <Text Include="large_brush_1.txt" />
     <Text Include="large_brush_2.txt" />
+    <Text Include="cloud_1.txt" />
+    <Text Include="cloud_2.txt" />
   </ItemGroup>
 </Project>

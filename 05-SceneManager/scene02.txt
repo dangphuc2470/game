@@ -1,9 +1,13 @@
 # list of object assets to load in this scene
 [ASSETS]
 mario.txt
-coin.txt
-cloud.txt
 brick.txt
+coin.txt
+goomba.txt
+cloud.txt
+brick_platform.txt
+large_brush_1.txt
+large_brush_2.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -11,7 +15,7 @@ brick.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	120	10
+0	120	135
 
 #COIN
 4	100	120
@@ -28,8 +32,10 @@ brick.txt
 4	180	100
 
 #Platform
-5	100	180	16	15	32	60000	52000	20001
+6	8	180	15	30	42	61000	62000	63000
+6	639	165	15	30	31	61000	62000	63000
 
 #Portal 
-50	200	160	216	180	1
+#   x,  y,  r,  b 
+50	20	160	300	180	1
 
