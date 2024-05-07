@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Background.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickPlatform.cpp" />
     <ClCompile Include="Coin.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
+    <ClInclude Include="Background.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickPlatform.h" />
     <ClInclude Include="Coin.h" />
@@ -194,6 +196,8 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="large_brush_1.txt" />
+    <Text Include="large_brush_2.txt" />
     <Text Include="scene_1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

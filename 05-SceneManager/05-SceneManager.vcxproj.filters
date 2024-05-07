@@ -78,6 +78,9 @@
     <ClCompile Include="BrickPlatform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -152,8 +155,13 @@
     <ClInclude Include="BrickPlatform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="scene_1.txt" />
+    <Text Include="large_brush_1.txt" />
+    <Text Include="large_brush_2.txt" />
   </ItemGroup>
 </Project>

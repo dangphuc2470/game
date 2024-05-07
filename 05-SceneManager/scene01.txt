@@ -6,6 +6,9 @@ coin.txt
 goomba.txt
 cloud.txt
 brick_platform.txt
+large_brush_1.txt
+large_brush_2.txt
+
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -14,9 +17,7 @@ brick_platform.txt
 
 # MARIO
 0	20	10
-
 # BRICKS
-
 
 #COIN
 4	100	120
@@ -39,3 +40,8 @@ brick_platform.txt
 
 #Portal 
 50	300	110	316	140	2
+
+#Large brush
+100	200	141
+
+110	90	133
