@@ -149,6 +149,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickPlatform.cpp" />
     <ClCompile Include="Coin.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickPlatform.h" />
     <ClInclude Include="Coin.h" />
@@ -196,6 +198,7 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="box_1_long_pink.txt" />
     <Text Include="cloud_1.txt" />
     <Text Include="cloud_2.txt" />
     <Text Include="large_bush_1.txt" />

@@ -81,6 +81,9 @@
     <ClCompile Include="Background.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -158,6 +161,9 @@
     <ClInclude Include="Background.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="scene_1.txt" />
@@ -166,5 +172,6 @@
     <Text Include="cloud_1.txt" />
     <Text Include="cloud_2.txt" />
     <Text Include="small_bush.txt" />
+    <Text Include="box_1_long_pink.txt" />
   </ItemGroup>
 </Project>

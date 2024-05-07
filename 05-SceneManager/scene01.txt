@@ -11,6 +11,7 @@ large_bush_2.txt
 cloud_1.txt
 cloud_2.txt
 small_bush.txt
+box_1_long_pink.txt
 
 #
 [OBJECTS]
@@ -18,9 +19,7 @@ small_bush.txt
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
 # See OBJECT_TYPE constants in AssetIDs.h
 
-# MARIO
-#0	20	10
-0	20	10
+
 # BRICKS
 
 #COIN
@@ -66,3 +65,10 @@ small_bush.txt
 130	144	60
 130	761	80
 130	1685	40
+
+#Box
+150	200	200	80	40  
+
+# MARIO
+#0	20	10
+0	20	10
