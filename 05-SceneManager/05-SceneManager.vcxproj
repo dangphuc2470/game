@@ -198,7 +198,8 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="box_1_long_pink.txt" />
+    <Text Include="black_background.txt" />
+    <Text Include="box.txt" />
     <Text Include="cloud_1.txt" />
     <Text Include="cloud_2.txt" />
     <Text Include="large_bush_1.txt" />

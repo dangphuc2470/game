@@ -11,7 +11,8 @@ large_bush_2.txt
 cloud_1.txt
 cloud_2.txt
 small_bush.txt
-box_1_long_pink.txt
+box.txt
+black_background.txt
 
 #
 [OBJECTS]
@@ -31,19 +32,19 @@ box_1_long_pink.txt
 
 
 #Goomba
-2	300	10
-
+#2	300	10
+ 
 #Cloud Platform
 #ID Left Top Width Height Length 
 
 #Brick Platform
-#ID x  y  Width Height Length 
+#ID xï¿½ï¿½yï¿½ï¿½Width Height Lengthï¿½
 6	8	222	15	30	42	61000	62000	63000
 6	639	207	15	30	31	61000	62000	63000
+6	1150	222	15	30	24	61000	62000	63000
+6	1550	222	15	30	5	61000	62000	63000
+6	1680	222	15	30	77	61000	62000	63000
 
-#Portal 
-#  x, y, right, bottom
-50	60	170	130	180	2   
 
 #Large bush
 100	1000	168
@@ -51,12 +52,14 @@ box_1_long_pink.txt
 110	90	175
 
 #Small bush
-140	180	199	3
+140	168	199	3
 140	679	184	6
 140	1050	184	2
+140	1180	199	3
+140	1740	199	3
 
 #Cloud
-120	345	130
+120	345	80
 120	666	70
 120	1192	70
 120	2346	70
@@ -66,9 +69,34 @@ box_1_long_pink.txt
 130	761	80
 130	1685	40
 
-#Box
-150	200	200	80	40  
+#Box (W = H = 0 to set default size)
+#id	x	y	Width	Height	Box type
+150	290	167	0	0	159
+150	255	183	0	0	151
+150	539	151	0	0	162
+150	490	167	0	0	163
+150	440	183	0	0	156
+150	560	191	0	0	157
+150	1360	159	0	0	160
+150	1330	175	0	0	154
+150	1288	191	0	0	157
+150	1288	20	0	0	153
+
+#Black_background
+170	150	430
+170	470	430
+170	790	430
+170	1110	430
+170	1430	430
+170	1750	430
+170	2070	430
+170	2390	430
+170	2710	430
 
 # MARIO
 #0	20	10
 0	20	10
+
+#Portalï¿½
+#ï¿½ï¿½x, y, right, bottom
+50	60	170	130	180	2ï¿½ï¿½ï¿½

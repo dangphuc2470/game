@@ -5,9 +5,6 @@
 #include "Animations.h"
 #include "AssetIDs.h"
 
-#define COIN_BBOX_WIDTH 10
-#define COIN_BBOX_HEIGHT 16
-
 
 class CLargeBush1 : public CGameObject {
 public:
@@ -85,5 +82,20 @@ public:
 	int IsBlocking() { return 0; }
 };
 
-
+class CBlackBackground : public CGameObject {
+public:
+	CBlackBackground(float x, float y) : CGameObject(x, y) {}
+	void Render()
+	{
+		CSprites* s = CSprites::GetInstance();
+		s->Get(ID_SPRITE_BLACK_BACKGROUND)->Draw(x, y);
+	};
+	void Update(DWORD dt) {}
+	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
+	int IsDirectionColliable(float nx, float ny)
+	{
+		if (nx == 0 && ny == -1) return 1;
+		else return 0;
+	}
+};
 

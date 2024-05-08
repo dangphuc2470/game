@@ -6,36 +6,93 @@ coin.txt
 goomba.txt
 cloud.txt
 brick_platform.txt
-large_brush_1.txt
-large_brush_2.txt
+large_bush_1.txt
+large_bush_2.txt
+cloud_1.txt
+cloud_2.txt
+small_bush.txt
+box.txt
+black_background.txt
+
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
 # See OBJECT_TYPE constants in AssetIDs.h
 
-# MARIO
-0	120	135
+
+# BRICKS
 
 #COIN
 4	100	120
 4	120	120
 4	140	120
 4	160	120
-4	180	120
 
 
-4	100	100
-4	120	100
-4	140	100
-4	160	100
-4	180	100
 
-#Platform
-6	8	180	15	30	42	61000	62000	63000
-6	639	165	15	30	31	61000	62000	63000
+#Goomba
+#2	300	10
+ 
+#Cloud Platform
+#ID Left Top Width Height Length 
 
-#Portal 
-#   x,  y,  r,  b 
-50	20	160	300	180	1
+#Brick Platform
+#ID x��y��Width Height Length�
+6	8	222	15	30	42	61000	62000	63000
+6	639	207	15	30	31	61000	62000	63000
+6	1150	222	15	30	24	61000	62000	63000
+6	1550	222	15	30	5	61000	62000	63000
+6	1680	222	15	30	77	61000	62000	63000
 
+
+#Large bush
+100	1000	168
+110	905	160
+110	90	175
+
+#Small bush
+140	168	199	3
+140	679	184	6
+140	1050	184	2
+140	1200	199	3
+140	1740	199	3
+
+#Cloud
+120	345	80
+120	666	70
+120	1192	70
+120	2346	70
+
+
+130	144	60
+130	761	80
+130	1685	40
+
+#Box (W = H = 0 to set default size)
+#id	x	y	Width	Height	Box type
+150	290	167	0	0	159
+150	255	183	0	0	151
+150	539	151	0	0	162
+150	490	167	0	0	163
+150	440	183	0	0	156
+150	560	191	0	0	157
+
+#Black_background
+170	150	430
+170	470	430
+170	790	430
+170	1110	430
+170	1430	430
+170	1750	430
+170	2070	430
+170	2390	430
+170	2710	430
+
+# MARIO
+#0	20	10
+0	20	135
+
+#Portal�
+#��x, y, right, bottom
+50	60	170	130	180	1���

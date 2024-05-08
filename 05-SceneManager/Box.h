@@ -3,28 +3,93 @@
 #include "Sprites.h"
 #include "AssetIDs.h"
 
-
-/// <summary>
-/// x, y is the center of the box, 
-/// default cellWidth 87, 79 without shadow
-/// default cellHeight 39
-/// </summary>
-class CBox1LongPink : public CGameObject {
+class CBoxPlatform : public CGameObject {
 public:
-	float cellWidth; 
-	float cellHeight; 
+	float cellWidth;
+	float cellHeight;
+	int spriteID;
 	int shadowLength = 8;
-	CBox1LongPink(float x, float y, float cellWidth, float cellHeight) : CGameObject(x, y) {
-	this->cellHeight = cellHeight;
-	this->cellWidth = cellWidth;
+	CBoxPlatform(float x, float y, float cellWidth, float cellHeight, int spriteID) : CGameObject(x, y) {
+		//Set default cell size for each sprite
+		switch (spriteID)
+		{
+		case ID_SPRITE_BOX_PLATFORM_SQUARE_PINK:
+			this->cellWidth = 55;
+			this->cellHeight = 47;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_RECTANGLE_PINK_GROUND_HORIZONTAL:
+			this->cellWidth = 63;
+			this->cellHeight = 31;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_RECTANGLE_PINK_SKY_HORIZONTAL:
+			this->cellWidth = 87;
+			this->cellHeight = 39;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_RECTANGLE_PINK_LARGE_HORIZONTAL:
+			this->cellWidth = 119;
+			this->cellHeight = 63;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_GREEN_SHORT_HORIZONTAL:
+			this->cellWidth = 71;
+			this->cellHeight = 39;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_GREEN_SHORT_FAT_HORIZONTAL:
+			this->cellWidth = 87;
+			this->cellHeight = 47;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_GREEN_LONG_HORIZONTAL:
+			this->cellWidth = 103;
+			this->cellHeight = 31;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_GREEN_LONG_VERTICAL:
+			this->cellWidth = 55;
+			this->cellHeight = 143;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_BLUE_TALL:
+			this->cellWidth = 55;
+			this->cellHeight = 79;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_BLUE_FAT:
+			this->cellWidth = 119;
+			this->cellHeight = 95;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_BLUE_SHORT:
+			this->cellWidth = 71;
+			this->cellHeight = 39;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_WHITE_TALL:
+			this->cellWidth = 71;
+			this->cellHeight = 111;
+			break;
+		case ID_SPRITE_BOX_PLATFORM_RECTANGLE_PINK_TALL_VERTICAL:
+			this->cellWidth = 71;
+			this->cellHeight = 79;
+			break;
+			
+
+		default:
+			this->cellWidth = 0;
+			this->cellHeight = 0;
+			break;
+		}
+
+
+		if (cellWidth != 0)
+			this->cellWidth = cellWidth;
+		if (cellHeight != 0)
+			this->cellHeight = cellHeight;
+		this->spriteID = spriteID;
+
 	}
+
 	void Render()
 	{
 		CSprites* s = CSprites::GetInstance();
-		s->Get(ID_SPRITE_BOX_1_SINGLE_LONG_PINK)->Draw(x, y);
+		s->Get(spriteID)->Draw(x, y);
 
 		RenderBoundingBox();
 	};
+
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b)
 	{
@@ -41,4 +106,6 @@ public:
 	}
 
 };
+
+
 

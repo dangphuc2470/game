@@ -126,11 +126,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_LARGE_BUSH_2: obj = new CLargeBush2(x, y); break;
 	case OBJECT_TYPE_CLOUD_1: obj = new CCloud1(x, y); break;
 	case OBJECT_TYPE_CLOUD_2: obj = new CCloud2(x, y); break;
-	case OBJECT_TYPE_BOX_1_SINGLE_LONG_PINK:
+	case OBJECT_TYPE_BLACK_BACKGROUND: obj = new CBlackBackground(x, y); break;
+	case OBJECT_TYPE_BOX_PLATFORM:
 	{
 		float width = atoi(tokens[3].c_str());
 		float height = atoi(tokens[4].c_str());
-		obj = new CBox1LongPink(x, y, width, height);
+		int box_type_sprite_id = atoi(tokens[5].c_str());
+		obj = new CBoxPlatform(x, y, width, height, box_type_sprite_id);
 		break;
 	}
 	case OBJECT_TYPE_SMALL_BUSH:

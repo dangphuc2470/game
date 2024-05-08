@@ -172,6 +172,7 @@
     <Text Include="cloud_1.txt" />
     <Text Include="cloud_2.txt" />
     <Text Include="small_bush.txt" />
-    <Text Include="box_1_long_pink.txt" />
+    <Text Include="box.txt" />
+    <Text Include="black_background.txt" />
   </ItemGroup>
 </Project>
