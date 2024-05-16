@@ -86,8 +86,7 @@ public:
 	{
 		CSprites* s = CSprites::GetInstance();
 		s->Get(spriteID)->Draw(x, y);
-
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	};
 
 	void Update(DWORD dt) {}

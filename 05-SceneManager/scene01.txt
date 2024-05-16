@@ -39,6 +39,7 @@ black_background.txt
 
 #Brick Platform
 #ID x��y��Width Height Length�
+6	-29	250	15	500	3	61000	62000	63000  #Block from going back from start
 6	8	222	15	30	42	61000	62000	63000
 6	639	207	15	30	31	61000	62000	63000
 6	1150	222	15	30	24	61000	62000	63000
@@ -92,6 +93,9 @@ black_background.txt
 170	2070	430
 170	2390	430
 170	2710	430
+
+# GOOMBA
+7	220	200
 
 # MARIO
 #0	20	10
