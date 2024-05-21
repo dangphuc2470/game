@@ -99,7 +99,10 @@ black_background.txt
 
 # MARIO
 #0	20	10
-0	10	10
+0	20	10
+
+# Platform for test
+6	8	180	15	30	3	61000	62000	63000
 
 #Portal�
 #��x, y, right, bottom
