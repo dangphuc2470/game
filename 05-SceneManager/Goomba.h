@@ -8,9 +8,10 @@
 
 #define GOOMBA_BBOX_WIDTH 16
 #define GOOMBA_BBOX_HEIGHT 15
+#define GOOMBA_BBOX_HEIGHT_NO_WINGS 14
 #define GOOMBA_BBOX_HEIGHT_FLY_WALK 22
 #define GOOMBA_BBOX_HEIGHT_FLY_FLY 23
-#define GOOMBA_BBOX_HEIGHT_DIE 8
+#define GOOMBA_BBOX_HEIGHT_DIE 9
 
 #define GOOMBA_DIE_TIMEOUT 500
 
@@ -18,6 +19,8 @@
 #define GOOMBA_STATE_DIE 200
 #define GOOMBA_STATE_FLYING_WALK 300
 #define GOOMBA_STATE_FLYING_FLY 400
+#define GOOMBA_STATE_FLYING_NO_WINGS 500
+#define GOOMBA_STATE_FLYING_DIE 600
 #define GOOMBA_STATE_CHANGE_TIME_SHORT 100 //ms
 #define GOOMBA_STATE_CHANGE_TIME_LONG 2000 //ms
 
@@ -63,6 +66,22 @@ protected:
 			right = left + GOOMBA_BBOX_WIDTH;
 			bottom = top + GOOMBA_BBOX_HEIGHT_FLY_WALK;
 		}
+		else if (state == GOOMBA_STATE_FLYING_DIE)
+		{
+			left = x - GOOMBA_BBOX_WIDTH / 2;
+			top = y - GOOMBA_BBOX_HEIGHT_DIE / 2;
+			right = left + GOOMBA_BBOX_WIDTH;
+			bottom = top + GOOMBA_BBOX_HEIGHT_DIE;
+		}
+		else if (state == GOOMBA_STATE_FLYING_NO_WINGS)
+		{
+			left = x - GOOMBA_BBOX_WIDTH / 2;
+			top = y - GOOMBA_BBOX_HEIGHT / 2;
+			right = left + GOOMBA_BBOX_WIDTH;
+			bottom = top + GOOMBA_BBOX_HEIGHT_NO_WINGS;
+		}
+		else
+			DebugOutTitle(L"[ERROR] CGoomba::GetBoundingBox unknown state: %d\n", state);
 	}
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -70,7 +89,7 @@ protected:
 		vy += ay * dt;
 		vx += ax * dt;
 
-		if ((state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
+		if ((state == GOOMBA_STATE_DIE || state == GOOMBA_STATE_FLYING_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
 		{
 			isDeleted = true;
 			return;
@@ -96,6 +115,7 @@ protected:
 			}
 		}
 
+		DebugOutTitle(L"[INFO] CGoomba::Update state: %d\n", state);
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	};
@@ -105,15 +125,15 @@ protected:
 	{
 		int aniId = ID_ANI_GOOMBA_WALKING;
 		if (state == GOOMBA_STATE_DIE)
-		{
 			aniId = ID_ANI_GOOMBA_DIE;
-		}
 		else if (state == GOOMBA_STATE_FLYING_WALK)
-		{
 			aniId = ID_ANI_GOOMBA_FLY_WALK;
-		}
-		else
+		else if (state == GOOMBA_STATE_FLYING_FLY)
 			aniId = ID_ANI_GOOMBA_FLY_FLY;
+		else if (state == GOOMBA_STATE_FLYING_NO_WINGS)
+			aniId = ID_ANI_GOOMBA_FLY_NO_WINGS;
+		else if (state == GOOMBA_STATE_FLYING_DIE)
+			aniId = ID_ANI_GOOMBA_FLY_DIE;
 
 		CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 		RenderBoundingBox();
@@ -135,6 +155,8 @@ protected:
 		if (!e->obj->IsBlocking()) return;
 		if (dynamic_cast<CGoomba*>(e->obj)) return;
 
+		
+
 		if (e->ny != 0)
 		{
 			vy = 0;
@@ -143,6 +165,9 @@ protected:
 		{
 			vx = -vx;
 		}
+
+
+
 	};
 
 public:
@@ -171,6 +196,13 @@ public:
 			vy = 0;
 			ay = 0;
 			break;
+		case GOOMBA_STATE_FLYING_DIE:
+			die_start = GetTickCount64();
+			y += (GOOMBA_BBOX_HEIGHT_FLY_WALK - GOOMBA_BBOX_HEIGHT_DIE) / 2;
+			vx = 0;
+			vy = 0;
+			ay = 0;
+			break;
 		case GOOMBA_STATE_WALKING:
 			vx = -GOOMBA_WALKING_SPEED;
 			break;
@@ -180,7 +212,8 @@ public:
 			break;
 		case GOOMBA_STATE_FLYING_FLY:
 			vy = -GOOMBA_JUMP_SPEED;
-			//vx = GOOMBA_WALKING_SPEED;
+			break;
+		case GOOMBA_STATE_FLYING_NO_WINGS:
 			break;
 		}
 	};

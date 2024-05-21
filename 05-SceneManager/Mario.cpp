@@ -65,9 +65,22 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
-		if (goomba->GetState() != GOOMBA_STATE_DIE)
+		if (goomba->GetState() == GOOMBA_STATE_DIE || goomba->GetState() == GOOMBA_STATE_FLYING_DIE)
+			return;
+
+		if (goomba->GetState() == GOOMBA_STATE_WALKING)
 		{
 			goomba->SetState(GOOMBA_STATE_DIE);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (goomba->GetState() == GOOMBA_STATE_FLYING_NO_WINGS)
+		{
+			goomba->SetState(GOOMBA_STATE_FLYING_DIE);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else
+		{
+			goomba->SetState(GOOMBA_STATE_FLYING_NO_WINGS);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
@@ -75,11 +88,12 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	{
 		if (untouchable == 0)
 		{
-			if (goomba->GetState() != GOOMBA_STATE_DIE)
+			if (goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_FLYING_DIE)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
-					level = MARIO_LEVEL_SMALL;
+					//Todo: change to small Mario
+					//level = MARIO_LEVEL_SMALL;
 					StartUntouchable();
 				}
 				else
@@ -278,7 +292,7 @@ void CMario::Render()
 
 	//RenderBoundingBox();
 	
-	DebugOutTitle(L"Coins: %d", coin);
+	//DebugOutTitle(L"Coins: %d", coin);
 }
 
 void CMario::SetState(int state)
