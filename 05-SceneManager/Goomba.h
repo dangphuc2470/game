@@ -33,8 +33,8 @@ protected:
 	DWORD lastStateChange;
 	int flyWalkCycle;
 	DWORD flyWalkTimes[8] = { 2000, 100, 100, 100, 100, 100, 1000, 500 }; //ms
-
 	ULONGLONG die_start;
+
 	float GOOMBA_JUMP_SPEED = 0.1f;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
@@ -164,8 +164,6 @@ protected:
 		if (!e->obj->IsBlocking()) return;
 		if (dynamic_cast<CGoomba*>(e->obj)) return;
 
-		
-
 		if (e->ny != 0)
 		{
 			vy = 0;
@@ -174,8 +172,6 @@ protected:
 		{
 			vx = -vx;
 		}
-
-
 
 	};
 
@@ -227,5 +223,4 @@ public:
 		}
 	};
 };
-
 
