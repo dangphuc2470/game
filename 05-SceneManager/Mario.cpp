@@ -38,11 +38,27 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (e->ny != 0 && e->obj->IsBlocking())
-	{
-		vy = 0;
-		if (e->ny < 0) isOnPlatform = true;
-	}
+	 if (e->ny != 0 && e->obj->IsBlocking())
+    {
+		 float x, y;
+		 e->obj->GetPositionTopBot(x, y);
+		 float t, b;
+		 this->GetPositionTopBot(t, b);
+		 x = floor(x);
+		 y = floor(y);
+		 t = floor(t);
+		 b = floor(b);
+
+		//DebugOutTitle(L"Collision at %f %f, Mario %f %f", x, y, t, b);
+        vy = 0;
+        if (e->ny < 0) {
+			isOnPlatform = true;
+			//DebugOutTitle(L"On Platform\n");
+		}
+		//DebugOutTitle(L"Not on Platform\n");*/
+		//Debug out title the ny, x, b
+		//DebugOutTitle(L"ny: %f, x: %f, b: %f", e->ny, x, b);
+    }
 	else
 		if (e->nx != 0 && e->obj->IsBlocking())
 		{
@@ -436,6 +452,8 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		right = left + MARIO_SMALL_BBOX_WIDTH;
 		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
 	}
+	this->top = top;
+	this->bottom = bottom;
 }
 
 void CMario::SetLevel(int l)

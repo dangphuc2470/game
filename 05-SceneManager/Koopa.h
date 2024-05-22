@@ -65,7 +65,7 @@ protected:
 			vy = -KOOPA_JUMP_SPEED; // Make Koopa jump
 			lastJumpTime = now;
 		}
-		DebugOutTitle(L"[INFO] Koopa y: %f\n", y);
+		//DebugOutTitle(L"[INFO] Koopa y: %f\n", y);
 
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -161,7 +161,7 @@ public:
 	};
 	virtual void SetState(int state, int nx = 1)
 	{
-		DebugOutTitle(L"[INFO] Koopa SetState: %d\n", state);
+		//DebugOutTitle(L"[INFO] Koopa SetState: %d\n", state);
 
 		CGameObject::SetState(state);
 		switch (state)
