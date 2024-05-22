@@ -13,6 +13,7 @@ cloud_2.txt
 small_bush.txt
 box.txt
 black_background.txt
+koopa.txt
 
 #
 [OBJECTS]
@@ -95,8 +96,11 @@ black_background.txt
 170	2710	430
 
 # GOOMBA
-7	280	196
-2	220	199
+#7	280	196
+#2	220	199
+
+#Koopas
+3	10	180
 
 # MARIO
 #0	20	10

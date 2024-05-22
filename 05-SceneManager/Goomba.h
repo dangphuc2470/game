@@ -113,7 +113,7 @@ protected:
 			}
 		}
 
-		DebugOutTitle(L"[INFO] CGoomba::Update state: %d\n", state);
+		//DebugOutTitle(L"[INFO] CGoomba::Update state: %d\n", state);
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	};
