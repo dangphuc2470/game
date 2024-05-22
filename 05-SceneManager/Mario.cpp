@@ -7,10 +7,11 @@
 #include "Goomba.h"
 #include "Coin.h"
 #include "Portal.h"
+#include "Koopa.h"
 
 #include "Collision.h"
 
-void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
@@ -18,7 +19,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
-	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
+	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
@@ -42,11 +43,11 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		vy = 0;
 		if (e->ny < 0) isOnPlatform = true;
 	}
-	else 
-	if (e->nx != 0 && e->obj->IsBlocking())
-	{
-		vx = 0;
-	}
+	else
+		if (e->nx != 0 && e->obj->IsBlocking())
+		{
+			vx = 0;
+		}
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
@@ -54,6 +55,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+	else if (dynamic_cast<CKoopa*>(e->obj))
+		OnCollisionWithKoopa(e);
 	/*else if (dynamic_cast<CGoombaFlying*>(e->obj))
 		OnCollisionWithGoombaFlying(e);*/
 }
@@ -92,8 +95,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
-					//Todo: change to small Mario
-					//level = MARIO_LEVEL_SMALL;
+					level = MARIO_LEVEL_SMALL;
 					StartUntouchable();
 				}
 				else
@@ -106,39 +108,72 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	}
 }
 
-//void CMario::OnCollisionWithGoombaFlying(LPCOLLISIONEVENT e)
-//{
-//	CGoombaFlying* goomba = dynamic_cast<CGoombaFlying*>(e->obj);
-//
-//	// jump on top >> kill Goomba and deflect a bit 
-//	if (e->ny < 0)
-//	{
-//		if (goomba->GetState() != GOOMBA_STATE_DIE)
-//		{
-//			goomba->SetState(GOOMBA_STATE_DIE);
-//			vy = -MARIO_JUMP_DEFLECT_SPEED;
-//		}
-//	}
-//	else // hit by Goomba
-//	{
-//		if (untouchable == 0)
-//		{
-//			if (goomba->GetState() != GOOMBA_STATE_DIE)
-//			{
-//				if (level > MARIO_LEVEL_SMALL)
-//				{
-//					level = MARIO_LEVEL_SMALL;
-//					StartUntouchable();
-//				}
-//				else
-//				{
-//					DebugOut(L">>> Mario DIE >>> \n");
-//					SetState(MARIO_STATE_DIE);
-//				}
-//			}
-//		}
-//	}
-//}
+void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
+{
+	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+
+	// jump on top >> kill Koopa and deflect a bit 
+	if (e->ny < 0)
+	{
+		int stateToSet = -1;
+		switch (koopa->GetState())
+		{
+		case KOOPA_STATE_DIE_GREEN:
+			stateToSet = KOOPA_STATE_DIE_SLIP_GREEN;
+			break;
+		case KOOPA_STATE_DIE_RED:
+			stateToSet = KOOPA_STATE_DIE_SLIP_RED;
+			break;
+		case KOOPA_STATE_DIE_SLIP_GREEN:
+			stateToSet = KOOPA_STATE_DIE_GREEN;
+			break;
+		case KOOPA_STATE_DIE_SLIP_RED:
+			stateToSet = KOOPA_STATE_DIE_RED;
+			break;
+		case KOOPA_STATE_WALKING_GREEN:
+			stateToSet = KOOPA_STATE_DIE_GREEN;
+			break;
+		case KOOPA_STATE_WALKING_RED:
+			stateToSet = KOOPA_STATE_DIE_RED;
+			break;
+		case KOOPA_STATE_FLY_GREEN:
+			stateToSet = KOOPA_STATE_WALKING_GREEN;
+			break;
+		case KOOPA_STATE_FLY_RED:
+			stateToSet = KOOPA_STATE_WALKING_RED;
+			break;
+		}
+		if (stateToSet != -1)
+			koopa->SetState(stateToSet, -1);
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
+
+	}
+	else // hit by Koopa
+	{
+		if (untouchable == 0)
+		{
+			if (koopa->GetState() == KOOPA_STATE_DIE_RED)
+				koopa->SetState(KOOPA_STATE_DIE_SLIP_RED, e->nx);
+			else if (koopa->GetState() == KOOPA_STATE_DIE_GREEN)
+				koopa->SetState(KOOPA_STATE_DIE_SLIP_GREEN, e->nx);
+			else
+			{
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					//Todo: change to small mario
+					//level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+		}
+	}
+
+}
 
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
@@ -291,14 +326,14 @@ void CMario::Render()
 	animations->Get(aniId)->Render(x, y);
 
 	//RenderBoundingBox();
-	
+
 	//DebugOutTitle(L"Coins: %d", coin);
 }
 
 void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed! 
-	if (this->state == MARIO_STATE_DIE) return; 
+	if (this->state == MARIO_STATE_DIE) return;
 
 	switch (state)
 	{
@@ -347,7 +382,7 @@ void CMario::SetState(int state)
 			state = MARIO_STATE_IDLE;
 			isSitting = true;
 			vx = 0; vy = 0.0f;
-			y +=MARIO_SIT_HEIGHT_ADJUST;
+			y += MARIO_SIT_HEIGHT_ADJUST;
 		}
 		break;
 
@@ -375,9 +410,9 @@ void CMario::SetState(int state)
 	CGameObject::SetState(state);
 }
 
-void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
+void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (level==MARIO_LEVEL_BIG)
+	if (level == MARIO_LEVEL_BIG)
 	{
 		if (isSitting)
 		{
@@ -386,18 +421,18 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
 		}
-		else 
+		else
 		{
-			left = x - MARIO_BIG_BBOX_WIDTH/2;
-			top = y - MARIO_BIG_BBOX_HEIGHT/2;
+			left = x - MARIO_BIG_BBOX_WIDTH / 2;
+			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
 			right = left + MARIO_BIG_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_BBOX_HEIGHT;
 		}
 	}
 	else
 	{
-		left = x - MARIO_SMALL_BBOX_WIDTH/2;
-		top = y - MARIO_SMALL_BBOX_HEIGHT/2;
+		left = x - MARIO_SMALL_BBOX_WIDTH / 2;
+		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
 		right = left + MARIO_SMALL_BBOX_WIDTH;
 		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
 	}

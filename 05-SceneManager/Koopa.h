@@ -2,23 +2,26 @@
 #include "GameObject.h"
 #include "AssetIDs.h"
 
-#define KOOPA_GRAVITY 0.002f
+#define KOOPA_GRAVITY 0.001f
 #define KOOPA_WALKING_SPEED 0.05f
+#define KOOPA_SLIP_SPEED 0.2f
 
 
 #define KOOPA_BBOX_WIDTH 15
 #define KOOPA_BBOX_HEIGHT 25
 #define KOOPA_BBOX_HEIGHT_WINGS 26
-#define KOOPA_BBOX_HEIGHT_DIE 7
-#define KOOPA_JUMP_SPEED 0.2f
-
+#define KOOPA_BBOX_HEIGHT_DIE 15
+#define KOOPA_JUMP_SPEED 0.3f
+#define KOOPA_JUMP_INTERVAL 1000
 #define KOOPA_DIE_TIMEOUT 500
 
 #define KOOPA_STATE_WALKING_GREEN 100
 #define KOOPA_STATE_DIE_GREEN 200
+#define KOOPA_STATE_DIE_SLIP_GREEN 201
 #define KOOPA_STATE_FLY_GREEN 300
 #define KOOPA_STATE_WALKING_RED 400
 #define KOOPA_STATE_DIE_RED 500
+#define KOOPA_STATE_DIE_SLIP_RED 501
 #define KOOPA_STATE_FLY_RED 600
 
 
@@ -27,13 +30,12 @@ class CKoopa : public CGameObject
 protected:
 	float ax;
 	float ay;
-
-	ULONGLONG die_start;
-
+	int previousState = -1;
+	DWORD lastJumpTime;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
 		left = x - KOOPA_BBOX_WIDTH / 2;
-		if (state == KOOPA_STATE_DIE_GREEN || state == KOOPA_STATE_DIE_RED)
+		if (state == KOOPA_STATE_DIE_GREEN || state == KOOPA_STATE_DIE_RED || state == KOOPA_STATE_DIE_SLIP_RED || state == KOOPA_STATE_DIE_SLIP_GREEN)
 		{
 			top = y - KOOPA_BBOX_HEIGHT_DIE / 2;
 			right = left + KOOPA_BBOX_WIDTH;
@@ -56,19 +58,40 @@ protected:
 	{
 		vy += ay * dt;
 		vx += ax * dt;
+		DWORD now = GetTickCount64();
+
+		if ((state == KOOPA_STATE_FLY_GREEN || state == KOOPA_STATE_FLY_RED) && now - lastJumpTime >= KOOPA_JUMP_INTERVAL)
+		{
+			vy = -KOOPA_JUMP_SPEED; // Make Koopa jump
+			lastJumpTime = now;
+		}
+		DebugOutTitle(L"[INFO] Koopa y: %f\n", y);
 
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	};
 	virtual void Render()
 	{
-		int aniID;
+		if (state == KOOPA_STATE_DIE_RED)
+		{
+			CSprites::GetInstance()->Get(75003)->Draw(x, y);
+			RenderBoundingBox();
+			return;
+		}
+		else if (state == KOOPA_STATE_DIE_GREEN)
+		{
+			CSprites::GetInstance()->Get(72003)->Draw(x, y);
+			RenderBoundingBox();
+			return;
+		}
+
+		int aniID = KOOPA_STATE_WALKING_GREEN;
 		switch (state)
 		{
 		case KOOPA_STATE_WALKING_GREEN:
 			vx > 0 ? aniID = ID_ANI_KOOPA_WALKING_GREEN_RIGHT : aniID = ID_ANI_KOOPA_WALKING_GREEN_LEFT;
 			break;
-		case KOOPA_STATE_DIE_GREEN:
+		case KOOPA_STATE_DIE_SLIP_GREEN:
 			aniID = ID_ANI_KOOPA_DIE_GREEN;
 			break;
 		case KOOPA_STATE_FLY_GREEN:
@@ -77,7 +100,7 @@ protected:
 		case KOOPA_STATE_WALKING_RED:
 			vx > 0 ? aniID = ID_ANI_KOOPA_WALKING_RED_RIGHT : aniID = ID_ANI_KOOPA_WALKING_RED_LEFT;
 			break;
-		case KOOPA_STATE_DIE_RED:
+		case KOOPA_STATE_DIE_SLIP_RED:
 			aniID = ID_ANI_KOOPA_DIE_RED;
 			break;
 		case KOOPA_STATE_FLY_RED:
@@ -134,33 +157,53 @@ public:
 			else
 				SetState(KOOPA_STATE_WALKING_RED);
 		}
-
+		lastJumpTime = GetTickCount64();
 	};
-	virtual void SetState(int state)
+	virtual void SetState(int state, int nx = 1)
 	{
+		DebugOutTitle(L"[INFO] Koopa SetState: %d\n", state);
+
 		CGameObject::SetState(state);
 		switch (state)
 		{
 		case KOOPA_STATE_WALKING_GREEN:
 			vx = KOOPA_WALKING_SPEED;
+			if (previousState == KOOPA_STATE_FLY_GREEN)
+				y -= (KOOPA_BBOX_HEIGHT_WINGS - KOOPA_BBOX_HEIGHT);
 			break;
+
+		case KOOPA_STATE_WALKING_RED:
+			vx = KOOPA_WALKING_SPEED;
+			if (previousState == KOOPA_STATE_FLY_RED)
+				y -= (KOOPA_BBOX_HEIGHT_WINGS - KOOPA_BBOX_HEIGHT) ;
+			break;
+
 		case KOOPA_STATE_DIE_GREEN:
 			vx = 0;
-			vy = 0;
-			ay = 0;
-			y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
+			if (previousState == KOOPA_STATE_WALKING_GREEN)				// If previous state is walking, move the koopa up a bit so it doesn't fall through the ground, if already died, no need
+				y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
+			y = floor(y);
+			break;
+
+		case KOOPA_STATE_DIE_RED:
+			vx = 0;
+			if (previousState == KOOPA_STATE_WALKING_RED)				// If previous state is walking, move the koopa up a bit so it doesn't fall through the ground, if already died, no need
+				y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
+			y = floor(y);
+			break;
+		case KOOPA_STATE_DIE_SLIP_GREEN:
+			vx = KOOPA_SLIP_SPEED * -nx;
+			break;
+		
+		case KOOPA_STATE_DIE_SLIP_RED:
+			vx = KOOPA_SLIP_SPEED * -nx;
+			break;
+
 		case KOOPA_STATE_FLY_GREEN:
 			vx = KOOPA_WALKING_SPEED;
 			//vy = -KOOPA_JUMP_SPEED;
 			break;
-		case KOOPA_STATE_WALKING_RED:
-			vx = KOOPA_WALKING_SPEED;
-			break;
-		case KOOPA_STATE_DIE_RED:
-			vx = 0;
-			vy = 0;
-			ay = 0;
-			y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
+
 		case KOOPA_STATE_FLY_RED:
 			vx = KOOPA_WALKING_SPEED;
 			//vy = -KOOPA_JUMP_SPEED;
@@ -169,5 +212,8 @@ public:
 			DebugOutTitle(L"[INFO] Koopa SetState Error: %d\n", state);
 			break;
 		}
+		//show speed
+		previousState = state;
+
 	}
 };
