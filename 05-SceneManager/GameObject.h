@@ -20,7 +20,8 @@ protected:
 
 	float x; 
 	float y;
-
+	float top;
+	float bottom;
 	float vx;
 	float vy;
 
@@ -34,6 +35,7 @@ public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
+	void GetPositionTopBot(float &t, float &b) { t = this->top; b = this->bottom; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 
 	int GetState() { return this->state; }

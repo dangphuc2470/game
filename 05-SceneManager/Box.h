@@ -96,6 +96,8 @@ public:
 		t = y - (this->cellHeight / 2);
 		r = l + this->cellWidth - shadowLength; //Only need to minus shadow length for the right side
 		b = t + this->cellHeight;
+		this->top = t;
+		this->bottom = b;
 	}
 
 	int IsDirectionColliable(float nx, float ny)
