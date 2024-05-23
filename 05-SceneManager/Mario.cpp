@@ -1,15 +1,15 @@
 #include <algorithm>
-#include "debug.h"
+#include "../05-SceneManager/Game/debug.h"
 
 #include "Mario.h"
-#include "Game.h"
+#include "../05-SceneManager/Game/Game.h"
 
-#include "Goomba.h"
-#include "Coin.h"
-#include "Portal.h"
-#include "Koopa.h"
+#include "../05-SceneManager/Enemy/Goomba.h"
+#include "../05-SceneManager/Item/Coin.h"
+#include "../05-SceneManager/Landscape/Portal.h"
+#include "../05-SceneManager/Enemy/Koopa.h"
 
-#include "Collision.h"
+#include "../05-SceneManager/GameObject/Collision.h"
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {

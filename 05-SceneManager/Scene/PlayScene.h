@@ -1,13 +1,13 @@
 #pragma once
-#include "Game.h"
-#include "Textures.h"
+#include "../Game/Game.h"
+#include "../Game/Textures.h"
 #include "Scene.h"
-#include "GameObject.h"
-#include "Brick.h"
-#include "Mario.h"
-#include "Goomba.h"
+#include "../GameObject/GameObject.h"
+#include "../Landscape/Brick.h"
+#include "../Mario.h"
+#include "../Enemy/Goomba.h"
+#include "../Enemy/Koopa.h"
 #include <string>
-//#include "Koopas.h"
 
 
 class CPlayScene: public CScene

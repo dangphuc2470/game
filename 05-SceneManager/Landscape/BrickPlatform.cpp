@@ -1,8 +1,8 @@
 #include "BrickPlatform.h"
 
-#include "Sprite.h"
-#include "Sprites.h"
-#include "debug.h"
+#include "../Game/Sprite.h"
+#include "../Game/Sprites.h"
+#include "../Game/debug.h"
 
 void CBrickPlatform::Render()
 {

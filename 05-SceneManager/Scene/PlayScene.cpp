@@ -1,20 +1,21 @@
 #include <iostream>
 #include <fstream>
-#include "AssetIDs.h"
+#include "../GameObject/AssetIDs.h"
 
 #include "PlayScene.h"
-#include "Utils.h"
-#include "Textures.h"
-#include "Sprites.h"
-#include "Portal.h"
-#include "Coin.h"
-#include "Platform.h"
-#include "BrickPlatform.h"
-#include "Background.h"
-#include "Box.h"
-#include "Koopa.h"
+#include "../Game/Utils.h"
+#include "../Game/Textures.h"
+#include "../Game/Sprites.h"
+#include "../Item/Coin.h"
+#include "../Landscape/Portal.h"
+#include "../Landscape/Platform.h"
+#include "../Landscape/BrickPlatform.h"
+#include "../Landscape/Background.h"
+#include "../Landscape/Box.h"
+#include "../Enemy/Koopa.h"
+#include "../Enemy/Goomba.h"
 
-#include "SampleKeyEventHandler.h"
+#include "../Game/SampleKeyEventHandler.h"
 
 using namespace std;
 

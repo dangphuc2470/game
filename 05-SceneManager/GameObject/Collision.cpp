@@ -1,7 +1,7 @@
 #include "Collision.h"
 #include "GameObject.h"
 
-#include "debug.h"
+#include "../Game/debug.h"
 
 int CCollisionEvent::WasCollided() {
 	return

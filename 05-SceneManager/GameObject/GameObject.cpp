@@ -2,11 +2,11 @@
 #include <algorithm>
 
 
-#include "debug.h"
-#include "Textures.h"
-#include "Game.h"
-#include "GameObject.h"
-#include "Sprites.h"
+#include "../Game/debug.h"
+#include "../Game/Textures.h"
+#include "../Game/Game.h"
+#include "../GameObject/GameObject.h"
+#include "../Game/Sprites.h"
 
 CGameObject::CGameObject()
 {

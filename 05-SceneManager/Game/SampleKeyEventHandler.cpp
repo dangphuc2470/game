@@ -3,8 +3,8 @@
 #include "debug.h"
 #include "Game.h"
 
-#include "Mario.h"
-#include "PlayScene.h"
+#include "../Mario.h"
+#include "../Scene/PlayScene.h"
 
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {

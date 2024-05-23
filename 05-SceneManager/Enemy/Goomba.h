@@ -1,6 +1,6 @@
 #pragma once
-#include "GameObject.h"
-#include "AssetIDs.h"
+#include "../GameObject/GameObject.h"
+#include "../GameObject/AssetIDs.h"
 
 #define GOOMBA_GRAVITY 0.001f
 #define GOOMBA_WALKING_SPEED 0.05f

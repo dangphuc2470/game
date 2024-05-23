@@ -1,7 +1,7 @@
 #pragma once
-#include "GameObject.h"
-#include "Sprites.h"
-#include "AssetIDs.h"
+#include "../GameObject/GameObject.h"
+#include "../Game/Sprites.h"
+#include "../GameObject/AssetIDs.h"
 
 class CBoxPlatform : public CGameObject {
 public:

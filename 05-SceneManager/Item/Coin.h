@@ -1,8 +1,8 @@
 #pragma once
 
-#include "GameObject.h"
-#include "Animation.h"
-#include "Animations.h"
+#include "../GameObject/GameObject.h"
+#include "../Game/Animation.h"
+#include "../Game/Animations.h"
 
 #define ID_ANI_COIN 11000
 

@@ -1,18 +1,19 @@
 # list of object assets to load in this scene
 [ASSETS]
 mario.txt
-brick.txt
-coin.txt
-goomba.txt
-cloud.txt
-brick_platform.txt
-large_bush_1.txt
-large_bush_2.txt
-cloud_1.txt
-cloud_2.txt
-small_bush.txt
-box.txt
-black_background.txt
+Landscape\brick.txt
+Item\coin.txt
+Enemy\goomba.txt
+Enemy\koopa.txt
+Landscape\cloud.txt
+Landscape\brick_platform.txt
+Landscape\large_bush_1.txt
+Landscape\large_bush_2.txt
+Landscape\cloud_1.txt
+Landscape\cloud_2.txt
+Landscape\small_bush.txt
+Landscape\box.txt
+Landscape\black_background.txt
 
 #
 [OBJECTS]
@@ -39,12 +40,13 @@ black_background.txt
 
 #Brick Platform
 #ID x��y��Width Height Length�
+6	-29	250	15	500	3	61000	62000	63000  #Block from going back from start
 6	8	222	15	30	42	61000	62000	63000
 6	639	207	15	30	31	61000	62000	63000
 6	1150	222	15	30	24	61000	62000	63000
 6	1550	222	15	30	5	61000	62000	63000
 6	1680	222	15	30	77	61000	62000	63000
-6	-29	250	15	500	3	61000	62000	63000  #Block from going back from start
+
 
 #Large bush
 100	1000	168
@@ -55,7 +57,7 @@ black_background.txt
 140	168	199	3
 140	679	184	6
 140	1050	184	2
-140	1200	199	3
+140	1180	199	3
 140	1740	199	3
 
 #Cloud
@@ -77,6 +79,10 @@ black_background.txt
 150	490	167	0	0	163
 150	440	183	0	0	156
 150	560	191	0	0	157
+150	1360	159	0	0	160
+150	1330	175	0	0	154
+150	1288	191	0	0	157
+150	1288	20	0	0	153
 
 #Black_background
 170	150	430
@@ -89,10 +95,20 @@ black_background.txt
 170	2390	430
 170	2710	430
 
+# GOOMBA
+#7	280	196
+#2	220	199
+
+#Koopa
+10	10	180
+
 # MARIO
 #0	20	10
-0	20	135
+0	20	10
+
+# Platform for test
+#6	8	180	15	30	3	61000	62000	63000
 
 #Portal�
 #��x, y, right, bottom
-50	60	170	130	180	1���
+50	30	170	40	180	2���

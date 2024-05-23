@@ -26,23 +26,23 @@ HOW TO INSTALL Microsoft.DXSDK.D3DX
 #include <d3dx10.h>
 #include <list>
 
-#include "debug.h"
-#include "Game.h"
-#include "GameObject.h"
-#include "Textures.h"
-#include "Animation.h"
-#include "Animations.h"
+#include "../05-SceneManager/Game/debug.h"
+#include "../05-SceneManager/Game/Game.h"
+#include "../05-SceneManager/GameObject/GameObject.h"
+#include "../05-SceneManager/Game/Textures.h"
+#include "../05-SceneManager/Game/Animation.h"
+#include "../05-SceneManager/Game/Animations.h"
 
-#include "Mario.h"
-#include "Brick.h"
-#include "Goomba.h"
-#include "Coin.h"
-#include "Platform.h"
-#include "BrickPlatform.h"
+#include "../05-SceneManager/Mario.h"
+#include "../05-SceneManager/Landscape/Brick.h"
+#include "../05-SceneManager/Enemy/Goomba.h"
+#include "../05-SceneManager/Item/Coin.h"
+#include "../05-SceneManager/Landscape/Platform.h"
+#include "../05-SceneManager/Landscape/BrickPlatform.h"
 
-#include "SampleKeyEventHandler.h"
+#include "../05-SceneManager/Game/SampleKeyEventHandler.h"
 
-#include "AssetIDs.h"
+#include "../05-SceneManager/GameObject/AssetIDs.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"

@@ -1,6 +1,6 @@
 #include "Portal.h"
-#include "Game.h"
-#include "Textures.h"
+#include "../Game/Game.h"
+#include "../Game/Textures.h"
 
 CPortal::CPortal(float l, float t, float r, float b, int scene_id )
 {

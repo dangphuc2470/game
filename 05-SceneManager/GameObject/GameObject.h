@@ -3,11 +3,11 @@
 #include <Windows.h>
 #include <d3dx10.h>
 #include <vector>
-#include "debug.h"
-#include "Animation.h"
-#include "Animations.h"
-#include "Sprites.h"
-#include "Collision.h"
+#include "../Game/debug.h"
+#include "../Game/Animation.h"
+#include "../Game/Animations.h"
+#include "../Game/Sprites.h"
+#include "../GameObject/Collision.h"
 
 using namespace std;
 

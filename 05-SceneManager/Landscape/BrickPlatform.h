@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.h"
+#include "../GameObject/GameObject.h"
 
 // 
 // The most popular type of object in Mario! 

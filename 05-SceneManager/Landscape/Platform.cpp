@@ -1,7 +1,7 @@
 #include "Platform.h"
 
-#include "Sprite.h"
-#include "Sprites.h"
+#include "../Game/Sprites.h"
+#include "../Game/Sprite.h"
 
 void CPlatform::Render()
 {

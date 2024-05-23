@@ -1,10 +1,8 @@
 #pragma once
-#include "GameObject.h"
-
-#include "Animation.h"
-#include "Animations.h"
-
-#include "debug.h"
+#include "../05-SceneManager/GameObject/GameObject.h"
+#include "../05-SceneManager/Game/Animation.h"
+#include "../05-SceneManager/Game/Animations.h"
+#include "../05-SceneManager/Game/debug.h"
 
 #define MARIO_WALKING_SPEED		0.1f
 #define MARIO_RUNNING_SPEED		0.2f

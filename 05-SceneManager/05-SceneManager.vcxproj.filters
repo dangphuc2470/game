@@ -21,164 +21,164 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
+    <ClCompile Include="Game\Animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Animations.cpp">
+    <ClCompile Include="Game\Animations.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp">
+    <ClCompile Include="Landscape\Brick.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Coin.cpp">
+    <ClCompile Include="Item\Coin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Collision.cpp">
+    <ClCompile Include="GameObject\Collision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="debug.cpp">
+    <ClCompile Include="Game\debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
+    <ClCompile Include="Game\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="GameObject\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Goomba.cpp">
+    <ClCompile Include="Enemy\Goomba.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Platform.cpp">
+    <ClCompile Include="Landscape\Platform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SampleKeyEventHandler.cpp">
+    <ClCompile Include="Game\SampleKeyEventHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
+    <ClCompile Include="Game\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Sprites.cpp">
+    <ClCompile Include="Game\Sprites.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Textures.cpp">
+    <ClCompile Include="Game\Textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
+    <ClCompile Include="Scene\PlayScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp">
+    <ClCompile Include="Game\Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Portal.cpp">
+    <ClCompile Include="Landscape\Portal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BrickPlatform.cpp">
+    <ClCompile Include="Landscape\BrickPlatform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Background.cpp">
+    <ClCompile Include="Landscape\Background.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Box.cpp">
+    <ClCompile Include="Landscape\Box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Koopa.cpp">
+    <ClCompile Include="Enemy\Koopa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h">
+    <ClInclude Include="Game\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationFrame.h">
+    <ClInclude Include="Game\AnimationFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Animations.h">
+    <ClInclude Include="Game\Animations.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AssetIDs.h">
+    <ClInclude Include="GameObject\AssetIDs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Brick.h">
+    <ClInclude Include="Landscape\Brick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Coin.h">
+    <ClInclude Include="Item\Coin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Collision.h">
+    <ClInclude Include="GameObject\Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="debug.h">
+    <ClInclude Include="Game\debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="Game\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
+    <ClInclude Include="GameObject\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Goomba.h">
+    <ClInclude Include="Enemy\Goomba.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KeyEventHandler.h">
+    <ClInclude Include="Game\KeyEventHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Platform.h">
+    <ClInclude Include="Landscape\Platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SampleKeyEventHandler.h">
+    <ClInclude Include="Game\SampleKeyEventHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
+    <ClInclude Include="Game\Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sprites.h">
+    <ClInclude Include="Game\Sprites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
+    <ClInclude Include="Game\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Textures.h">
+    <ClInclude Include="Game\Textures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="Scene\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScene.h">
+    <ClInclude Include="Scene\PlayScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
+    <ClInclude Include="Game\Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Portal.h">
+    <ClInclude Include="Landscape\Portal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BrickPlatform.h">
+    <ClInclude Include="Landscape\BrickPlatform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Background.h">
+    <ClInclude Include="Landscape\Background.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Box.h">
+    <ClInclude Include="Landscape\Box.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Koopa.h">
+    <ClInclude Include="Enemy\Koopa.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="scene_1.txt" />
-    <Text Include="large_bush_1.txt" />
-    <Text Include="large_bush_2.txt" />
-    <Text Include="cloud_1.txt" />
-    <Text Include="cloud_2.txt" />
-    <Text Include="small_bush.txt" />
-    <Text Include="box.txt" />
-    <Text Include="black_background.txt" />
+    <Text Include="Scene\scene_1.txt" />
+    <Text Include="Landscape\large_bush_1.txt" />
+    <Text Include="Landscape\large_bush_2.txt" />
+    <Text Include="Landscape\cloud_1.txt" />
+    <Text Include="Landscape\cloud_2.txt" />
+    <Text Include="Landscape\small_bush.txt" />
+    <Text Include="Landscape\box.txt" />
+    <Text Include="Landscape\black_background.txt" />
   </ItemGroup>
 </Project>

@@ -1,10 +1,19 @@
 # list of object assets to load in this scene
 [ASSETS]
 mario.txt
-brick.txt
-coin.txt
-goomba.txt
-cloud.txt
+Landscape\brick.txt
+Item\coin.txt
+Enemy\goomba.txt
+Enemy\koopa.txt
+Landscape\cloud.txt
+Landscape\brick_platform.txt
+Landscape\large_bush_1.txt
+Landscape\large_bush_2.txt
+Landscape\cloud_1.txt
+Landscape\cloud_2.txt
+Landscape\small_bush.txt
+Landscape\box.txt
+Landscape\black_background.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
