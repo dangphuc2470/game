@@ -6,6 +6,7 @@ Item\coin.txt
 Enemy\goomba.txt
 Enemy\koopa.txt
 Landscape\cloud.txt
+Landscape\brick.txt
 Landscape\brick_platform.txt
 Landscape\large_bush_1.txt
 Landscape\large_bush_2.txt
@@ -128,7 +129,8 @@ Landscape\vertical_pipe.txt
 8	300	180
 3	120	180
 
-
+#BRICK
+1	20	150
 
 
 
@@ -139,8 +141,8 @@ Landscape\vertical_pipe.txt
 
 #Portal�
 #��x, y, right, bottom
-#50	30	170	40	180	2���
+50	30	170	40	180	2���
 
 # MARIO
 #0	20	10
-0	2250	10
+0	20	10

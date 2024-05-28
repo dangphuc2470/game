@@ -1,4 +1,5 @@
 #include "Brick.h"
+#include "../GameObject/AssetIDs.h"
 
 void CBrick::Render()
 {
