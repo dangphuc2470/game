@@ -83,6 +83,7 @@ public:
 };
 
 class CBlackBackground : public CGameObject {
+	
 public:
 	CBlackBackground(float x, float y) : CGameObject(x, y) {}
 	void Render()
@@ -90,12 +91,20 @@ public:
 		CSprites* s = CSprites::GetInstance();
 		s->Get(ID_SPRITE_BLACK_BACKGROUND)->Draw(x, y);
 	};
+	int cellWidth = 335;
+	int cellHeight = 415;
+
 	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
-	int IsDirectionColliable(float nx, float ny)
-	{
-		if (nx == 0 && ny == -1) return 1;
-		else return 0;
-	}
+	void GetBoundingBox(float& l, float& t, float& r, float& b) {
+		l = x - (this->cellWidth / 2);
+		t = y - (this->cellHeight / 2);
+		r = l + this->cellWidth; 
+		b = t + this->cellHeight;
+	};
+	int IsBlocking() { return 1; }
+
+	int GetSceneId() {
+		return 2; // Todo: change this to the correct scene id
+	};
 };
 

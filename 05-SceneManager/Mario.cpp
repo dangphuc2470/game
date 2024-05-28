@@ -7,6 +7,7 @@
 #include "../05-SceneManager/Enemy/Goomba.h"
 #include "../05-SceneManager/Item/Coin.h"
 #include "../05-SceneManager/Landscape/Portal.h"
+#include "../05-SceneManager/Landscape/Background.h"
 #include "../05-SceneManager/Enemy/Koopa.h"
 
 #include "../05-SceneManager/GameObject/Collision.h"
@@ -73,6 +74,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CKoopa*>(e->obj))
 		OnCollisionWithKoopa(e);
+	else if (dynamic_cast<CBlackBackground*>(e->obj))
+		OnCollisionWithTheVoid(e);
 	/*else if (dynamic_cast<CGoombaFlying*>(e->obj))
 		OnCollisionWithGoombaFlying(e);*/
 }
@@ -201,6 +204,15 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
+	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+}
+
+void CMario::OnCollisionWithTheVoid(LPCOLLISIONEVENT e)
+{
+	DebugOut(L">>> Mario VOID >>> \n");
+	CBlackBackground* p = (CBlackBackground*)e->obj;
+	//SetState(MARIO_STATE_DIE);
+	//Todo: Go Die
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 }
 
