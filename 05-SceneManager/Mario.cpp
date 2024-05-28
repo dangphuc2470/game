@@ -8,6 +8,7 @@
 #include "../05-SceneManager/Item/Coin.h"
 #include "../05-SceneManager/Landscape/Portal.h"
 #include "../05-SceneManager/Landscape/Background.h"
+#include "../05-SceneManager/Landscape/Brick.h"
 #include "../05-SceneManager/Enemy/Koopa.h"
 
 #include "../05-SceneManager/GameObject/Collision.h"
@@ -76,6 +77,12 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CBlackBackground*>(e->obj))
 		OnCollisionWithTheVoid(e);
+	else if (dynamic_cast<CBrick*>(e->obj))
+	{
+		if (e-> ny > 0)
+			e->obj->SetState(BRICK_STATE_BROKEN);
+	}
+		
 	/*else if (dynamic_cast<CGoombaFlying*>(e->obj))
 		OnCollisionWithGoombaFlying(e);*/
 }
