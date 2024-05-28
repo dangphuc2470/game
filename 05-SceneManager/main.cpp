@@ -50,9 +50,9 @@ HOW TO INSTALL Microsoft.DXSDK.D3DX
 
 #define BACKGROUND_COLOR D3DXCOLOR(0.6118f, 0.9882f, 0.9412f, 1.0f)
 
-//#define SCREEN_WIDTH 2000
+#define SCREEN_WIDTH 8000
 //Todo: change screen width to 400
-#define SCREEN_WIDTH 400
+//#define SCREEN_WIDTH 400
 #define SCREEN_HEIGHT 300
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

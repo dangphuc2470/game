@@ -145,7 +145,7 @@ protected:
 		}
 
 		CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	};
 
 	virtual int IsCollidable() { return 1; };

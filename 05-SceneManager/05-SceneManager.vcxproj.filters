@@ -87,6 +87,9 @@
     <ClCompile Include="Enemy\Koopa.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Landscape\Vertical_Pipe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Animation.h">
@@ -170,6 +173,9 @@
     <ClInclude Include="Enemy\Koopa.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Landscape\Vertical_Pipe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Scene\scene_1.txt" />
@@ -180,5 +186,6 @@
     <Text Include="Landscape\small_bush.txt" />
     <Text Include="Landscape\box.txt" />
     <Text Include="Landscape\black_background.txt" />
+    <Text Include="Landscape\vertical_pipe.txt" />
   </ItemGroup>
 </Project>
