@@ -24,7 +24,7 @@ protected:
 	float bottom;
 	float vx;
 	float vy;
-
+	int isBlocking = true;
 	int nx;	 
 
 	int state;
@@ -37,7 +37,7 @@ public:
 	void GetPosition(float &x, float &y) { x = this->x; y = this->y; }
 	void GetPositionTopBot(float &t, float &b) { t = this->top; b = this->bottom; }
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
-
+	void SetBlocking(bool isBlocking) { this->isBlocking = isBlocking; }
 	int GetState() { return this->state; }
 	virtual void Delete() { isDeleted = true;  }
 	bool IsDeleted() { return isDeleted; }
@@ -65,7 +65,7 @@ public:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {};
 	
 	// Is this object blocking other object? If YES, collision framework will automatically push the other object
-	virtual int IsBlocking() { return 1; }
+	virtual int IsBlocking() { return isBlocking; }
 	virtual int IsDirectionColliable(float nx, float ny) { return 1; }
 
 

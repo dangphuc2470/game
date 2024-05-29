@@ -97,7 +97,7 @@
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
 
-#define MARIO_UNTOUCHABLE_TIME 2500
+#define MARIO_UNTOUCHABLE_TIME 2500000000000000000  //Todo: change to 2.5s
 
 class CMario : public CGameObject
 {

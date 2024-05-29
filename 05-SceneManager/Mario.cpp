@@ -187,7 +187,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				if (level > MARIO_LEVEL_SMALL)
 				{
 					//Todo: change to small mario
-					//level = MARIO_LEVEL_SMALL;
+					level = MARIO_LEVEL_SMALL;
 					StartUntouchable();
 				}
 				else

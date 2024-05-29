@@ -15,55 +15,55 @@ public:
 		{
 		case ID_SPRITE_BOX_PLATFORM_SQUARE_PINK:
 			this->cellWidth = 55;
-			this->cellHeight = 47;
+			this->cellHeight = 48;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_RECTANGLE_PINK_GROUND_HORIZONTAL:
 			this->cellWidth = 63;
-			this->cellHeight = 31;
+			this->cellHeight = 32;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_RECTANGLE_PINK_SKY_HORIZONTAL:
 			this->cellWidth = 87;
-			this->cellHeight = 39;
+			this->cellHeight = 40;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_RECTANGLE_PINK_LARGE_HORIZONTAL:
 			this->cellWidth = 119;
-			this->cellHeight = 63;
+			this->cellHeight = 64;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_GREEN_SHORT_HORIZONTAL:
 			this->cellWidth = 71;
-			this->cellHeight = 39;
+			this->cellHeight = 40;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_GREEN_SHORT_FAT_HORIZONTAL:
 			this->cellWidth = 87;
-			this->cellHeight = 47;
+			this->cellHeight = 48;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_GREEN_LONG_HORIZONTAL:
 			this->cellWidth = 103;
-			this->cellHeight = 31;
+			this->cellHeight = 32;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_GREEN_LONG_VERTICAL:
 			this->cellWidth = 55;
-			this->cellHeight = 143;
+			this->cellHeight = 144;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_BLUE_TALL:
 			this->cellWidth = 55;
-			this->cellHeight = 79;
+			this->cellHeight = 80;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_BLUE_FAT:
 			this->cellWidth = 119;
-			this->cellHeight = 95;
+			this->cellHeight = 96;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_BLUE_SHORT:
 			this->cellWidth = 71;
-			this->cellHeight = 39;
+			this->cellHeight = 40;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_WHITE_TALL:
 			this->cellWidth = 71;
-			this->cellHeight = 111;
+			this->cellHeight = 112;
 			break;
 		case ID_SPRITE_BOX_PLATFORM_RECTANGLE_PINK_TALL_VERTICAL:
 			this->cellWidth = 71;
-			this->cellHeight = 79;
+			this->cellHeight = 80;
 			break;
 			
 
