@@ -90,6 +90,9 @@
     <ClCompile Include="Landscape\Vertical_Pipe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Landscape\MysteryBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Animation.h">
@@ -174,6 +177,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Landscape\Vertical_Pipe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Landscape\MysteryBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

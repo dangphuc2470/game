@@ -146,6 +146,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Landscape\MysteryBox.cpp" />
     <ClCompile Include="Game\Animation.cpp" />
     <ClCompile Include="Game\Animations.cpp" />
     <ClCompile Include="Landscape\Background.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Enemy\Koopa.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="Landscape\Platform.h" />
+    <ClInclude Include="Landscape\MysteryBox.h" />
     <ClInclude Include="Scene\PlayScene.h" />
     <ClInclude Include="Landscape\Portal.h" />
     <ClInclude Include="Game\SampleKeyEventHandler.h" />
