@@ -13,6 +13,7 @@
 #include "../Landscape/Background.h"
 #include "../Landscape/Box.h"
 #include "../Landscape/Vertical_Pipe.h"
+#include "../Landscape/MysteryBox.h"
 #include "../Enemy/Koopa.h"
 #include "../Enemy/Goomba.h"
 
@@ -136,6 +137,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_CLOUD_2: obj = new CCloud2(x, y); break;
 	case OBJECT_TYPE_BLACK_BACKGROUND: obj = new CBlackBackground(x, y); break;
 	case OBJECT_TYPE_VERTICAL_PIPE: obj = new CVerticalPipe(x, y); break;
+	case OBJECT_TYPE_MYSTERY_BOX: obj = new CMysteryBox(x, y); break;
 	case OBJECT_TYPE_BOX_PLATFORM:
 	{
 		float width = atoi(tokens[3].c_str());

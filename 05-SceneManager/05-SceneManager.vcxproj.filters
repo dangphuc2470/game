@@ -193,5 +193,6 @@
     <Text Include="Landscape\box.txt" />
     <Text Include="Landscape\black_background.txt" />
     <Text Include="Landscape\vertical_pipe.txt" />
+    <Text Include="Landscape\mystery_box.txt" />
   </ItemGroup>
 </Project>

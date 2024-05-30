@@ -210,6 +210,7 @@
     <Text Include="Landscape\cloud_2.txt" />
     <Text Include="Landscape\large_bush_1.txt" />
     <Text Include="Landscape\large_bush_2.txt" />
+    <Text Include="Landscape\mystery_box.txt" />
     <Text Include="Landscape\vertical_pipe.txt" />
     <Text Include="Scene\scene_1.txt" />
     <Text Include="Landscape\small_bush.txt" />

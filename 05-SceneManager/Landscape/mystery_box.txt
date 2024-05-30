@@ -1,0 +1,13 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+193	500	1400	515	1415	20
+194	519	1400	534	1415	20
+195	538	1400	553	1415	20
+196	557	1400	572	1415	20
+191	576	1400	591	1415	20
+# wodden box 198	595	1400	610	1415	20
+
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+192	193	100	194	100	195	100	196	100

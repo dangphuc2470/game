@@ -9,7 +9,9 @@
 #include "../05-SceneManager/Landscape/Portal.h"
 #include "../05-SceneManager/Landscape/Background.h"
 #include "../05-SceneManager/Landscape/Brick.h"
+#include "../05-SceneManager/Landscape/MysteryBox.h"
 #include "../05-SceneManager/Enemy/Koopa.h"
+#include "../05-SceneManager/Scene/PlayScene.h"
 
 #include "../05-SceneManager/GameObject/Collision.h"
 
@@ -81,6 +83,21 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		if (e-> ny > 0)
 			e->obj->SetState(BRICK_STATE_BROKEN);
+	}
+	else if (dynamic_cast<CMysteryBox*>(e->obj))
+	{
+		if (e->ny > 0)
+		{
+			e->obj->SetState(MBOX_STATE_UNBOX);
+			CGameObject* newObj = new CGoomba(x, y - 30);
+
+			// Add new object to the scene
+			CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+			//scene->AddObject(newObj);
+
+			newObj->SetPosition(x, y - 30);
+			scene->AddObject(newObj);
+		}
 	}
 		
 	/*else if (dynamic_cast<CGoombaFlying*>(e->obj))
@@ -360,7 +377,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 
 	//DebugOutTitle(L"Coins: %d", coin);
 }

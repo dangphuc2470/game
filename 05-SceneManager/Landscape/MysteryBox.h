@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <map>
 
-#define MBOX_BBOX_WIDTH 15
+#define MBOX_BBOX_WIDTH 14
 #define MBOX_BBOX_HEIGHT 15
 #define MBOX_STATE_NORMAL 100
 #define MBOX_STATE_UNBOX 200
@@ -29,7 +29,7 @@ public:
 			CAnimations* animations = CAnimations::GetInstance();
 			animations->Get(ID_ANI_MYSTERY_BOX)->Render(x, y);
 		}
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	};
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
