@@ -5,9 +5,8 @@
 #include "../GameObject/GameObject.h"
 #include "../Landscape/Brick.h"
 #include "../Mario.h"
-#include "../Enemy/Goomba.h"
-#include "../Enemy/Koopa.h"
 #include <string>
+
 
 
 class CPlayScene: public CScene

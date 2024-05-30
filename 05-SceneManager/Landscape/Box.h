@@ -8,7 +8,7 @@ public:
 	float cellWidth;
 	float cellHeight;
 	int spriteID;
-	int shadowLength = 8;
+	int shadowLength = 6;
 	CBoxPlatform(float x, float y, float cellWidth, float cellHeight, int spriteID) : CGameObject(x, y) {
 		//Set default cell size for each sprite
 		switch (spriteID)
@@ -92,9 +92,9 @@ public:
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b)
 	{
-		l = x - (this->cellWidth / 2);
+		l = x - (this->cellWidth / 2) + shadowLength - 3;
 		t = y - (this->cellHeight / 2);
-		r = l + this->cellWidth - shadowLength; //Only need to minus shadow length for the right side
+		r = l + this->cellWidth - shadowLength * 2; //Only need to minus shadow length for the right side
 		b = t + this->cellHeight;
 		this->top = t;
 		this->bottom = b;

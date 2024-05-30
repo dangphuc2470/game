@@ -146,6 +146,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy\GuideObject.cpp" />
     <ClCompile Include="Landscape\MysteryBox.cpp" />
     <ClCompile Include="Game\Animation.cpp" />
     <ClCompile Include="Game\Animations.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Landscape\Vertical_Pipe.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy\GuideObject.h" />
     <ClInclude Include="Game\Animation.h" />
     <ClInclude Include="Game\AnimationFrame.h" />
     <ClInclude Include="Game\Animations.h" />

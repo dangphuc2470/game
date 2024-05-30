@@ -1,6 +1,8 @@
 #pragma once
 #include "../GameObject/GameObject.h"
 #include "../GameObject/AssetIDs.h"
+#include "../Enemy/GuideObject.h"
+#include "../Scene/PlayScene.h"
 
 #define KOOPA_GRAVITY 0.001f
 #define KOOPA_WALKING_SPEED 0.05f
@@ -25,6 +27,7 @@
 #define KOOPA_STATE_DIE_SLIP_RED 501
 #define KOOPA_STATE_FLY_RED 600
 
+#define GUIDE_AND_KOOPA_POSITION_Y_TOLERANCE 3 // If the distance between guide and koopa is greater than 3 pixel, the koopa is considered falling
 
 class CKoopa : public CGameObject
 {
@@ -32,6 +35,7 @@ protected:
 	float ax;
 	float ay;
 	int previousState = -1;
+	CGuideObject* guide;
 	DWORD lastJumpTime;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
@@ -59,6 +63,11 @@ protected:
 	{
 		vy += ay * dt;
 		vx += ax * dt;
+
+		if (IsFalling() && (state == KOOPA_STATE_WALKING_GREEN || state == KOOPA_STATE_WALKING_RED))
+			ChangeDirection();
+
+
 		DWORD now = GetTickCount64();
 
 		if ((state == KOOPA_STATE_FLY_GREEN || state == KOOPA_STATE_FLY_RED) && now - lastJumpTime >= KOOPA_JUMP_INTERVAL)
@@ -67,7 +76,8 @@ protected:
 			lastJumpTime = now;
 		}
 		//DebugOutTitle(L"[INFO] Koopa y: %f\n", y);
-
+		
+		//guide->Update(dt, coObjects);
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	};
@@ -131,9 +141,7 @@ protected:
 			vy = 0;
 		}
 		else if (e->nx != 0)
-		{
-			vx = -vx;
-		}
+			ChangeDirection();
 	};
 
 public:
@@ -157,7 +165,14 @@ public:
 				SetState(KOOPA_STATE_WALKING_RED);
 		}
 		lastJumpTime = GetTickCount64();
+		guide = new CGuideObject(this);
+		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+		guide->SetPosition(x + KOOPA_BBOX_WIDTH, y);
+		scene->AddObject(guide);
+
 	};
+
+
 	virtual void SetState(int state, int nx = 1)
 	{
 		//DebugOutTitle(L"[INFO] Koopa SetState: %d\n", state);
@@ -221,4 +236,30 @@ public:
 		previousState = state;
 
 	}
+
+	void GetPosition(float& x, float& y)
+	{
+		x = this->x;
+		y = this->y;
+	}
+
+	bool IsFalling()
+	{
+		float gx, gy;
+		guide->GetPosition(gx, gy);
+		//DebugOutTitle(L"Guide Position: %f %f, Koopa Position: %f, %f", gx, gy, x, y);
+		if (abs(gy - y) > GUIDE_AND_KOOPA_POSITION_Y_TOLERANCE)
+			return true;
+		return false;
+	}
+
+	void ChangeDirection()
+	{
+		vx = -vx;
+		if (vx > 0)
+			guide->SetPosition(x + KOOPA_BBOX_WIDTH, y);
+		else
+			guide->SetPosition(x - KOOPA_BBOX_WIDTH, y);
+	}
+
 };
