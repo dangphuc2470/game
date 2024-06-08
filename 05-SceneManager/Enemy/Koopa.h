@@ -29,12 +29,14 @@
 #define KOOPA_STATE_FLY_RED 600
 #define KOOPA_STATE_FLASH_GREEN 700
 #define KOOPA_STATE_FLASH_RED 800
+#define KOOPA_DELETE_TIME 5000
 
 #define GUIDE_AND_KOOPA_POSITION_Y_TOLERANCE 3 // If the distance between guide and koopa is greater than 3 pixel, the koopa is considered falling
 
 class CKoopa : public CGameObject
 {
 protected:
+	//Todo: Improve Koopa flash animation
 	float ax;
 	float ay;
 	int previousState = -1;
@@ -42,6 +44,9 @@ protected:
 	DWORD lastJumpTime;
 	DWORD dieStartTime;
 	DWORD respawnStartTime;
+	DWORD deleteStartTime;
+	bool isCollidable = true;
+
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
 		left = x - KOOPA_BBOX_WIDTH / 2;
@@ -65,6 +70,14 @@ protected:
 			bottom = top + KOOPA_BBOX_HEIGHT;
 		}
 	};
+
+	void SetColliable(bool isColliable)
+	{
+		this->isCollidable = isColliable;
+		if (!isColliable)
+			deleteStartTime = GetTickCount64();
+	}
+
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		vy += ay * dt;
@@ -75,6 +88,12 @@ protected:
 
 
 		DWORD now = GetTickCount64();
+		if (!isCollidable && now - deleteStartTime > KOOPA_DELETE_TIME)
+		{
+			isDeleted = true;
+			guide->isDeleted = true;
+		}
+
 
 		if ((state == KOOPA_STATE_FLY_GREEN || state == KOOPA_STATE_FLY_RED) && now - lastJumpTime >= KOOPA_JUMP_INTERVAL)
 		{
@@ -155,10 +174,10 @@ protected:
 			}
 			CAnimations::GetInstance()->Get(aniID)->Render(x, y);
 		}
-		//RenderBoundingBox();
+		RenderBoundingBox();
 	};
 
-	virtual int IsCollidable() { return 1; };
+	virtual int IsCollidable() { return isCollidable; };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt)
 	{
@@ -168,9 +187,19 @@ protected:
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e)
 	{
+		//
+		if (dynamic_cast<CKoopa*>(e->obj))
+		{
+			DebugOutTitle(L"[INFO] Koopa Collision with Koopa\n");
+			if (this->state == KOOPA_STATE_DIE_SLIP_GREEN || this->state == KOOPA_STATE_DIE_SLIP_RED)
+			{
+				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+				koopa->SetColliable(false);
+				//koopa->isDeleted = true;
+			}
+			return;
+		};
 		if (!e->obj->IsBlocking()) return;
-		if (dynamic_cast<CKoopa*>(e->obj)) return;
-
 		if (e->ny != 0)
 		{
 			vy = 0;
