@@ -3,6 +3,7 @@
 #include "../GameObject/AssetIDs.h"
 #include "../Enemy/GuideObject.h"
 #include "../Scene/PlayScene.h"
+#include "../Enemy/Goomba.h"
 
 #define KOOPA_GRAVITY 0.001f
 #define KOOPA_WALKING_SPEED 0.05f
@@ -45,7 +46,6 @@ protected:
 	DWORD dieStartTime;
 	DWORD respawnStartTime;
 	DWORD deleteStartTime;
-	bool isCollidable = true;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
@@ -73,7 +73,7 @@ protected:
 
 	void SetColliable(bool isColliable)
 	{
-		this->isCollidable = isColliable;
+		CGameObject::SetCollidable(isColliable);
 		if (!isColliable)
 			deleteStartTime = GetTickCount64();
 	}
@@ -198,7 +198,14 @@ protected:
 				//koopa->isDeleted = true;
 			}
 			return;
-		};
+		}
+		else if (dynamic_cast<CGoomba*>(e->obj))
+		{
+			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+			//goomba->SetState(GOOMBA_STATE_DIE);
+			goomba->SetCollidable(false);
+		}
+
 		if (!e->obj->IsBlocking()) return;
 		if (e->ny != 0)
 		{
@@ -233,7 +240,7 @@ public:
 		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 		guide->SetPosition(x + KOOPA_BBOX_WIDTH, y);
 		scene->AddObject(guide);
-
+		SetColliable(true);
 	};
 
 

@@ -148,7 +148,7 @@ protected:
 		//RenderBoundingBox();
 	};
 
-	virtual int IsCollidable() { return 1; };
+	virtual int IsCollidable() { return isCollidable; };
 	virtual int IsBlocking() { return 0; }
 
 
@@ -186,6 +186,7 @@ public:
 		SetState(GOOMBA_STATE_FLYING_WALK);
 		lastStateChange = GetTickCount64();
 		flyWalkCycle = 0;
+		CGameObject::SetCollidable(true);
 	}
 
 
