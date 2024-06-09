@@ -20,16 +20,11 @@
 #define KOOPA_DIE_TIMEOUT 5000
 #define KOOPA_FLASH_TIME 3000
 
-#define KOOPA_STATE_WALKING_GREEN 100
-#define KOOPA_STATE_DIE_GREEN 200
-#define KOOPA_STATE_DIE_SLIP_GREEN 201
-#define KOOPA_STATE_FLY_GREEN 300
-#define KOOPA_STATE_WALKING_RED 400
-#define KOOPA_STATE_DIE_RED 500
-#define KOOPA_STATE_DIE_SLIP_RED 501
-#define KOOPA_STATE_FLY_RED 600
-#define KOOPA_STATE_FLASH_GREEN 700
-#define KOOPA_STATE_FLASH_RED 800
+#define KOOPA_STATE_WALKING 100
+#define KOOPA_STATE_DIE 200
+#define KOOPA_STATE_DIE_SLIP 201
+#define KOOPA_STATE_FLY 300
+#define KOOPA_STATE_FLASH 700
 #define KOOPA_DELETE_TIME 5000
 
 #define GUIDE_AND_KOOPA_POSITION_Y_TOLERANCE 3 // If the distance between guide and koopa is greater than 3 pixel, the koopa is considered falling
@@ -46,18 +41,19 @@ protected:
 	DWORD dieStartTime;
 	DWORD respawnStartTime;
 	DWORD deleteStartTime;
+	string color;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
 		left = x - KOOPA_BBOX_WIDTH / 2;
-		if (state == KOOPA_STATE_DIE_GREEN || state == KOOPA_STATE_DIE_RED || state == KOOPA_STATE_DIE_SLIP_RED || 
-			state == KOOPA_STATE_DIE_SLIP_GREEN || state == KOOPA_STATE_FLASH_GREEN || state == KOOPA_STATE_FLASH_RED)
+		if (state == KOOPA_STATE_DIE ||
+			state == KOOPA_STATE_DIE_SLIP || state == KOOPA_STATE_FLASH)
 		{
 			top = y - KOOPA_BBOX_HEIGHT_DIE / 2;
 			right = left + KOOPA_BBOX_WIDTH;
 			bottom = top + KOOPA_BBOX_HEIGHT_DIE;
 		}
-		else if (state == KOOPA_STATE_FLY_GREEN || state == KOOPA_STATE_FLY_RED)
+		else if (state == KOOPA_STATE_FLY)
 		{
 			top = y - KOOPA_BBOX_HEIGHT_WINGS / 2;
 			right = left + KOOPA_BBOX_WIDTH;
@@ -78,14 +74,23 @@ protected:
 			deleteStartTime = GetTickCount64();
 	}
 
+	void SetColor(string color)
+	{
+		this->color = color;
+	}
+
+	string GetColor()
+	{
+		return color;
+	}
+
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		vy += ay * dt;
 		vx += ax * dt;
 
-		if (IsFalling() && (state == KOOPA_STATE_WALKING_GREEN || state == KOOPA_STATE_WALKING_RED))
+		if (IsFalling() && (state == KOOPA_STATE_WALKING))
 			ChangeDirection();
-
 
 		DWORD now = GetTickCount64();
 		if (!isCollidable && now - deleteStartTime > KOOPA_DELETE_TIME)
@@ -95,26 +100,19 @@ protected:
 		}
 
 
-		if ((state == KOOPA_STATE_FLY_GREEN || state == KOOPA_STATE_FLY_RED) && now - lastJumpTime >= KOOPA_JUMP_INTERVAL)
+		if ((state == KOOPA_STATE_FLY) && now - lastJumpTime >= KOOPA_JUMP_INTERVAL)
 		{
 			vy = -KOOPA_JUMP_SPEED; // Make Koopa jump
 			lastJumpTime = now;
 		}
 
-		else if ((state == KOOPA_STATE_DIE_GREEN || state == KOOPA_STATE_DIE_RED) && GetTickCount64() - dieStartTime > KOOPA_DIE_TIMEOUT)
+		else if (state == KOOPA_STATE_DIE && GetTickCount64() - dieStartTime > KOOPA_DIE_TIMEOUT)
 		{
-			if (state == KOOPA_STATE_DIE_GREEN)
-				SetState(KOOPA_STATE_FLASH_GREEN);
-			else
-				SetState(KOOPA_STATE_FLASH_RED);
+			SetState(KOOPA_STATE_FLASH);
 		}
-		else if ((state == KOOPA_STATE_FLASH_GREEN) && GetTickCount64() - dieStartTime > KOOPA_FLASH_TIME)
+		else if ((state == KOOPA_STATE_FLASH) && GetTickCount64() - dieStartTime > KOOPA_FLASH_TIME)
 		{
-			SetState(KOOPA_STATE_WALKING_GREEN);
-		}
-		else if ((state == KOOPA_STATE_FLASH_RED) && GetTickCount64() - dieStartTime > KOOPA_FLASH_TIME)
-		{
-			SetState(KOOPA_STATE_WALKING_RED);
+			SetState(KOOPA_STATE_WALKING);
 		}
 		else {
 			//throw L"Koopa State Error";
@@ -123,58 +121,59 @@ protected:
 
 
 		//DebugOutTitle(L"[INFO] Koopa y: %f\n", y);
-		
+
 		//guide->Update(dt, coObjects);
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	};
 	virtual void Render()
 	{
-		if (state == KOOPA_STATE_DIE_RED)
+		 if (state == KOOPA_STATE_DIE)
 		{
-			CSprites::GetInstance()->Get(ID_SPRITE_KOOPA_DIE_RED + 3)->Draw(x, y);
-		}
-		else if (state == KOOPA_STATE_DIE_GREEN)
-		{
-
-			CSprites::GetInstance()->Get(ID_SPRITE_KOOPA_DIE_GREEN + 3 )->Draw(x, y);
+			if (color == "green")
+				CSprites::GetInstance()->Get(ID_SPRITE_KOOPA_DIE_GREEN + 3)->Draw(x, y);
+			else
+				CSprites::GetInstance()->Get(ID_SPRITE_KOOPA_DIE_RED + 3)->Draw(x, y);
 		}
 		else
 		{
-			int aniID = KOOPA_STATE_WALKING_GREEN;
+			int aniID = KOOPA_STATE_WALKING;
 			switch (state)
 			{
-			case KOOPA_STATE_WALKING_GREEN:
-				vx > 0 ? aniID = ID_ANI_KOOPA_WALKING_GREEN_RIGHT : aniID = ID_ANI_KOOPA_WALKING_GREEN_LEFT;
+			case KOOPA_STATE_WALKING:
+				if (color == "green")
+					vx > 0 ? aniID = ID_ANI_KOOPA_WALKING_GREEN_RIGHT : aniID = ID_ANI_KOOPA_WALKING_GREEN_LEFT;
+				else
+					vx > 0 ? aniID = ID_ANI_KOOPA_WALKING_RED_RIGHT : aniID = ID_ANI_KOOPA_WALKING_RED_LEFT;
 				break;
-			case KOOPA_STATE_DIE_SLIP_GREEN:
-				aniID = ID_ANI_KOOPA_DIE_GREEN;
+			case KOOPA_STATE_DIE_SLIP:
+				if (color == "green")
+					aniID = ID_ANI_KOOPA_DIE_GREEN;
+				else
+					aniID = ID_ANI_KOOPA_DIE_RED;
 				break;
-			case KOOPA_STATE_FLY_GREEN:
+			case KOOPA_STATE_FLY:
+				if (color == "green")
 				vx > 0 ? aniID = ID_ANI_KOOPA_FLY_GREEN_RIGHT : aniID = ID_ANI_KOOPA_FLY_GREEN_LEFT;
+				else 
+					vx > 0 ? aniID = ID_ANI_KOOPA_FLY_RED_RIGHT : aniID = ID_ANI_KOOPA_FLY_RED_LEFT;
 				break;
-			case KOOPA_STATE_WALKING_RED:
-				vx > 0 ? aniID = ID_ANI_KOOPA_WALKING_RED_RIGHT : aniID = ID_ANI_KOOPA_WALKING_RED_LEFT;
+			
+
+			case KOOPA_STATE_FLASH:
+				if (color == "green")
+					aniID = ID_ANI_KOOPA_FLASH_GREEN;
+				else
+					aniID = ID_ANI_KOOPA_FLASH_RED;
 				break;
-			case KOOPA_STATE_DIE_SLIP_RED:
-				aniID = ID_ANI_KOOPA_DIE_RED;
-				break;
-			case KOOPA_STATE_FLY_RED:
-				vx > 0 ? aniID = ID_ANI_KOOPA_FLY_RED_RIGHT : aniID = ID_ANI_KOOPA_FLY_RED_LEFT;
-				break;
-			case KOOPA_STATE_FLASH_GREEN:
-				aniID = ID_ANI_KOOPA_FLASH_GREEN;
-				break;
-			case KOOPA_STATE_FLASH_RED:
-				aniID = ID_ANI_KOOPA_FLASH_RED;
-				break;
+		
 			default:
 				DebugOutTitle(L"[INFO] Koopa State Error: %d\n", state);
 				break;
 			}
 			CAnimations::GetInstance()->Get(aniID)->Render(x, y);
 		}
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	};
 
 	virtual int IsCollidable() { return isCollidable; };
@@ -191,15 +190,17 @@ protected:
 		if (dynamic_cast<CKoopa*>(e->obj))
 		{
 			DebugOutTitle(L"[INFO] Koopa Collision with Koopa\n");
-			if (this->state == KOOPA_STATE_DIE_SLIP_GREEN || this->state == KOOPA_STATE_DIE_SLIP_RED)
+			if (this->state == KOOPA_STATE_DIE_SLIP)
 			{
 				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+
+				koopa->SetState(KOOPA_STATE_DIE);
 				koopa->SetColliable(false);
 				//koopa->isDeleted = true;
 			}
 			return;
 		}
-		else if (dynamic_cast<CGoomba*>(e->obj))
+		else if (dynamic_cast<CGoomba*>(e->obj) && (this->state == KOOPA_STATE_DIE_SLIP))
 		{
 			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 			//goomba->SetState(GOOMBA_STATE_DIE);
@@ -220,21 +221,16 @@ public:
 	{
 		this->ax = 0;
 		this->ay = KOOPA_GRAVITY;
-
 		if (isGreen)
-		{
-			if (isHaveWings)
-				SetState(KOOPA_STATE_FLY_GREEN);
-			else
-				SetState(KOOPA_STATE_WALKING_GREEN);
-		}
+			this->color = "green";
 		else
-		{
-			if (isHaveWings)
-				SetState(KOOPA_STATE_FLY_RED);
-			else
-				SetState(KOOPA_STATE_WALKING_RED);
-		}
+			this->color = "red";
+
+		if (isHaveWings)
+			SetState(KOOPA_STATE_FLY);
+		else
+			SetState(KOOPA_STATE_WALKING);
+
 		lastJumpTime = GetTickCount64();
 		guide = new CGuideObject(this);
 		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
@@ -251,62 +247,33 @@ public:
 		CGameObject::SetState(state);
 		switch (state)
 		{
-		case KOOPA_STATE_WALKING_GREEN:
+		case KOOPA_STATE_WALKING:
 			vy = -KOOPA_STATE_CHANGE_JUMP;
 			vx = KOOPA_WALKING_SPEED;
-			if (previousState == KOOPA_STATE_FLY_GREEN)
+			if (previousState == KOOPA_STATE_FLY)
 				y -= (KOOPA_BBOX_HEIGHT_WINGS - KOOPA_BBOX_HEIGHT);
 			break;
-
-		case KOOPA_STATE_WALKING_RED:
-			vx = KOOPA_WALKING_SPEED;
-			vy = -KOOPA_STATE_CHANGE_JUMP;
-			if (previousState == KOOPA_STATE_FLY_RED)
-				y -= (KOOPA_BBOX_HEIGHT_WINGS - KOOPA_BBOX_HEIGHT) ;
-			break;
-
-		case KOOPA_STATE_DIE_GREEN:
+		case KOOPA_STATE_DIE:
 			dieStartTime = GetTickCount64();
 			vy = -KOOPA_STATE_CHANGE_JUMP;
 			vx = 0;
-			if (previousState == KOOPA_STATE_WALKING_GREEN)				// If previous state is walking, move the koopa up a bit so it doesn't fall through the ground, if already died, no need
+			if (previousState == KOOPA_STATE_WALKING)				// If previous state is walking, move the koopa up a bit so it doesn't fall through the ground, if already died, no need
 				y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
 			y = floor(y);
 			break;
 
-		case KOOPA_STATE_DIE_RED:
-			dieStartTime = GetTickCount64();
-			vx = 0;
-			vy = -KOOPA_STATE_CHANGE_JUMP;
-			if (previousState == KOOPA_STATE_WALKING_RED)				// If previous state is walking, move the koopa up a bit so it doesn't fall through the ground, if already died, no need
-				y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
-			y = floor(y);
-			break;
-		case KOOPA_STATE_DIE_SLIP_GREEN:
+		case KOOPA_STATE_DIE_SLIP:
 			vy = -KOOPA_STATE_CHANGE_JUMP;
 			vx = KOOPA_SLIP_SPEED * -nx;
-			break;
-		
-		case KOOPA_STATE_DIE_SLIP_RED:
-			vx = KOOPA_SLIP_SPEED * -nx;
-			vy = -KOOPA_STATE_CHANGE_JUMP;
 			break;
 
-		case KOOPA_STATE_FLY_GREEN:
+
+		case KOOPA_STATE_FLY:
 			vy = -KOOPA_STATE_CHANGE_JUMP;
 			vx = KOOPA_WALKING_SPEED;
 			break;
 
-		case KOOPA_STATE_FLY_RED:
-			vx = KOOPA_WALKING_SPEED;
-			vy = -KOOPA_STATE_CHANGE_JUMP;
-			break;
-		case KOOPA_STATE_FLASH_GREEN:
-			dieStartTime = GetTickCount64();
-			vx = 0;
-			vy = 0;
-			break;
-		case KOOPA_STATE_FLASH_RED:
+		case KOOPA_STATE_FLASH:
 			dieStartTime = GetTickCount64();
 			vx = 0;
 			vy = 0;

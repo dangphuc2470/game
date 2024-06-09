@@ -161,30 +161,22 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 		int stateToSet = -1;
 		switch (koopa->GetState())
 		{
-		case KOOPA_STATE_DIE_GREEN:
-			stateToSet = KOOPA_STATE_DIE_SLIP_GREEN;
+		case KOOPA_STATE_DIE:
+			stateToSet = KOOPA_STATE_DIE_SLIP;
 			break;
-		case KOOPA_STATE_DIE_RED:
-			stateToSet = KOOPA_STATE_DIE_SLIP_RED;
+		
+		case KOOPA_STATE_DIE_SLIP:
+			stateToSet = KOOPA_STATE_DIE;
 			break;
-		case KOOPA_STATE_DIE_SLIP_GREEN:
-			stateToSet = KOOPA_STATE_DIE_GREEN;
+		
+		case KOOPA_STATE_WALKING:
+			stateToSet = KOOPA_STATE_DIE;
 			break;
-		case KOOPA_STATE_DIE_SLIP_RED:
-			stateToSet = KOOPA_STATE_DIE_RED;
+		
+		case KOOPA_STATE_FLY:
+			stateToSet = KOOPA_STATE_WALKING;
 			break;
-		case KOOPA_STATE_WALKING_GREEN:
-			stateToSet = KOOPA_STATE_DIE_GREEN;
-			break;
-		case KOOPA_STATE_WALKING_RED:
-			stateToSet = KOOPA_STATE_DIE_RED;
-			break;
-		case KOOPA_STATE_FLY_GREEN:
-			stateToSet = KOOPA_STATE_WALKING_GREEN;
-			break;
-		case KOOPA_STATE_FLY_RED:
-			stateToSet = KOOPA_STATE_WALKING_RED;
-			break;
+		
 		}
 		if (stateToSet != -1)
 			koopa->SetState(stateToSet, -1);
@@ -195,10 +187,8 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	{
 		if (untouchable == 0)
 		{
-			if (koopa->GetState() == KOOPA_STATE_DIE_RED)
-				koopa->SetState(KOOPA_STATE_DIE_SLIP_RED, e->nx);
-			else if (koopa->GetState() == KOOPA_STATE_DIE_GREEN)
-				koopa->SetState(KOOPA_STATE_DIE_SLIP_GREEN, e->nx);
+			if (koopa->GetState() == KOOPA_STATE_DIE)
+				koopa->SetState(KOOPA_STATE_DIE_SLIP, e->nx);
 			else
 			{
 				if (level > MARIO_LEVEL_SMALL)

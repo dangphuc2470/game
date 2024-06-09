@@ -25,7 +25,7 @@ public:
 	{
         //CSprites::GetInstance()->Get(ID_SPRITE_CLOUD_MIDDLE)->Draw(x, y);
 
-        RenderBoundingBox();
+        //RenderBoundingBox();
     }
 
     virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
