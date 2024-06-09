@@ -7,7 +7,9 @@
 class CVerticalPipe: public CGameObject
 {
 public:
-    CVerticalPipe(float x, float y) : CGameObject(x, y) {}
+    CVerticalPipe(float x, float y) : CGameObject(x, y) {
+    SetCollidable(true);
+    }
     void Render()
     {
         CSprites* sprites = CSprites::GetInstance();
@@ -15,6 +17,8 @@ public:
         //RenderBoundingBox();
     
     };
+
+
     void Update(DWORD dt) {}
     void GetBoundingBox(float& l, float& t, float& r, float& b)
     {

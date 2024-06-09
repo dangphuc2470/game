@@ -137,7 +137,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_CLOUD_2: obj = new CCloud2(x, y); break;
 	case OBJECT_TYPE_BLACK_BACKGROUND: obj = new CBlackBackground(x, y); break;
 	case OBJECT_TYPE_VERTICAL_PIPE: obj = new CVerticalPipe(x, y); break;
-	case OBJECT_TYPE_MYSTERY_BOX: obj = new CMysteryBox(x, y); break;
+	case OBJECT_TYPE_MYSTERY_BOX: 
+	{
+		bool isOpened = atoi(tokens[3].c_str());
+		int objectToSpawn = -1;
+		if (tokens.size() > 4)
+		{
+			objectToSpawn = atoi(tokens[4].c_str());
+		}
+		obj = new CMysteryBox(x, y, isOpened, objectToSpawn); break;
+	}
 	case OBJECT_TYPE_BOX_PLATFORM:
 	{
 		float width = atoi(tokens[3].c_str());

@@ -88,15 +88,11 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		if (e->ny > 0)
 		{
-			e->obj->SetState(MBOX_STATE_UNBOX);
-			CGameObject* newObj = new CGoomba(x, y - 30);
+			if (e->obj->GetState() == MBOX_STATE_NORMAL)
+			{
+				e->obj->SetState(MBOX_STATE_UNBOX);
+			}
 
-			// Add new object to the scene
-			CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-			//scene->AddObject(newObj);
-
-			newObj->SetPosition(x, y - 30);
-			scene->AddObject(newObj);
 		}
 	}
 		

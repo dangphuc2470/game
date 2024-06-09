@@ -5,6 +5,8 @@
 #include "../Game/Animations.h"
 #include "../Mario.h"
 #include "../GameObject/AssetIDs.h"
+#include "../Scene/PlayScene.h"
+#include "../Enemy/Goomba.h"
 #include <stdio.h>
 #include <map>
 
@@ -15,7 +17,14 @@
 
 class CMysteryBox : public CGameObject {
 public:
-	CMysteryBox(float x, float y) : CGameObject(x, y) {}
+	int objectToSpawn;
+	CMysteryBox(float x, float y, bool isOpenable, int objectToSpawn) : CGameObject(x, y) {
+	if (isOpenable)
+		state = MBOX_STATE_NORMAL;
+	else
+		state = MBOX_STATE_UNBOX;
+	this->objectToSpawn = objectToSpawn;
+	}
 	void Render()
 	{
 		//DebugOutTitle(L"MBOX state: %d\n", state);
@@ -47,6 +56,34 @@ public:
 	};
 
 	void SetState(int state) {
+		if (state == MBOX_STATE_UNBOX)
+		{
+			//coin++;
+
+			CGameObject* newObj = NULL;
+			switch (objectToSpawn)
+			{
+				case OBJECT_TYPE_GOOMBA:
+					newObj = new CGoomba(x, y);
+					break;
+				case -1:
+					return;
+			/*case ID_OBJECT_MUSHROOM:
+				obj = new CMushroom(x, y);
+				break;
+			case ID_OBJECT_FLOWER:
+				obj = new CFlower(x, y);
+				break;
+			case ID_OBJECT_COIN:
+				obj = new CCoin(x, y);
+				break;*/
+			}
+			// Add new object to the scene
+			if (newObj == NULL) return;
+			CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+			newObj->SetPosition(x, y - 30);
+			scene->AddObject(newObj);
+		};
 		CGameObject::SetState(state);
 	}
 
