@@ -47,6 +47,9 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	case DIK_S:
 		mario->SetState(MARIO_STATE_SIT_RELEASE);
 		break;
+	case DIK_J:
+		mario->SetReadyToHold(false);
+		break;
 	}
 }
 
@@ -54,6 +57,10 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 {
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	if (game->IsKeyDown(DIK_J))
+	{
+		mario->SetReadyToHold(true);
+	}
 
 	if (game->IsKeyDown(DIK_D))
 	{
@@ -66,6 +73,7 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	{
 		if (game->IsKeyDown(DIK_J))
 			mario->SetState(MARIO_STATE_RUNNING_LEFT);
+
 		else
 			mario->SetState(MARIO_STATE_WALKING_LEFT);
 	}

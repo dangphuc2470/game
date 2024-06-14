@@ -164,6 +164,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Landscape\Platform.cpp" />
+    <ClCompile Include="Enemy\Ptooie.cpp" />
     <ClCompile Include="Scene\PlayScene.cpp" />
     <ClCompile Include="Landscape\Portal.cpp" />
     <ClCompile Include="Game\SampleKeyEventHandler.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Mario.h" />
     <ClInclude Include="Landscape\Platform.h" />
     <ClInclude Include="Landscape\MysteryBox.h" />
+    <ClInclude Include="Enemy\Ptooie.h" />
     <ClInclude Include="Scene\PlayScene.h" />
     <ClInclude Include="Landscape\Portal.h" />
     <ClInclude Include="Game\SampleKeyEventHandler.h" />

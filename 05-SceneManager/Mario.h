@@ -111,7 +111,8 @@ class CMario : public CGameObject
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	int coin; 
-
+	CGameObject* holdingObject = NULL;
+	bool isReadyToHold = false;
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -153,4 +154,7 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void SetHoldingObject(CGameObject* obj) { holdingObject = obj; }
+	void SetReadyToHold(bool ready) { isReadyToHold = ready; }
+	bool GetReadyToHold() { return isReadyToHold; }
 };

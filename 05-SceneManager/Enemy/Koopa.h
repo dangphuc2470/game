@@ -25,7 +25,11 @@
 #define KOOPA_STATE_DIE_SLIP 201
 #define KOOPA_STATE_FLY 300
 #define KOOPA_STATE_FLASH 700
+#define KOOPA_STATE_DIE_HOLD_RIGHT 800
+#define KOOPA_STATE_DIE_HOLD_LEFT 801
 #define KOOPA_DELETE_TIME 5000
+
+
 
 #define GUIDE_AND_KOOPA_POSITION_Y_TOLERANCE 3 // If the distance between guide and koopa is greater than 3 pixel, the koopa is considered falling
 
@@ -36,6 +40,7 @@ protected:
 	float ax;
 	float ay;
 	int previousState = -1;
+	CMario* mario;
 	CGuideObject* guide;
 	DWORD lastJumpTime;
 	DWORD dieStartTime;
@@ -86,36 +91,54 @@ protected:
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
-		vy += ay * dt;
-		vx += ax * dt;
-
-		if (IsFalling() && (state == KOOPA_STATE_WALKING))
-			ChangeDirection();
-
-		DWORD now = GetTickCount64();
-		if (!isCollidable && now - deleteStartTime > KOOPA_DELETE_TIME)
+		if (mario != NULL)
 		{
-			isDeleted = true;
-			guide->isDeleted = true;
+			float x, y;
+			this->mario->GetPosition(x, y);
+			if (state == KOOPA_STATE_DIE_HOLD_LEFT)
+			{
+				/*float vx, vy;
+				this->mario->GetSpeed(vx, vy);
+				this->vx = vx;
+				this->vy = vy;*/
+				SetPosition(x - KOOPA_BBOX_WIDTH, y - 5);
+			}
+			else 
+				SetPosition(x + MARIO_BIG_BBOX_WIDTH, y - 5);
 		}
+		else 
+		{
+			vy += ay * dt;
+			vx += ax * dt;
+
+			if (IsFalling() && (state == KOOPA_STATE_WALKING))
+				ChangeDirection();
+
+			DWORD now = GetTickCount64();
+			if (!isCollidable && now - deleteStartTime > KOOPA_DELETE_TIME)
+			{
+				isDeleted = true;
+				guide->isDeleted = true;
+			}
 
 
-		if ((state == KOOPA_STATE_FLY) && now - lastJumpTime >= KOOPA_JUMP_INTERVAL)
-		{
-			vy = -KOOPA_JUMP_SPEED; // Make Koopa jump
-			lastJumpTime = now;
-		}
+			if ((state == KOOPA_STATE_FLY) && now - lastJumpTime >= KOOPA_JUMP_INTERVAL)
+			{
+				vy = -KOOPA_JUMP_SPEED; // Make Koopa jump
+				lastJumpTime = now;
+			}
 
-		else if (state == KOOPA_STATE_DIE && GetTickCount64() - dieStartTime > KOOPA_DIE_TIMEOUT)
-		{
-			SetState(KOOPA_STATE_FLASH);
-		}
-		else if ((state == KOOPA_STATE_FLASH) && GetTickCount64() - dieStartTime > KOOPA_FLASH_TIME)
-		{
-			SetState(KOOPA_STATE_WALKING);
-		}
-		else {
-			//throw L"Koopa State Error";
+			else if (state == KOOPA_STATE_DIE && GetTickCount64() - dieStartTime > KOOPA_DIE_TIMEOUT)
+			{
+				SetState(KOOPA_STATE_FLASH);
+			}
+			else if ((state == KOOPA_STATE_FLASH) && GetTickCount64() - dieStartTime > KOOPA_FLASH_TIME)
+			{
+				SetState(KOOPA_STATE_WALKING);
+			}
+			else {
+				//throw L"Koopa State Error";
+			}
 		}
 
 
@@ -128,7 +151,7 @@ protected:
 	};
 	virtual void Render()
 	{
-		 if (state == KOOPA_STATE_DIE)
+		 if (state == KOOPA_STATE_DIE || state == KOOPA_STATE_DIE_HOLD_LEFT || state == KOOPA_STATE_DIE_HOLD_RIGHT)
 		{
 			if (color == "green")
 				CSprites::GetInstance()->Get(ID_SPRITE_KOOPA_DIE_GREEN + 3)->Draw(x, y);
@@ -230,7 +253,8 @@ public:
 			SetState(KOOPA_STATE_FLY);
 		else
 			SetState(KOOPA_STATE_WALKING);
-
+		//Todo: remove test
+		//SetState(KOOPA_STATE_W);
 		lastJumpTime = GetTickCount64();
 		guide = new CGuideObject(this);
 		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
@@ -245,6 +269,8 @@ public:
 		//DebugOutTitle(L"[INFO] Koopa SetState: %d\n", state);
 
 		CGameObject::SetState(state);
+		this->mario = NULL;
+		SetColliable(true);
 		switch (state)
 		{
 		case KOOPA_STATE_WALKING:
@@ -285,6 +311,25 @@ public:
 		//show speed
 		previousState = state;
 
+	}
+
+	void SetState(int state, CMario* mario)
+	{
+		CGameObject::SetState(state);
+		this->mario = mario;
+		vx = 0;
+		vy = 0;
+		float x, y;
+		mario->GetPosition(x, y);
+		if (state == KOOPA_STATE_DIE_HOLD_RIGHT)
+			SetPosition(x + MARIO_BIG_BBOX_WIDTH, y - 5);
+		else if (state == KOOPA_STATE_DIE_HOLD_LEFT)
+		{
+			SetPosition(x - KOOPA_BBOX_WIDTH, y - 5);
+		}
+		SetColliable(false);
+		previousState = state;
+		DebugOutTitle(L"[INFO] Koopa SetState hold: %d\n", state);
 	}
 
 	void GetPosition(float& x, float& y)

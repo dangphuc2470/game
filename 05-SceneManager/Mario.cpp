@@ -17,6 +17,19 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
+	if (holdingObject != NULL)
+	{
+		if (!GetReadyToHold())
+		{
+			if (dynamic_cast<CKoopa*>(holdingObject))
+			{
+				CKoopa* koopa = dynamic_cast<CKoopa*>(holdingObject);
+				koopa->SetState(KOOPA_STATE_DIE);
+			}
+			SetHoldingObject(NULL);
+		}
+	}
 	vy += ay * dt;
 	vx += ax * dt;
 
@@ -184,7 +197,23 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 		if (untouchable == 0)
 		{
 			if (koopa->GetState() == KOOPA_STATE_DIE)
-				koopa->SetState(KOOPA_STATE_DIE_SLIP, e->nx);
+			{
+				
+				switch (state)
+				{
+				case MARIO_STATE_RUNNING_RIGHT:
+					koopa->SetState(KOOPA_STATE_DIE_HOLD_RIGHT, this);
+					SetHoldingObject(koopa);
+				break;
+				case MARIO_STATE_RUNNING_LEFT:
+					koopa->SetState(KOOPA_STATE_DIE_HOLD_LEFT, this);
+					SetHoldingObject(koopa);
+				break;
+				default:
+					koopa->SetState(KOOPA_STATE_DIE_SLIP, e->nx);
+					break;
+				}
+			}
 			else
 			{
 				if (level > MARIO_LEVEL_SMALL)
