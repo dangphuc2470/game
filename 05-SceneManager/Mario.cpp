@@ -198,7 +198,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 		{
 			if (koopa->GetState() == KOOPA_STATE_DIE)
 			{
-				
+		
 				switch (state)
 				{
 				case MARIO_STATE_RUNNING_RIGHT:
@@ -213,8 +213,10 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 					koopa->SetState(KOOPA_STATE_DIE_SLIP, e->nx);
 					break;
 				}
+
+
 			}
-			else
+			else if (holdingObject == NULL)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
@@ -406,12 +408,22 @@ void CMario::SetState(int state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
+		if (holdingObject != NULL)
+		{
+			CKoopa* koopa = dynamic_cast<CKoopa*>(holdingObject);
+			koopa->SetState(KOOPA_STATE_DIE_HOLD_RIGHT, this);
+		}
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
 		nx = 1;
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
+		if (holdingObject != NULL)
+		{
+			CKoopa* koopa = dynamic_cast<CKoopa*>(holdingObject);
+			koopa->SetState(KOOPA_STATE_DIE_HOLD_LEFT, this);
+		}
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		nx = -1;
