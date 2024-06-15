@@ -118,10 +118,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (dynamic_cast<CFireBall*>(e->obj))
 	{
+
 		OnCollisionWithFireball(e);
+		DebugOutTitle(L"Collision fb mario", x, y, top, bottom);
+
 	}
 
-		
+	//DebugOutTitle(L"Collision at %f %f, Mario %f %f", x, y, top, bottom);
 	/*else if (dynamic_cast<CGoombaFlying*>(e->obj))
 		OnCollisionWithGoombaFlying(e);*/
 }
@@ -448,7 +451,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 
 	//DebugOutTitle(L"Coins: %d", coin);
 }

@@ -1,9 +1,10 @@
 #pragma once
 #include "../GameObject/GameObject.h"
 #include "../GameObject/AssetIDs.h"
+#include "../Mario.h"
 
 #define FIREBALL_WIDTH 7
-#define FIREBALL_HEIGHT 6
+#define FIREBALL_HEIGHT 8
 #define FIREBALL_DISTANCE_LAST 250
 
 
@@ -22,6 +23,26 @@ public:
          start_y = y;
          SetCollidable(true);
     }
+    
+    virtual void OnCollisionWith(LPCOLLISIONEVENT e)
+    {
+        DebugOutTitle(L"Fireball collision fb");
+        if (dynamic_cast<CMario*>(e->obj)) {
+			CMario* mario = dynamic_cast<CMario*>(e->obj);
+            if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+                {
+				mario->SetState(MARIO_STATE_DIE);
+			}
+			else
+			{
+				mario->SetLevel(MARIO_LEVEL_SMALL);
+				mario->SetState(MARIO_STATE_IDLE);
+			}
+		}
+		else if (dynamic_cast<CFireBall*>(e->obj)) {
+			isDeleted = true;
+		}
+    };
 
     virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr) override {
         // Update fireball position based on its velocity
@@ -39,7 +60,7 @@ public:
     virtual void Render() override {
        //CSprites::GetInstance()->Get(5305)->Draw(x, y);
        CAnimations::GetInstance()->Get(ID_ANI_FIREBALL)->Render(x, y);
-       //RenderBoundingBox();
+       RenderBoundingBox();
     }
 
     virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) override {

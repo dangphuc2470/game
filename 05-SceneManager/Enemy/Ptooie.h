@@ -54,7 +54,7 @@ protected:
 
 		if (distance < PIPE_WIDTH || distance > PTOOIE_DISTANCE_TO_EXTEND)
 		{
-			DebugOutTitle(L"Be hon");
+			//DebugOutTitle(L"Be hon");
 			if (now - lastMoveTime > TIME_BETWEEN_STATE)
 			{
 				vy = -PTOOIE_SPEED;
@@ -96,7 +96,7 @@ protected:
 		}
 		else if (state == PTOOIE_STATE_RETRACT)
 		{
-			DebugOutTitle(L"Lon hon");
+			//DebugOutTitle(L"Lon hon");
 
 			if (y < retractY)
 			{
