@@ -196,7 +196,7 @@ public:
 		float normDirY = dirY / distance;
 
 		// Calculate the velocity of the fireball
-		vx = normDirX * fireballSpeed;
+		vx = normDirX * fireballSpeed + 0.01;
 		vy = normDirY * fireballSpeed;
 	}
 

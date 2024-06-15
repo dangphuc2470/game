@@ -1,10 +1,8 @@
 #pragma once
 #include "../GameObject/GameObject.h"
 #include "../GameObject/AssetIDs.h"
-
 #define GOOMBA_GRAVITY 0.001f
 #define GOOMBA_WALKING_SPEED 0.05f
-
 
 #define GOOMBA_BBOX_WIDTH 16
 #define GOOMBA_BBOX_HEIGHT 15
@@ -163,7 +161,7 @@ protected:
 	{
 		if (!e->obj->IsBlocking()) return;
 		if (dynamic_cast<CGoomba*>(e->obj)) return;
-
+		
 		if (e->ny != 0)
 		{
 			vy = 0;

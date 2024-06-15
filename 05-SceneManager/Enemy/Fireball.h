@@ -22,11 +22,12 @@ public:
    	     start_x = x;
          start_y = y;
          SetCollidable(true);
+         SetBlocking(false);
     }
     
     virtual void OnCollisionWith(LPCOLLISIONEVENT e)
     {
-        DebugOutTitle(L"Fireball collision fb");
+        DebugOutTitle(L"Fireball collision fb awdawda");
         if (dynamic_cast<CMario*>(e->obj)) {
 			CMario* mario = dynamic_cast<CMario*>(e->obj);
             if (mario->GetLevel() == MARIO_LEVEL_SMALL)
@@ -39,9 +40,7 @@ public:
 				mario->SetState(MARIO_STATE_IDLE);
 			}
 		}
-		else if (dynamic_cast<CFireBall*>(e->obj)) {
-			isDeleted = true;
-		}
+		
     };
 
     virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr) override {

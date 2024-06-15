@@ -30,6 +30,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					koopa->SetState(KOOPA_STATE_DIE);
 				else
 					koopa->SetState(KOOPA_STATE_DIE_SLIP, vx * KOOPA_SPEED_FROM_MARIO_SPEED_MULTIPLER);
+				StartUntouchable();
 			}
 			SetHoldingObject(NULL);
 		}
@@ -59,27 +60,27 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	 if (e->ny != 0 && e->obj->IsBlocking())
-    {
-		 float x, y;
-		 e->obj->GetPositionTopBot(x, y);
-		 float t, b;
-		 this->GetPositionTopBot(t, b);
-		 x = floor(x);
-		 y = floor(y);
-		 t = floor(t);
-		 b = floor(b);
+	if (e->ny != 0 && e->obj->IsBlocking())
+	{
+		float x, y;
+		e->obj->GetPositionTopBot(x, y);
+		float t, b;
+		this->GetPositionTopBot(t, b);
+		x = floor(x);
+		y = floor(y);
+		t = floor(t);
+		b = floor(b);
 
 		//DebugOutTitle(L"Collision at %f %f, Mario %f %f", x, y, t, b);
-        vy = 0;
-        if (e->ny < 0) {
+		vy = 0;
+		if (e->ny < 0) {
 			isOnPlatform = true;
 			//DebugOutTitle(L"On Platform\n");
 		}
 		//DebugOutTitle(L"Not on Platform\n");*/
 		//Debug out title the ny, x, b
 		//DebugOutTitle(L"ny: %f, x: %f, b: %f", e->ny, x, b);
-    }
+	}
 	else
 		if (e->nx != 0 && e->obj->IsBlocking())
 		{
@@ -98,7 +99,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithTheVoid(e);
 	else if (dynamic_cast<CBrick*>(e->obj))
 	{
-		if (e-> ny > 0)
+		if (e->ny > 0)
 			e->obj->SetState(BRICK_STATE_BROKEN);
 	}
 	else if (dynamic_cast<CMysteryBox*>(e->obj))
@@ -189,19 +190,19 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 		case KOOPA_STATE_DIE:
 			stateToSet = KOOPA_STATE_DIE_SLIP;
 			break;
-		
+
 		case KOOPA_STATE_DIE_SLIP:
 			stateToSet = KOOPA_STATE_DIE;
 			break;
-		
+
 		case KOOPA_STATE_WALKING:
 			stateToSet = KOOPA_STATE_DIE;
 			break;
-		
+
 		case KOOPA_STATE_FLY:
 			stateToSet = KOOPA_STATE_WALKING;
 			break;
-		
+
 		}
 		if (stateToSet != -1)
 			koopa->SetState(stateToSet, -1);
@@ -214,17 +215,17 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 		{
 			if (koopa->GetState() == KOOPA_STATE_DIE)
 			{
-		
+
 				switch (state)
 				{
 				case MARIO_STATE_RUNNING_RIGHT:
 					koopa->SetState(KOOPA_STATE_DIE_HOLD_RIGHT, this);
 					SetHoldingObject(koopa);
-				break;
+					break;
 				case MARIO_STATE_RUNNING_LEFT:
 					koopa->SetState(KOOPA_STATE_DIE_HOLD_LEFT, this);
 					SetHoldingObject(koopa);
-				break;
+					break;
 				default:
 					koopa->SetState(KOOPA_STATE_DIE_SLIP, e->nx);
 					break;
@@ -253,22 +254,27 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithPtooie(LPCOLLISIONEVENT e)
 {
-	CPtooie * ptooie = dynamic_cast<CPtooie*>(e->obj);
+	CPtooie* ptooie = dynamic_cast<CPtooie*>(e->obj);
 	if (untouchable == 0)
 	{
-	
-			if (level > MARIO_LEVEL_SMALL)
-			{
-				level = MARIO_LEVEL_SMALL;
-				StartUntouchable();
-			}
-			else
-			{
-				DebugOut(L">>> Mario DIE >>> \n");
-				SetState(MARIO_STATE_DIE);
-			}
+		float vx, vy;
+		ptooie->GetSpeed(vx, vy);
+		if (ptooie->GetState() == PTOOIE_STATE_RETRACT && vy == 0)
+		{
+			return;
 		}
-	
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
+	}
+
 }
 
 void CMario::OnCollisionWithFireball(LPCOLLISIONEVENT e)

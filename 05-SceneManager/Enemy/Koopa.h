@@ -4,11 +4,13 @@
 #include "../Enemy/GuideObject.h"
 #include "../Scene/PlayScene.h"
 #include "../Enemy/Goomba.h"
+#include "../Landscape/MysteryBox.h"
 
 #define KOOPA_GRAVITY 0.001f
 #define KOOPA_WALKING_SPEED 0.05f
 #define KOOPA_SLIP_SPEED 0.2f
 #define KOOPA_STATE_CHANGE_JUMP 0.1f
+#define KOOPA_REFLECT 10
 
 
 #define KOOPA_BBOX_WIDTH 15
@@ -222,6 +224,14 @@ protected:
 				//koopa->isDeleted = true;
 			}
 			return;
+		}
+		else if (dynamic_cast<CMysteryBox*>(e->obj))
+		{
+			CMysteryBox* box = dynamic_cast<CMysteryBox*>(e->obj);
+				box->SetState(MBOX_STATE_UNBOX);
+				this->x = this->x - KOOPA_REFLECT;
+				this->y = this->y - KOOPA_REFLECT;
+			
 		}
 		else if (dynamic_cast<CGoomba*>(e->obj) && (this->state == KOOPA_STATE_DIE_SLIP))
 		{

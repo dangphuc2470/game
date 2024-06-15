@@ -56,7 +56,7 @@ public:
 	};
 
 	void SetState(int state) {
-		if (state == MBOX_STATE_UNBOX)
+		if (this->state == MBOX_STATE_NORMAL && state == MBOX_STATE_UNBOX)
 		{
 			//coin++;
 

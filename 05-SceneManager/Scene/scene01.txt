@@ -43,15 +43,7 @@ Landscape\mystery_box.txt
 #Cloud Platform
 #ID Left Top Width Height Length 
 
-# PIPE
-#80	350	255
-180	-100	255 #Idk why the 1st pipe is incolliable so I put it in the backrooms
-180	350	255
-180	1830	270
-180	1900	260
-180	2276	261
-180	2276	10
-180	2350	270
+
 
 
 
@@ -95,6 +87,24 @@ Landscape\mystery_box.txt
 150	2200	136	0	0	158
 150	2180	184	0	0	151
 
+# MARIO
+#0	20	10
+0	20	10
+
+
+200	350	176
+
+
+# PIPE
+#80	350	255
+180	-100	255 #Idk why the 1st pipe is incolliable so I put it in the backrooms
+180	350	255
+180	1830	270
+180	1900	260
+180	2276	261
+180	2276	10
+180	2350	270
+
 #Brick Platform
 #ID x��y��Width Height Length�
 6	-29	250	15	500	3	61000	62000	63000  #Block from going back from start
@@ -125,15 +135,16 @@ Landscape\mystery_box.txt
 
 # GOOMBA
 #7	280	180
-#2	360	180
-#
-#
+2	300	180
+2	500	180
+
 ##Koopa
 #10	10	180
 #9	40	180
 #8	350	180
 #200	130	120
 #9	170	120
+3	550	150
 
 #BRICK
 
@@ -164,8 +175,3 @@ Landscape\mystery_box.txt
 #��x, y, right, bottom
 50	30	170	40	180	2���
 
-# MARIO
-#0	20	10
-0	20	10
-
-200	350	176
