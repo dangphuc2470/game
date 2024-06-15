@@ -194,6 +194,7 @@
     <ClInclude Include="Enemy\Goomba.h" />
     <ClInclude Include="Game\KeyEventHandler.h" />
     <ClInclude Include="Enemy\Koopa.h" />
+    <ClInclude Include="Item\Mushroom.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="Landscape\Platform.h" />
     <ClInclude Include="Landscape\MysteryBox.h" />

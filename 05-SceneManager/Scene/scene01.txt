@@ -3,6 +3,7 @@
 mario.txt
 Landscape\brick.txt
 Item\coin.txt
+Item\mushroom.txt
 Enemy\goomba.txt
 Enemy\koopa.txt
 Enemy\ptooie.txt
@@ -156,13 +157,14 @@ Landscape\mystery_box.txt
 #1	185	150
 
 #mystery_box
-190	176	150	1	2
-190	191	150	1	2
-190	218	102	1	2
-190	233	102	1	2
-190	416	118	1	2
-190	656	185	1	2
-190	704	150	1	2
+190	176	150	1	0
+190	191	150	1	0
+190	218	102	1	0
+190	233	102	1	220
+190	416	118	1	0
+190	656	185	1	220
+190	704	150	1	0
+
 
 
 

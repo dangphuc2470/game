@@ -7,6 +7,7 @@
 #include "../GameObject/AssetIDs.h"
 #include "../Scene/PlayScene.h"
 #include "../Enemy/Goomba.h"
+#include "../Item/Mushroom.h"
 #include <stdio.h>
 #include <map>
 
@@ -66,8 +67,11 @@ public:
 				case OBJECT_TYPE_GOOMBA:
 					newObj = new CGoomba(x, y);
 					break;
-				case -1:
-					return;
+				case OBJECT_TYPE_MUSHROOM:
+					newObj = new CMushroom(x, y);
+					break;
+				default:
+					break;
 			/*case ID_OBJECT_MUSHROOM:
 				obj = new CMushroom(x, y);
 				break;
@@ -79,10 +83,12 @@ public:
 				break;*/
 			}
 			// Add new object to the scene
-			if (newObj == NULL) return;
-			CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-			newObj->SetPosition(x, y - 30);
-			scene->AddObject(newObj);
+			if (newObj != NULL)
+			{
+				CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+				newObj->SetPosition(x, y - 30);
+				scene->AddObject(newObj);
+			}
 		};
 		CGameObject::SetState(state);
 	}
