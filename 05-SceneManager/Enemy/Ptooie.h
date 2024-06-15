@@ -1,189 +1,190 @@
-//#pragma once
-//#pragma once
-//#include "../GameObject/GameObject.h"
-//#include "../GameObject/AssetIDs.h"
-//
-//#define PTOOIE_GRAVITY 0.001f
-//#define PTOOIE_WALKING_SPEED 0.05f
-//
-//
-//#define PTOOIE_BBOX_WIDTH 16
-//#define PTOOIE_BBOX_HEIGHT 15
-//
-//#define PTOOIE_STATE_WALKING 100
-//#define PTOOIE_STATE_DIE 200
-//#define PTOOIE_STATE_FLYING_WALK 300
-//#define PTOOIE_STATE_FLYING_FLY 400
-//#define PTOOIE_STATE_FLYING_NO_WINGS 500
-//#define PTOOIE_STATE_FLYING_DIE 600
-//#define PTOOIE_STATE_CHANGE_TIME_SHORT 100 //ms
-//#define PTOOIE_STATE_CHANGE_TIME_LONG 2000 //ms
-//
-//
-//class CPtooie : public CGameObject
-//{
-//protected:
-//	float ax;
-//	float ay;
-//	DWORD lastStateChange;
-//
-//	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
-//	{
-//		switch (state)
-//		{
-//		case PTOOIE_STATE_DIE:
-//			left = x - PTOOIE_BBOX_WIDTH / 2;
-//			top = y - PTOOIE_BBOX_HEIGHT_DIE / 2;
-//			right = left + PTOOIE_BBOX_WIDTH;
-//			bottom = top + PTOOIE_BBOX_HEIGHT_DIE;
-//			break;
-//		
-//		default:
-//			DebugOutTitle(L"[ERROR] CPTOOIE::GetBoundingBox unknown state: %d\n", state);
-//		}
-//
-//	}
-//
-//	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-//	{
-//		vy += ay * dt;
-//		vx += ax * dt;
-//
-//		if ((state == PTOOIE_STATE_DIE || state == PTOOIE_STATE_FLYING_DIE) && (GetTickCount64() - die_start > PTOOIE_DIE_TIMEOUT))
-//		{
-//			isDeleted = true;
-//			return;
-//		}
-//
-//		DWORD now = GetTickCount64();
-//		if (state == PTOOIE_STATE_FLYING_WALK || state == PTOOIE_STATE_FLYING_FLY)
-//		{
-//			DWORD changeTime = flyWalkTimes[flyWalkCycle % 8];
-//			if (flyWalkCycle % 8 == 6)
-//				PTOOIE_JUMP_SPEED = 0.25f;
-//			else
-//				PTOOIE_JUMP_SPEED = 0.1f;
-//			if (now - lastStateChange >= changeTime)
-//			{
-//				if (state == PTOOIE_STATE_FLYING_WALK)
-//					SetState(PTOOIE_STATE_FLYING_FLY);
-//				else if (state == PTOOIE_STATE_FLYING_FLY)
-//					SetState(PTOOIE_STATE_FLYING_WALK);
-//
-//				lastStateChange = now;
-//				flyWalkCycle = (flyWalkCycle + 1) % 8;
-//			}
-//		}
-//
-//		//DebugOutTitle(L"[INFO] CPTOOIE::Update state: %d\n", state);
-//		CGameObject::Update(dt, coObjects);
-//		CCollision::GetInstance()->Process(this, dt, coObjects);
-//	};
-//
-//
-//	virtual void Render()
-//	{
-//		int aniId;
-//		switch (state)
-//		{
-//		case PTOOIE_STATE_DIE:
-//			aniId = ID_ANI_PTOOIE_DIE;
-//			break;
-//		case PTOOIE_STATE_FLYING_DIE:
-//			aniId = ID_ANI_PTOOIE_FLY_DIE;
-//			break;
-//		case PTOOIE_STATE_FLYING_WALK:
-//			aniId = ID_ANI_PTOOIE_FLY_WALK;
-//			break;
-//		case PTOOIE_STATE_FLYING_FLY:
-//			aniId = ID_ANI_PTOOIE_FLY_FLY;
-//			break;
-//		case PTOOIE_STATE_FLYING_NO_WINGS:
-//			aniId = ID_ANI_PTOOIE_FLY_NO_WINGS;
-//			break;
-//		default:
-//			aniId = ID_ANI_PTOOIE_WALKING;
-//			break;
-//		}
-//
-//		CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-//		//RenderBoundingBox();
-//	};
-//
-//	virtual int IsCollidable() { return isCollidable; };
-//	virtual int IsBlocking() { return 0; }
-//
-//
-//	virtual void OnNoCollision(DWORD dt)
-//	{
-//		x += vx * dt;
-//		y += vy * dt;
-//	};
-//
-//
-//	virtual void OnCollisionWith(LPCOLLISIONEVENT e)
-//	{
-//		if (!e->obj->IsBlocking()) return;
-//		if (dynamic_cast<CPTOOIE*>(e->obj)) return;
-//
-//		if (e->ny != 0)
-//		{
-//			vy = 0;
-//		}
-//		else if (e->nx != 0)
-//		{
-//			vx = -vx;
-//		}
-//
-//	};
-//
-//public:
-//	CPTOOIE(float x, float y, bool isHaveWing = 0)
-//	{
-//		this->ax = 0;
-//		this->ay = PTOOIE_GRAVITY;
-//		die_start = -1;
-//		isHaveWing == 0 ?
-//			SetState(PTOOIE_STATE_WALKING) :
-//			SetState(PTOOIE_STATE_FLYING_WALK);
-//		lastStateChange = GetTickCount64();
-//		flyWalkCycle = 0;
-//		CGameObject::SetCollidable(true);
-//	}
-//
-//
-//	virtual void SetState(int state)
-//	{
-//		CGameObject::SetState(state);
-//		switch (state)
-//		{
-//		case PTOOIE_STATE_DIE:
-//			die_start = GetTickCount64();
-//			y += (PTOOIE_BBOX_HEIGHT - PTOOIE_BBOX_HEIGHT_DIE) / 2;
-//			vx = 0;
-//			vy = 0;
-//			ay = 0;
-//			break;
-//		case PTOOIE_STATE_FLYING_DIE:
-//			die_start = GetTickCount64();
-//			y += (PTOOIE_BBOX_HEIGHT_FLY_WALK - PTOOIE_BBOX_HEIGHT_DIE) / 2;
-//			vx = 0;
-//			vy = 0;
-//			ay = 0;
-//			break;
-//		case PTOOIE_STATE_WALKING:
-//			vx = -PTOOIE_WALKING_SPEED;
-//			break;
-//		case PTOOIE_STATE_FLYING_WALK:
-//			if (vx == 0)
-//				vx = -PTOOIE_WALKING_SPEED;
-//			break;
-//		case PTOOIE_STATE_FLYING_FLY:
-//			vy = -PTOOIE_JUMP_SPEED;
-//			break;
-//		case PTOOIE_STATE_FLYING_NO_WINGS:
-//			break;
-//		}
-//	};
-//};
-//
+#pragma once
+#pragma once
+#include "../GameObject/GameObject.h"
+#include "../GameObject/AssetIDs.h"
+#include "../Mario.h"
+#define PTOOIE_SPEED 0.05f
+
+#define PTOOIE_BBOX_WIDTH 15
+#define PTOOIE_BBOX_HEIGHT 23
+
+#define PTOOIE_STATE_EXTEND 100
+#define PTOOIE_STATE_RETRACT 200
+#define PTOOIE_STATE_DIE 300
+#define PIPE_WIDTH 20
+
+
+class CPtooie : public CGameObject
+{
+protected:
+	bool isMovingUp = false;
+	float targetY;
+	float retractY; 
+	DWORD timeToStayUp = 3000; 
+	DWORD timeToStayDown = 3000; 
+	DWORD lastMoveTime; 
+	CGameObject* mario;
+
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
+	{
+		left = x - PTOOIE_BBOX_WIDTH / 2;
+		top = y - PTOOIE_BBOX_HEIGHT / 2;
+		right = left + PTOOIE_BBOX_WIDTH;
+		bottom = top + PTOOIE_BBOX_HEIGHT;
+	}
+
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+	{
+		DWORD now = GetTickCount64();
+		float marioX, marioY;
+		CMario* marioObj = dynamic_cast<CMario*>(mario);
+		marioObj->GetPosition(marioX, marioY);
+		float distance = abs(marioX - this->x);
+
+		if (distance < PIPE_WIDTH)
+		{
+			DebugOutTitle(L"Be hon");
+			if (now - lastMoveTime > timeToStayUp)
+			{
+				vy = -PTOOIE_SPEED;
+				SetState(PTOOIE_STATE_RETRACT);
+			}
+			if (y < targetY)
+			y = targetY;
+			else if (y > retractY)
+				y = retractY;
+		}
+		else
+		if (state == PTOOIE_STATE_EXTEND)
+		{
+			DebugOutTitle(L"Lon hon");
+			if (y > targetY)
+			{
+				vy = -PTOOIE_SPEED;
+			}
+			else
+			{
+				vy = 0;
+				if (y < targetY)
+				{
+					y = targetY;
+				}
+				if (now - lastMoveTime > timeToStayUp)
+					SetState(PTOOIE_STATE_RETRACT);
+			}
+		}
+		else if (state == PTOOIE_STATE_RETRACT)
+		{
+			DebugOutTitle(L"Lon hon");
+
+			if (y < retractY)
+			{
+				vy = PTOOIE_SPEED;
+			}
+			else
+			{
+				vy = 0;
+				if (y > retractY)
+				{
+					y = retractY;
+				}
+				if (now - lastMoveTime > timeToStayUp)
+					SetState(PTOOIE_STATE_EXTEND);
+			}
+		}
+		else if (state == PTOOIE_STATE_DIE)
+		{
+			vy = 0;
+			isDeleted = true;
+		}
+
+
+		CGameObject::Update(dt, coObjects);
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	};
+
+
+	virtual void Render()
+	{
+		int aniId;
+		float marioX, marioY;
+		CMario* marioObj = dynamic_cast<CMario*>(mario);
+
+		marioObj->GetPosition(marioX, marioY);
+		if (this->x < marioX)
+		{
+			aniId = ID_ANI_PTOOIE_RED_RIGHT;
+		}
+		else
+		{
+			aniId = ID_ANI_PTOOIE_RED_LEFT;
+		}
+		CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+		//RenderBoundingBox();
+	};
+
+	virtual int IsCollidable() { return isCollidable; };
+	virtual int IsBlocking() { return 0; }
+
+
+	virtual void OnNoCollision(DWORD dt)
+	{
+		y += vy * dt;
+	};
+
+
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e)
+	{
+	};
+
+public:
+	CPtooie(float x, float y, CGameObject* mario)
+	{
+		this->x = x;
+		this->y = y;
+		this->mario = mario;
+		targetY = y - PTOOIE_BBOX_HEIGHT;
+		retractY = y;
+		lastMoveTime = GetTickCount64();
+		SetCollidable(true);
+		SetState(PTOOIE_STATE_RETRACT);
+	}
+
+
+	virtual void SetState(int state)
+	{
+		CGameObject::SetState(state);
+		this->state = state;
+		lastMoveTime = GetTickCount64(); 
+		if (state == PTOOIE_STATE_RETRACT)
+		{
+			if (y < retractY)
+			{
+				vy = PTOOIE_SPEED;
+			}
+			else
+			{
+				vy = 0;
+				if (y > retractY)
+				{
+					y = retractY;
+				}
+			}
+		}
+		else
+		{
+			if (y > targetY)
+			{
+				vy = -PTOOIE_SPEED;
+			}
+			else
+			{
+				vy = 0;
+				if (y < targetY)
+				{
+					y = targetY;
+				}
+			}
+		}
+	};
+};

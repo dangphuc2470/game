@@ -14,10 +14,10 @@
 #include "../05-SceneManager/Scene/PlayScene.h"
 
 #include "../05-SceneManager/GameObject/Collision.h"
-
+#define KOOPA_SPEED_FROM_MARIO_SPEED_MULTIPLER -5.0f
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
+	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
 	if (holdingObject != NULL)
 	{
 		if (!GetReadyToHold())
@@ -25,7 +25,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (dynamic_cast<CKoopa*>(holdingObject))
 			{
 				CKoopa* koopa = dynamic_cast<CKoopa*>(holdingObject);
-				koopa->SetState(KOOPA_STATE_DIE);
+				if (vx == 0)
+					koopa->SetState(KOOPA_STATE_DIE);
+				else
+					koopa->SetState(KOOPA_STATE_DIE_SLIP, vx * KOOPA_SPEED_FROM_MARIO_SPEED_MULTIPLER);
 			}
 			SetHoldingObject(NULL);
 		}
