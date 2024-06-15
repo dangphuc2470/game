@@ -6,6 +6,7 @@ Item\coin.txt
 Enemy\goomba.txt
 Enemy\koopa.txt
 Enemy\ptooie.txt
+Enemy\fireball.txt
 Landscape\cloud.txt
 Landscape\brick.txt
 Landscape\brick_platform.txt

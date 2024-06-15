@@ -5,6 +5,7 @@
 #include "../05-SceneManager/Game/Game.h"
 
 #include "../05-SceneManager/Enemy/Goomba.h"
+#include "../05-SceneManager/Enemy/Ptooie.h"
 #include "../05-SceneManager/Item/Coin.h"
 #include "../05-SceneManager/Landscape/Portal.h"
 #include "../05-SceneManager/Landscape/Background.h"
@@ -111,6 +112,15 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 		}
 	}
+	else if (dynamic_cast<CPtooie*>(e->obj))
+	{
+		OnCollisionWithPtooie(e);
+	}
+	else if (dynamic_cast<CFireBall*>(e->obj))
+	{
+		OnCollisionWithFireball(e);
+	}
+
 		
 	/*else if (dynamic_cast<CGoombaFlying*>(e->obj))
 		OnCollisionWithGoombaFlying(e);*/
@@ -237,6 +247,47 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	}
 
 }
+
+void CMario::OnCollisionWithPtooie(LPCOLLISIONEVENT e)
+{
+	CPtooie * ptooie = dynamic_cast<CPtooie*>(e->obj);
+	if (untouchable == 0)
+	{
+	
+			if (level > MARIO_LEVEL_SMALL)
+			{
+				level = MARIO_LEVEL_SMALL;
+				StartUntouchable();
+			}
+			else
+			{
+				DebugOut(L">>> Mario DIE >>> \n");
+				SetState(MARIO_STATE_DIE);
+			}
+		}
+	
+}
+
+void CMario::OnCollisionWithFireball(LPCOLLISIONEVENT e)
+{
+	CFireBall* fireball = dynamic_cast<CFireBall*>(e->obj);
+	if (untouchable == 0)
+	{
+
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
+	}
+
+}
+
 
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
