@@ -6,7 +6,7 @@
 #define PTOOIE_SPEED 0.05f
 
 #define PTOOIE_BBOX_WIDTH 15
-#define PTOOIE_BBOX_HEIGHT 23
+#define PTOOIE_BBOX_HEIGHT 31
 
 #define PTOOIE_STATE_EXTEND 100
 #define PTOOIE_STATE_RETRACT 200
@@ -23,6 +23,7 @@ protected:
 	DWORD timeToStayUp = 3000; 
 	DWORD timeToStayDown = 3000; 
 	DWORD lastMoveTime; 
+	DWORD lastFireballTime;
 	CGameObject* mario;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -113,13 +114,21 @@ protected:
 		marioObj->GetPosition(marioX, marioY);
 		if (this->x < marioX)
 		{
-			aniId = ID_ANI_PTOOIE_RED_RIGHT;
+			//Mario right
+			if (vy > 0)
+			CSprites::GetInstance()->Get(5212)->Draw(x, y);
+			else
+				CSprites::GetInstance()->Get(5213)->Draw(x, y);
 		}
 		else
 		{
-			aniId = ID_ANI_PTOOIE_RED_LEFT;
+			//Mario left
+			if (vy > 0)
+				CSprites::GetInstance()->Get(5211)->Draw(x, y);
+			else
+				CSprites::GetInstance()->Get(5210)->Draw(x, y);
 		}
-		CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+		//CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 		//RenderBoundingBox();
 	};
 
@@ -146,6 +155,7 @@ public:
 		targetY = y - PTOOIE_BBOX_HEIGHT;
 		retractY = y;
 		lastMoveTime = GetTickCount64();
+		lastFireballTime = -1;
 		SetCollidable(true);
 		SetState(PTOOIE_STATE_RETRACT);
 	}

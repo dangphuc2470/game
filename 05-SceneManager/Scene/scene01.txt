@@ -167,4 +167,4 @@ Landscape\mystery_box.txt
 #0	20	10
 0	20	10
 
-200	350	172
+200	350	176
