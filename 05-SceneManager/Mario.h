@@ -120,6 +120,7 @@ class CMario : public CGameObject
 	void OnCollisionWithTheVoid(LPCOLLISIONEVENT e);
 	void OnCollisionWithPtooie(LPCOLLISIONEVENT e);
 	void OnCollisionWithFireball(LPCOLLISIONEVENT e);
+	void OnCollisionWithSpawner(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();

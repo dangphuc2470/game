@@ -15,6 +15,7 @@
 #include "../05-SceneManager/Scene/PlayScene.h"
 
 #include "../05-SceneManager/GameObject/Collision.h"
+#include "Landscape/Spawner.h"
 #define KOOPA_SPEED_FROM_MARIO_SPEED_MULTIPLER -5.0f
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -124,6 +125,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		DebugOutTitle(L"Collision fb mario", x, y, top, bottom);
 
 	}
+	else if (dynamic_cast<CSpawner*>(e->obj))
+	{
+		OnCollisionWithSpawner(e);
+	}
 
 	//DebugOutTitle(L"Collision at %f %f, Mario %f %f", x, y, top, bottom);
 	/*else if (dynamic_cast<CGoombaFlying*>(e->obj))
@@ -175,6 +180,13 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			}
 		}
 	}
+}
+
+void CMario::OnCollisionWithSpawner(LPCOLLISIONEVENT e)
+{
+		CSpawner* spawner = dynamic_cast<CSpawner*>(e->obj);
+		spawner->Spawn();
+		
 }
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
