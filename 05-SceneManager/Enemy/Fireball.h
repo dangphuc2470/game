@@ -4,7 +4,7 @@
 #include "../Mario.h"
 
 #define FIREBALL_WIDTH 7
-#define FIREBALL_HEIGHT 8
+#define FIREBALL_HEIGHT 100
 #define FIREBALL_DISTANCE_LAST 250
 
 
@@ -19,17 +19,19 @@ public:
     CFireBall(float x, float y, float velocityX, float velocityY) : CGameObject(x, y) {
         this->velocityX = velocityX;
         this->velocityY = velocityY;
-   	     start_x = x;
-         start_y = y;
-         SetCollidable(true);
-         SetBlocking(false);
+   	    start_x = x;
+        start_y = y;
+        SetCollidable(true);
+        SetBlocking(true);
+        DebugOutTitle(L"Fireball create");
+
     }
     
     virtual void OnCollisionWith(LPCOLLISIONEVENT e)
     {
         DebugOutTitle(L"Fireball collision fb awdawda");
         if (dynamic_cast<CMario*>(e->obj)) {
-			CMario* mario = dynamic_cast<CMario*>(e->obj);
+			/*CMario* mario = dynamic_cast<CMario*>(e->obj);
             if (mario->GetLevel() == MARIO_LEVEL_SMALL)
                 {
 				mario->SetState(MARIO_STATE_DIE);
@@ -38,7 +40,9 @@ public:
 			{
 				mario->SetLevel(MARIO_LEVEL_SMALL);
 				mario->SetState(MARIO_STATE_IDLE);
-			}
+			}*/
+            e->obj->SetState(MARIO_STATE_DIE);
+			isDeleted = true;
 		}
 		
     };

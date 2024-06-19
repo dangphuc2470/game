@@ -319,6 +319,7 @@ void CPlayScene::Update(DWORD dt)
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);
+	
 
 	CGame* game = CGame::GetInstance();
 	cx -= game->GetBackBufferWidth() / 2;
@@ -326,7 +327,18 @@ void CPlayScene::Update(DWORD dt)
 
 	if (cx < 0) cx = 0;
 
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	CMario* mario = dynamic_cast<CMario*>(player);
+	if (mario != nullptr) {
+		int level = mario->GetLevel();
+		if (level == MARIO_LEVEL_RACOON && mario->GetState() == MARIO_STATE_FLY)
+			CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+		else
+			CGame::GetInstance()->SetCamPos(cx, cy /*cy*/);
+	}
+	else {
+		CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	}
+	
 
 	PurgeDeletedObjects();
 }

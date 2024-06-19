@@ -25,7 +25,7 @@ public:
 	{
         //CSprites::GetInstance()->Get(ID_SPRITE_CLOUD_MIDDLE)->Draw(x, y);
 
-        //RenderBoundingBox();
+        RenderBoundingBox();
     }
 
     virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -50,7 +50,13 @@ public:
     virtual void OnCollisionWith(LPCOLLISIONEVENT e)
     {
         if (!e->obj->IsBlocking()) return;
-        if (dynamic_cast<CMario*>(e->obj)) return;
+        
+
+        if (dynamic_cast<CMario*> (e->obj))
+        {
+            DebugOutTitle(L"GuideObject Collision Mario");
+            return;
+        }
 
         if (e->ny != 0)
         {

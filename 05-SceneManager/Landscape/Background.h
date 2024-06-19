@@ -101,7 +101,7 @@ public:
 		r = l + this->cellWidth; 
 		b = t + this->cellHeight;
 	};
-	int IsBlocking() { return 1; }
+	int IsBlocking() { return 0; }
 
 	int GetSceneId() {
 		return 2; // Todo: change this to the correct scene id

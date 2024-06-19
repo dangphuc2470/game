@@ -24,6 +24,7 @@
 
 #define MARIO_STATE_JUMP			300
 #define MARIO_STATE_RELEASE_JUMP    301
+#define MARIO_STATE_FLY	302
 
 #define MARIO_STATE_RUNNING_RIGHT	400
 #define MARIO_STATE_RUNNING_LEFT	500
@@ -85,6 +86,7 @@
 
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
+#define	MARIO_LEVEL_RACOON 3
 
 #define MARIO_BIG_BBOX_WIDTH  12
 #define MARIO_BIG_BBOX_HEIGHT 24
@@ -121,7 +123,7 @@ class CMario : public CGameObject
 	void OnCollisionWithPtooie(LPCOLLISIONEVENT e);
 	void OnCollisionWithFireball(LPCOLLISIONEVENT e);
 	void OnCollisionWithSpawner(LPCOLLISIONEVENT e);
-
+	//void OnCollisionWithGuider(LPCOLLISIONEVENT e);
 	int GetAniIdBig();
 	int GetAniIdSmall();
 

@@ -12,6 +12,7 @@
 #include "../05-SceneManager/Landscape/Brick.h"
 #include "../05-SceneManager/Landscape/MysteryBox.h"
 #include "../05-SceneManager/Enemy/Koopa.h"
+#include "../05-SceneManager/Enemy/FireBall.h"
 #include "../05-SceneManager/Scene/PlayScene.h"
 
 #include "../05-SceneManager/GameObject/Collision.h"
@@ -61,6 +62,16 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<CGuideObject*>(e->obj))
+	{
+		return;
+	}
+	if (dynamic_cast<CFireBall*>(e->obj))
+	{
+		SetState(MARIO_STATE_DIE);
+		return;
+	}
+
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		float x, y;
@@ -469,7 +480,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 
 	//DebugOutTitle(L"Coins: %d", coin);
 }
