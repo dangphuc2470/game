@@ -330,8 +330,11 @@ void CPlayScene::Update(DWORD dt)
 	CMario* mario = dynamic_cast<CMario*>(player);
 	if (mario != nullptr) {
 		int level = mario->GetLevel();
-		if (level == MARIO_LEVEL_RACOON && mario->GetState() == MARIO_STATE_FLY)
-			CGame::GetInstance()->SetCamPos(cx,  cy);
+		if (mario->GetIsFlying() || (cy < -100 && cx > 830))
+		{
+			CGame::GetInstance()->SetCamPos(cx, cy);
+		}
+
 		else
 			CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
 	}

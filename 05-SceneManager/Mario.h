@@ -24,7 +24,6 @@
 
 #define MARIO_STATE_JUMP			300
 #define MARIO_STATE_RELEASE_JUMP    301
-#define MARIO_STATE_FLY	302
 
 #define MARIO_STATE_RUNNING_RIGHT	400
 #define MARIO_STATE_RUNNING_LEFT	500
@@ -88,7 +87,7 @@
 #define ID_ANI_MARIO_RACOON_RUNNING_LEFT 1901
 
 #define ID_ANI_MARIO_RACOON_BRACE_RIGHT 2000
-#define ID_ANI_MARIO_RACOON_BRACE_LEFT
+#define ID_ANI_MARIO_RACOON_BRACE_LEFT 2001
 
 #define ID_ANI_MARIO_RACOON_JUMP_WALK_RIGHT 2100
 #define ID_ANI_MARIO_RACOON_JUMP_WALK_LEFT 2101
@@ -115,16 +114,21 @@
 
 #define MARIO_BIG_BBOX_WIDTH  12
 #define MARIO_BIG_BBOX_HEIGHT 24
+#define MARIO_RACOON_BBOX_HEIGHT 26
+#define MARIO_RACOON_BBOX_WIDTH  20
 #define MARIO_BIG_SITTING_BBOX_WIDTH  14
 #define MARIO_BIG_SITTING_BBOX_HEIGHT 16
 
 #define MARIO_SIT_HEIGHT_ADJUST ((MARIO_BIG_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
-
+#define MARIO_RACOON_HEIGHT_ADJUST ((MARIO_RACOON_BBOX_HEIGHT-MARIO_BIG_BBOX_HEIGHT)/2)
+#define MARIO_RACOON_SIT_HEIGHT_ADJUST ((MARIO_RACOON_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
-
+#define MARIO_FLY_TIME 4000
+#define MARIO_FLY_SPEED 0.004f
 #define MARIO_UNTOUCHABLE_TIME 2500  //Todo: change to 2.5s
+#define MARIO_UNTOUCHABLE_BLINK_TIME 200
 
 class CMario : public CGameObject
 {
@@ -136,7 +140,10 @@ class CMario : public CGameObject
 	int level; 
 	int untouchable; 
 	ULONGLONG untouchable_start;
+	ULONGLONG fly_start;
 	BOOLEAN isOnPlatform;
+	BOOLEAN isFlying;
+	BOOLEAN isCanFly;
 	int coin; 
 	CGameObject* holdingObject = NULL;
 	bool isReadyToHold = false;
@@ -151,6 +158,7 @@ class CMario : public CGameObject
 	//void OnCollisionWithGuider(LPCOLLISIONEVENT e);
 	int GetAniIdBig();
 	int GetAniIdSmall();
+	int GetAniIdRacoon();
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)
@@ -160,11 +168,15 @@ public:
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
 
-		level = MARIO_LEVEL_BIG;
+		//level = MARIO_LEVEL_BIG;
+		level = 3;
 		untouchable = 0;
 		untouchable_start = -1;
+		fly_start = -1;
 		isOnPlatform = false;
 		coin = 0;
+		isFlying = false;
+		isCanFly = false;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -188,4 +200,9 @@ public:
 	void SetHoldingObject(CGameObject* obj) { holdingObject = obj; }
 	void SetReadyToHold(bool ready) { isReadyToHold = ready; }
 	bool GetReadyToHold() { return isReadyToHold; }
+	void SetIsFlying(bool flying) {
+		isFlying = flying;
+		fly_start = GetTickCount64();
+	}
+	bool GetIsFlying() { return isFlying; }
 };

@@ -18,9 +18,12 @@
 #include "../05-SceneManager/GameObject/Collision.h"
 #include "Landscape/Spawner.h"
 #define KOOPA_SPEED_FROM_MARIO_SPEED_MULTIPLER -5.0f
+
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
+	
 	if (holdingObject != NULL)
 	{
 		if (!GetReadyToHold())
@@ -39,6 +42,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	vy += ay * dt;
 	vx += ax * dt;
+	if (isFlying)
+	{
+		if (GetTickCount64() - fly_start > MARIO_FLY_TIME)
+		{
+			isFlying = false;
+			vy = 0;
+		}
+		else
+		vy = -MARIO_FLY_SPEED * dt;
+	}
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
@@ -48,7 +61,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-
+	/*if (GetState() == MARIO_STATE_FLY && GetTickCount64() - fly_start > MARIO_FLY_TIME)
+	{
+		SetState(MARIO_STATE_IDLE);
+	}*/
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -466,6 +482,68 @@ int CMario::GetAniIdBig()
 	return aniId;
 }
 
+//
+// Get animdation ID racoon Mario
+//
+int CMario::GetAniIdRacoon()
+{
+	int aniId = -1;
+	if (!isOnPlatform)
+	{
+		if (abs(ax) == MARIO_ACCEL_RUN_X)
+		{
+			if (nx >= 0)
+				aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_RACOON_JUMP_RUN_LEFT;
+		}
+		else
+		{
+			if (nx >= 0)
+				aniId = ID_ANI_MARIO_RACOON_JUMP_WALK_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_RACOON_JUMP_WALK_LEFT;
+		}
+	}
+	else
+		if (isSitting)
+		{
+			if (nx > 0)
+				aniId = ID_ANI_MARIO_RACOON_SIT_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_RACOON_SIT_LEFT;
+		}
+		else
+			if (vx == 0)
+			{
+				if (nx > 0) aniId = ID_ANI_MARIO_RACOON_IDLE_RIGHT;
+				else aniId = ID_ANI_MARIO_RACOON_IDLE_LEFT;
+			}
+			else if (vx > 0)
+			{
+				if (ax < 0)
+					aniId = ID_ANI_MARIO_RACOON_BRACE_RIGHT;
+				else if (ax == MARIO_ACCEL_RUN_X)
+					aniId = ID_ANI_MARIO_RACOON_RUNNING_RIGHT;
+				else if (ax == MARIO_ACCEL_WALK_X)
+					aniId = ID_ANI_MARIO_RACOON_WALKING_RIGHT;
+			}
+			else // vx < 0
+			{
+				if (ax > 0)
+					aniId = ID_ANI_MARIO_RACOON_BRACE_LEFT;
+				else if (ax == -MARIO_ACCEL_RUN_X)
+					aniId = ID_ANI_MARIO_RACOON_RUNNING_LEFT;
+				else if (ax == -MARIO_ACCEL_WALK_X)
+					aniId = ID_ANI_MARIO_RACOON_WALKING_LEFT;
+			}
+
+	if (aniId == -1) aniId = ID_ANI_MARIO_RACOON_IDLE_RIGHT;
+
+	return aniId;
+}
+
+
 void CMario::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -477,7 +555,12 @@ void CMario::Render()
 		aniId = GetAniIdBig();
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
+	else if (level == MARIO_LEVEL_RACOON)
+		aniId = GetAniIdRacoon();
+	else
+		DebugOutTitle(L"Invalid Mario level");
 
+	//DebugOutTitle(L"Animation ID: %d", aniId);
 	animations->Get(aniId)->Render(x, y);
 
 	//RenderBoundingBox();
@@ -487,9 +570,9 @@ void CMario::Render()
 
 void CMario::SetState(int state)
 {
+	//DebugOutTitle(L"Set state %d", state);
 	// DIE is the end state, cannot be changed! 
 	if (this->state == MARIO_STATE_DIE) return;
-
 	switch (state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
@@ -563,6 +646,8 @@ void CMario::SetState(int state)
 	case MARIO_STATE_IDLE:
 		ax = 0.0f;
 		vx = 0.0f;
+		//ay = MARIO_GRAVITY;
+		//DebugOutTitle(L"Idle");
 		break;
 
 	case MARIO_STATE_DIE:
@@ -570,7 +655,9 @@ void CMario::SetState(int state)
 		vx = 0;
 		ax = 0;
 		break;
+	
 	}
+
 
 	CGameObject::SetState(state);
 }
@@ -594,13 +681,22 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 			bottom = top + MARIO_BIG_BBOX_HEIGHT;
 		}
 	}
-	else
+	else if (level == MARIO_LEVEL_SMALL)
 	{
 		left = x - MARIO_SMALL_BBOX_WIDTH / 2;
 		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
 		right = left + MARIO_SMALL_BBOX_WIDTH;
 		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
 	}
+	else if (level == MARIO_LEVEL_RACOON)
+	{
+		left = x - MARIO_RACOON_BBOX_WIDTH / 2;
+		top = y - MARIO_RACOON_BBOX_HEIGHT / 2;
+		right = left + MARIO_RACOON_BBOX_WIDTH;
+		bottom = top + MARIO_RACOON_BBOX_HEIGHT;
+	}
+	else 
+		throw("Invalid Mario level");
 	this->top = top;
 	this->bottom = bottom;
 }
@@ -612,6 +708,12 @@ void CMario::SetLevel(int l)
 	{
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 	}
+	else if (this->level == MARIO_LEVEL_BIG && l == MARIO_LEVEL_RACOON)
+	{
+		y -= (MARIO_RACOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT) / 2;
+		//x -= (MARIO_RACOON_BBOX_WIDTH - MARIO_BIG_BBOX_WIDTH) / 2;
+	}
+	
 	level = l;
 }
 
