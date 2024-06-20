@@ -331,9 +331,9 @@ void CPlayScene::Update(DWORD dt)
 	if (mario != nullptr) {
 		int level = mario->GetLevel();
 		if (level == MARIO_LEVEL_RACOON && mario->GetState() == MARIO_STATE_FLY)
-			CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+			CGame::GetInstance()->SetCamPos(cx,  cy);
 		else
-			CGame::GetInstance()->SetCamPos(cx, cy /*cy*/);
+			CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
 	}
 	else {
 		CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
