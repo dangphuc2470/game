@@ -39,7 +39,17 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_R: // reset
 		//Reload();
 		break;
+	case DIK_J:
+	case DIK_RCONTROL:
+		if (!isPressingRun)
+		{
+			mario->SetRunningStartToNow();
+			mario->SetIsFlyable(true);
+		}
+		isPressingRun = true;
+		break;
 	}
+
 }
 
 void CSampleKeyHandler::OnKeyUp(int KeyCode)
@@ -60,6 +70,15 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	case DIK_J:
 	case DIK_RCONTROL:
 		mario->SetReadyToHold(false);
+		isPressingRun = false;
+		break;
+	case DIK_A:
+	case DIK_LEFT:
+		isPressingRun = false;
+		break;
+	case DIK_D:
+	case DIK_RIGHT:
+		isPressingRun = false;
 		break;
 	}
 }
@@ -67,6 +86,7 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 void CSampleKeyHandler::KeyState(BYTE *states)
 {
 	LPGAME game = CGame::GetInstance();
+	//debug out the isPressingRun
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 	if (game->IsKeyDown(DIK_J) || game->IsKeyDown(DIK_RCONTROL))
 	{
@@ -79,6 +99,10 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
 		else
 			mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		
+		/*if (!isPressingRun)
+			mario->SetRunningStartToNow();
+		isPressingRun = true;*/
 	}
 	else if (game->IsKeyDown(DIK_A) || game->IsKeyDown(DIK_LEFT))
 	{
@@ -87,6 +111,10 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 
 		else
 			mario->SetState(MARIO_STATE_WALKING_LEFT);
+		
+		/*if (!isPressingRun)
+			mario->SetRunningStartToNow();
+		isPressingRun = true;*/
 	}
 	else
 		mario->SetState(MARIO_STATE_IDLE);

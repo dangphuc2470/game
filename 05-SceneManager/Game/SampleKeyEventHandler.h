@@ -4,6 +4,7 @@
 
 class CSampleKeyHandler: public CSceneKeyHandler
 {
+	bool isPressingRun = false;
 public:
 	virtual void KeyState(BYTE *states);
 	virtual void OnKeyDown(int KeyCode);

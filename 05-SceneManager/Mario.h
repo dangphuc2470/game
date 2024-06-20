@@ -141,9 +141,10 @@ class CMario : public CGameObject
 	int untouchable; 
 	ULONGLONG untouchable_start;
 	ULONGLONG fly_start;
+	ULONGLONG running_start;
 	BOOLEAN isOnPlatform;
 	BOOLEAN isFlying;
-	BOOLEAN isCanFly;
+	BOOLEAN isFlyable;
 	int coin; 
 	CGameObject* holdingObject = NULL;
 	bool isReadyToHold = false;
@@ -172,11 +173,12 @@ public:
 		level = 3;
 		untouchable = 0;
 		untouchable_start = -1;
+		running_start = -1;
 		fly_start = -1;
 		isOnPlatform = false;
 		coin = 0;
 		isFlying = false;
-		isCanFly = false;
+		isFlyable = false;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -205,4 +207,9 @@ public:
 		fly_start = GetTickCount64();
 	}
 	bool GetIsFlying() { return isFlying; }
+	bool GetIsFlyable() { return isFlyable; }
+	void SetIsFlyable(bool flyable) {
+		isFlyable = flyable;
+	}
+	void SetRunningStartToNow() { running_start = GetTickCount64(); }
 };

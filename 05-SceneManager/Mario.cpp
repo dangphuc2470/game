@@ -21,9 +21,11 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
+	//ULONGLONG running = GetTickCount64();
+	//Debug out title the time
+	//DebugOutTitle(L"Time: %d", running_start - running);
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
-	
+	DebugOutTitle(L"Running: %d", running_start);
 	if (holdingObject != NULL)
 	{
 		if (!GetReadyToHold())
@@ -573,6 +575,7 @@ void CMario::SetState(int state)
 	//DebugOutTitle(L"Set state %d", state);
 	// DIE is the end state, cannot be changed! 
 	if (this->state == MARIO_STATE_DIE) return;
+
 	switch (state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
@@ -585,6 +588,7 @@ void CMario::SetState(int state)
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
 		nx = 1;
+		//DebugOutTitle(L"Running");
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
@@ -595,6 +599,7 @@ void CMario::SetState(int state)
 		}
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
+		//DebugOutTitle(L"Runningl");
 		nx = -1;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
