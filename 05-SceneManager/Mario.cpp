@@ -25,7 +25,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//Debug out title the time
 	//DebugOutTitle(L"Time: %d", running_start - running);
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
-	DebugOutTitle(L"Running: %d", running_start);
+	//DebugOutTitle(L"Running: %d", running_start);
 	if (holdingObject != NULL)
 	{
 		if (!GetReadyToHold())
@@ -68,8 +68,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(MARIO_STATE_IDLE);
 	}*/
 	isOnPlatform = false;
-
+	
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+	//DebugOutTitle(L"X: %f, Y: %f, VX: %f, VY: %f", x, y, vx, vy);
 }
 
 void CMario::OnNoCollision(DWORD dt)

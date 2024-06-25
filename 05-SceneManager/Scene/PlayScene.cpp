@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <fstream>
 #include "../GameObject/AssetIDs.h"
 
@@ -328,19 +328,67 @@ void CPlayScene::Update(DWORD dt)
 	if (cx < 0) cx = 0;
 
 	CMario* mario = dynamic_cast<CMario*>(player);
-	if (mario != nullptr) {
-		int level = mario->GetLevel();
-		if (mario->GetIsFlying() || (cy < -100 && cx > 830))
+	
+	int level = mario->GetLevel();
+	if (mario->GetIsFlying() || (cy < -100 && cx > 500))
+	{
+		float x, y;
+		mario->GetPosition(x, y);
+		if (y>30)
 		{
-			CGame::GetInstance()->SetCamPos(cx, cy);
+			float targetCamY = cy;
+			float camMoveSpeedY = 0.05 * dt;
+
+			// Cập nhật vị trí camera Y dần dần về mục tiêu
+			if (cam_y < targetCamY)
+			{
+				cam_y += camMoveSpeedY * dt;
+				if (cam_y > targetCamY) // Tránh vượt quá mục tiêu
+				{
+					cam_y = targetCamY;
+				}
+			}
+			else if (cam_y > targetCamY)
+			{
+				cam_y -= camMoveSpeedY * dt;
+				if (cam_y < targetCamY) // Tránh vượt quá mục tiêu
+				{
+					cam_y = targetCamY;
+				}
+			}
+			if (cam_y > 0)
+				cam_y = 0;
+			CGame::GetInstance()->SetCamPos(cx, cam_y);
+		}
+		else CGame::GetInstance()->SetCamPos(cx, cy);
+	}
+	else
+	{
+		float targetCamY = 0.0f;
+		float camMoveSpeedY = 0.05 * dt; 
+
+		if (cam_y < targetCamY)
+		{
+			cam_y += camMoveSpeedY * dt;
+			if (cam_y > targetCamY) 
+			{
+				cam_y = targetCamY;
+			}
+		}
+		else if (cam_y > targetCamY)
+		{
+			cam_y -= camMoveSpeedY * dt;
+			if (cam_y < targetCamY) 
+			{
+				cam_y = targetCamY;
+			}
 		}
 
-		else
-			CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+		// Cập nhật vị trí camera
+		CGame::GetInstance()->SetCamPos(cx, cam_y);
 	}
-	else {
-		CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
-	}
+	
+
 	
 
 	PurgeDeletedObjects();

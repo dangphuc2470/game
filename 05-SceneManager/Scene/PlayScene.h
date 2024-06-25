@@ -27,7 +27,7 @@ protected:
 	
 public: 
 	CPlayScene(int id, LPCWSTR filePath);
-
+	float cam_y = 0;
 	virtual void Load();
 	virtual void Update(DWORD dt);
 	virtual void Render();
