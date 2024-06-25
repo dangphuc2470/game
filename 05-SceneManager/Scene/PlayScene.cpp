@@ -329,6 +329,7 @@ void CPlayScene::Update(DWORD dt)
 
 	CMario* mario = dynamic_cast<CMario*>(player);
 	
+
 	int level = mario->GetLevel();
 	if (mario->GetIsFlying() || (cy < -100 && cx > 500))
 	{
