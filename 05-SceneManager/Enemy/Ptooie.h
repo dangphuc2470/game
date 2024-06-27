@@ -78,7 +78,7 @@ protected:
 				{
 					float vx, vy;
 					CalculateFireballSpeed(x, y, marioX, marioY, vx, vy);
-					CGameObject* newObj = new CFireBall(x, y, vx, vy);
+					CGameObject* newObj = new CFireBall(x, y, vx, vy, marioObj);
 					CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 					newObj->SetPosition(x, y - 5);
 					scene->AddObject(newObj);

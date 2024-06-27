@@ -87,7 +87,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	if (dynamic_cast<CFireBall*>(e->obj))
 	{
-		SetState(MARIO_STATE_DIE);
+		OnCollisionWithFireball(e);
 		return;
 	}
 
@@ -148,18 +148,21 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		OnCollisionWithPtooie(e);
 	}
-	else if (dynamic_cast<CFireBall*>(e->obj))
-	{
 
-		OnCollisionWithFireball(e);
-		DebugOutTitle(L"Collision fb mario", x, y, top, bottom);
-
-	}
 	else if (dynamic_cast<CSpawner*>(e->obj))
 	{
 		OnCollisionWithSpawner(e);
 	}
-
+	else if (dynamic_cast<CMushroom*>(e->obj))
+	{
+		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+		if (level == MARIO_LEVEL_SMALL)
+		{
+			SetLevel(MARIO_LEVEL_BIG);
+			mushroom->SetState(MUSHROOM_STATE_DIE);
+		}
+		return;
+	}
 	//DebugOutTitle(L"Collision at %f %f, Mario %f %f", x, y, top, bottom);
 	/*else if (dynamic_cast<CGoombaFlying*>(e->obj))
 		OnCollisionWithGoombaFlying(e);*/
@@ -197,16 +200,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		{
 			if (goomba->GetState() != GOOMBA_STATE_DIE && goomba->GetState() != GOOMBA_STATE_FLYING_DIE)
 			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
+				MarioChangeSmallerLevel();
 			}
 		}
 	}
@@ -277,17 +271,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			}
 			else if (holdingObject == NULL)
 			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					//Todo: change to small mario
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
+				MarioChangeSmallerLevel();
 			}
 		}
 	}
@@ -305,16 +289,7 @@ void CMario::OnCollisionWithPtooie(LPCOLLISIONEVENT e)
 		{
 			return;
 		}
-		if (level > MARIO_LEVEL_SMALL)
-		{
-			level = MARIO_LEVEL_SMALL;
-			StartUntouchable();
-		}
-		else
-		{
-			DebugOut(L">>> Mario DIE >>> \n");
-			SetState(MARIO_STATE_DIE);
-		}
+		MarioChangeSmallerLevel();
 	}
 
 }
@@ -322,21 +297,6 @@ void CMario::OnCollisionWithPtooie(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithFireball(LPCOLLISIONEVENT e)
 {
 	CFireBall* fireball = dynamic_cast<CFireBall*>(e->obj);
-	if (untouchable == 0)
-	{
-
-		if (level > MARIO_LEVEL_SMALL)
-		{
-			level = MARIO_LEVEL_SMALL;
-			StartUntouchable();
-		}
-		else
-		{
-			DebugOut(L">>> Mario DIE >>> \n");
-			SetState(MARIO_STATE_DIE);
-		}
-	}
-
 }
 
 
@@ -575,7 +535,8 @@ void CMario::SetState(int state)
 {
 	//DebugOutTitle(L"Set state %d", state);
 	// DIE is the end state, cannot be changed! 
-	if (this->state == MARIO_STATE_DIE) return;
+	if (this->state == MARIO_STATE_DIE) 
+		return;
 
 	switch (state)
 	{
@@ -628,6 +589,7 @@ void CMario::SetState(int state)
 
 	case MARIO_STATE_RELEASE_JUMP:
 		if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
+		ay = MARIO_GRAVITY;
 		break;
 
 	case MARIO_STATE_SIT:

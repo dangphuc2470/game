@@ -3,6 +3,7 @@
 #include "../GameObject/AssetIDs.h"
 #include "../Enemy/Goomba.h"
 #include "../Enemy/Koopa.h"
+#include "../Enemy/Fireball.h"
 
 #define MUSHROOM_GRAVITY 0.001f
 #define MUSHROOM_WALKING_SPEED 0.05f
@@ -71,16 +72,7 @@ protected:
 		if (!e->obj->IsBlocking()) return;
 		if (dynamic_cast<CMushroom*>(e->obj)) return;
 		if (dynamic_cast<CGoomba*>(e->obj)) return;
-		if (dynamic_cast<CMario*>(e->obj)) 
-		{
-			CMario* mario = dynamic_cast<CMario*>(e->obj);
-			if (mario->GetLevel() == MARIO_LEVEL_SMALL)
-			{
-				mario->SetLevel(MARIO_LEVEL_BIG);
-				SetState(MUSHROOM_STATE_DIE);
-			}
-			return;
-		}
+		if (dynamic_cast<CFireBall*>(e->obj)) return;
 		if (e->ny != 0)
 		{
 			vy = 0;

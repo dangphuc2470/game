@@ -20,6 +20,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_K:
 		case DIK_UP:
 		mario->SetState(MARIO_STATE_JUMP);
+		
 		break;
 	case DIK_3:
 		mario->SetLevel(MARIO_LEVEL_RACOON);

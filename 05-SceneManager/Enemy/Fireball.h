@@ -4,7 +4,7 @@
 #include "../Mario.h"
 
 #define FIREBALL_WIDTH 7
-#define FIREBALL_HEIGHT 100
+#define FIREBALL_HEIGHT 7
 #define FIREBALL_DISTANCE_LAST 250
 
 
@@ -14,49 +14,52 @@ protected:
     float velocityY;
     float start_x;
     float start_y;
+    CMario* mario;
 
 public:
-    CFireBall(float x, float y, float velocityX, float velocityY) : CGameObject(x, y) {
+    CFireBall(float x, float y, float velocityX, float velocityY, CMario* mario) : CGameObject(x, y) {
         this->velocityX = velocityX;
         this->velocityY = velocityY;
    	    start_x = x;
         start_y = y;
+        this->mario = mario;
         SetCollidable(true);
-        SetBlocking(true);
-        DebugOutTitle(L"Fireball create");
+        SetBlocking(false);
 
     }
     
     virtual void OnCollisionWith(LPCOLLISIONEVENT e)
     {
-        DebugOutTitle(L"Fireball collision fb awdawda");
-        if (dynamic_cast<CMario*>(e->obj)) {
-			/*CMario* mario = dynamic_cast<CMario*>(e->obj);
-            if (mario->GetLevel() == MARIO_LEVEL_SMALL)
-                {
-				mario->SetState(MARIO_STATE_DIE);
-			}
-			else
-			{
-				mario->SetLevel(MARIO_LEVEL_SMALL);
-				mario->SetState(MARIO_STATE_IDLE);
-			}*/
-            e->obj->SetState(MARIO_STATE_DIE);
-			isDeleted = true;
-		}
-		
     };
 
     virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr) override {
         // Update fireball position based on its velocity
         x += velocityX * dt;
         y += velocityY * dt;
+        
+        float marioX, marioY;
+        mario->GetPosition(marioX, marioY);
 
+        if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
+			if (abs(x - marioX) < MARIO_BIG_BBOX_WIDTH / 2 && abs(y - marioY) < MARIO_SMALL_BBOX_HEIGHT / 2)
+			{
+                mario->MarioChangeSmallerLevel();
+                isDeleted = true;
+			}
+		}
+		else if (abs(x - marioX) < FIREBALL_WIDTH / 2 && abs(y - marioY) < MARIO_BIG_BBOX_HEIGHT / 2)
+		{
+            isDeleted = true;
+            mario->MarioChangeSmallerLevel();
+		}
+        
+        
         float dx = abs(start_x - x);
         float dy = abs(start_y - y);
         if (dx > FIREBALL_DISTANCE_LAST || dy > FIREBALL_DISTANCE_LAST) {
             isDeleted = true;
         }
+
 
     }
 
