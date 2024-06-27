@@ -117,10 +117,11 @@
 #define MARIO_BIG_BBOX_HEIGHT 24
 #define MARIO_RACOON_BBOX_HEIGHT 26
 #define MARIO_RACOON_BBOX_WIDTH  20
-#define MARIO_BIG_SITTING_BBOX_WIDTH  14
+#define MARIO_BIG_SITTING_BBOX_WIDTH  12
 #define MARIO_BIG_SITTING_BBOX_HEIGHT 16
 
 #define MARIO_SIT_HEIGHT_ADJUST ((MARIO_BIG_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
+#define MARIO_SIT_HEIGHT_ADJUST_RACOON ((MARIO_RACOON_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 #define MARIO_RACOON_HEIGHT_ADJUST ((MARIO_RACOON_BBOX_HEIGHT-MARIO_BIG_BBOX_HEIGHT)/2)
 #define MARIO_RACOON_SIT_HEIGHT_ADJUST ((MARIO_RACOON_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 #define MARIO_SMALL_BBOX_WIDTH  13
@@ -149,6 +150,7 @@ class CMario : public CGameObject
 	BOOLEAN isOnPlatform;
 	BOOLEAN isFlying;
 	BOOLEAN isFlyable;
+	BOOLEAN noFlash = false;
 	int coin;
 	CGameObject* holdingObject = NULL;
 	bool isReadyToHold = false;
@@ -201,9 +203,10 @@ public:
 
 	void SetLevel(int l);
 	int GetLevel() { return level; }
-	void StartUntouchable() {
+	void StartUntouchable(bool noFlash = false) {
 		untouchable = 1; 
 		untouchable_start = GetTickCount64();
+		this->noFlash = noFlash;
 		renderInvisibleSprite = true;
 		last_invisible_time = GetTickCount64();
 	}

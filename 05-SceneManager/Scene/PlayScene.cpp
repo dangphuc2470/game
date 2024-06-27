@@ -140,7 +140,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_CLOUD_2: obj = new CCloud2(x, y); break;
 	case OBJECT_TYPE_BLACK_BACKGROUND: obj = new CBlackBackground(x, y); break;
 	case OBJECT_TYPE_VERTICAL_PIPE: obj = new CVerticalPipe(x, y); break;
-	case OBJECT_TYPE_PTOOIE: obj = new CPtooie(x, y, player); break;
+	case OBJECT_TYPE_PTOOIE: 	
+	{
+		int isRed = atoi(tokens[3].c_str());
+		int isBite = atoi(tokens[4].c_str());
+		obj = new CPtooie(x, y, player, isRed, isBite); break;
+	}
 	case OBJECT_TYPE_SPAWNER:
 	{
 	int type = atoi(tokens[3].c_str());

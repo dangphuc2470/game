@@ -66,7 +66,7 @@ public:
     virtual void Render() override {
        //CSprites::GetInstance()->Get(5305)->Draw(x, y);
        CAnimations::GetInstance()->Get(ID_ANI_FIREBALL)->Render(x, y);
-       RenderBoundingBox();
+       //RenderBoundingBox();
     }
 
     virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) override {

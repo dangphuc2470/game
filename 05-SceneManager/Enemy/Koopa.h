@@ -16,7 +16,7 @@
 #define KOOPA_BBOX_WIDTH 15
 #define KOOPA_BBOX_HEIGHT 25
 #define KOOPA_BBOX_HEIGHT_WINGS 26
-#define KOOPA_BBOX_HEIGHT_DIE 15
+#define KOOPA_BBOX_HEIGHT_DIE 10
 #define KOOPA_JUMP_SPEED 0.3f
 #define KOOPA_JUMP_INTERVAL 1000
 #define KOOPA_DIE_TIMEOUT 5000
@@ -94,6 +94,11 @@ protected:
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
+		if (state == KOOPA_STATE_DIE_SLIP && vx == 0)
+			vx = -KOOPA_SLIP_SPEED;
+
+
+		// Is held by Mario
 		if (mario != NULL)
 		{
 			float x, y;
@@ -108,6 +113,10 @@ protected:
 			}
 			else
 				SetPosition(x + MARIO_BIG_BBOX_WIDTH, y - 5);
+			if (GetTickCount64() - dieStartTime > KOOPA_DIE_TIMEOUT)
+			{
+				SetState(KOOPA_STATE_FLASH);
+			}
 		}
 		else
 		{
@@ -131,7 +140,7 @@ protected:
 				lastJumpTime = now;
 			}
 
-			else if (state == KOOPA_STATE_DIE && GetTickCount64() - dieStartTime > KOOPA_DIE_TIMEOUT)
+			else if ((state == KOOPA_STATE_DIE || state == KOOPA_STATE_DIE_HOLD_LEFT || state == KOOPA_STATE_DIE_HOLD_LEFT) && GetTickCount64() - dieStartTime > KOOPA_DIE_TIMEOUT)
 			{
 				SetState(KOOPA_STATE_FLASH);
 			}
@@ -256,6 +265,8 @@ public:
 				vx = KOOPA_WALKING_SPEED;
 			if (previousState == KOOPA_STATE_FLY)
 				y -= (KOOPA_BBOX_HEIGHT_WINGS - KOOPA_BBOX_HEIGHT);
+			else if (previousState == KOOPA_STATE_FLASH)
+				y -= (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
 			break;
 		case KOOPA_STATE_DIE:
 			dieStartTime = GetTickCount64();
@@ -310,7 +321,7 @@ public:
 	{
 		CGameObject::SetState(state);
 		this->mario = mario;
-
+		dieStartTime = GetTickCount64();
 		vx = 0;
 		vy = 0;
 		float x, y;

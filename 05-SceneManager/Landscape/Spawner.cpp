@@ -18,6 +18,9 @@ void CSpawner::Spawn(CGameObject* player)
 	case OBJECT_TYPE_KOOPA_GREEN_WINGS:
 		newObj = new CKoopa(objX, objY, true, true, mario);
 		break;
+	case OBJECT_TYPE_KOOPA_RED:
+		newObj = new CKoopa(objX, objY, false, false, mario);
+		break;
 	default:
 		newObj = new CBrick(objX, objY);
 		break;
