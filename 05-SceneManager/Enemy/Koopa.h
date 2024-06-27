@@ -7,7 +7,7 @@
 #include "../Landscape/MysteryBox.h"
 
 #define KOOPA_GRAVITY 0.001f
-#define KOOPA_WALKING_SPEED 0.05f
+#define KOOPA_WALKING_SPEED -0.03f
 #define KOOPA_SLIP_SPEED 0.2f
 #define KOOPA_STATE_CHANGE_JUMP 0.1f
 #define KOOPA_REFLECT 10
@@ -322,6 +322,10 @@ public:
 
 	void ChangeDirection()
 	{
+		// Green Koopa does not change direction to avoid falling
+		if (color == "green")
+			return;
+
 		vx = -vx;
 		if (vx > 0)
 			guide->SetPosition(x + KOOPA_BBOX_WIDTH, y);

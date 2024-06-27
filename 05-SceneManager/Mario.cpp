@@ -26,7 +26,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"Time: %d", running_start - running);
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
 	//DebugOutTitle(L"Running: %d", running_start);
-	DebugOutTitle(L"Render invisible: %d", renderInvisibleSprite);
+	DebugOutTitle(L"Mario position: %f, %f", x, y);
+
 	if (untouchable && GetTickCount64() - last_invisible_time > MARIO_UNTOUCHABLE_BLINK_TIME)
 	{
 		last_invisible_time = GetTickCount64();
@@ -164,11 +165,11 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CMushroom*>(e->obj))
 	{
 		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+		mushroom->SetState(MUSHROOM_STATE_DIE);
 		if (level == MARIO_LEVEL_SMALL)
-		{
 			SetLevel(MARIO_LEVEL_BIG);
-			mushroom->SetState(MUSHROOM_STATE_DIE);
-		}
+		else
+			coin += 1000;
 		return;
 	}
 	//DebugOutTitle(L"Collision at %f %f, Mario %f %f", x, y, top, bottom);
@@ -216,8 +217,12 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithSpawner(LPCOLLISIONEVENT e)
 {
+	// Only spawn when go left to righr
+	if (e->nx < 0)
+	{
 		CSpawner* spawner = dynamic_cast<CSpawner*>(e->obj);
 		spawner->Spawn();
+	}
 		
 }
 

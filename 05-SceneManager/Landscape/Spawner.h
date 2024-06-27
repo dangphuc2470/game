@@ -2,12 +2,19 @@
 #include "../GameObject/GameObject.h"
 #include "../Game/Textures.h"
 #include "../Enemy/Goomba.h"
+#include "../Enemy/Koopa.h"
 
 #define SPAWNER_BBOX_WIDTH 1
 #define SPAWNER_BBOX_HEIGHT 200
 class CSpawner : public CGameObject {
+	protected:
+	int type;
+	float objX, objY;
 public:
-	CSpawner(float x, float y) : CGameObject(x, y) {
+	CSpawner(float x, float y, int type, float objX, float objY) : CGameObject(x, y) {
+		this->type = type;
+		this->objX = objX;
+		this->objY = objY;
 	}
 
 	void Render() {

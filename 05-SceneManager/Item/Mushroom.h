@@ -15,7 +15,7 @@
 
 #define MUSHROOM_STATE_WALKING 100
 #define MUSHROOM_STATE_DIE 200
-
+class CKoopa;
 
 
 class CMushroom : public CGameObject
@@ -67,22 +67,7 @@ protected:
 	};
 
 
-	virtual void OnCollisionWith(LPCOLLISIONEVENT e)
-	{
-		if (!e->obj->IsBlocking()) return;
-		if (dynamic_cast<CMushroom*>(e->obj)) return;
-		if (dynamic_cast<CGoomba*>(e->obj)) return;
-		if (dynamic_cast<CFireBall*>(e->obj)) return;
-		if (e->ny != 0)
-		{
-			vy = 0;
-		}
-		else if (e->nx != 0)
-		{
-			vx = -vx;
-		}
-
-	};
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public:
 	CMushroom(float x, float y, bool isHaveWing = 0)

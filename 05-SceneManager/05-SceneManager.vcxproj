@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClCompile Include="Enemy\GuideObject.cpp" />
     <ClCompile Include="Enemy\Fireball.cpp" />
+    <ClCompile Include="Item\Mushroom.cpp" />
     <ClCompile Include="Landscape\MysteryBox.cpp" />
     <ClCompile Include="Game\Animation.cpp" />
     <ClCompile Include="Game\Animations.cpp" />
