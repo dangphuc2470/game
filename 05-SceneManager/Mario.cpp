@@ -26,6 +26,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"Time: %d", running_start - running);
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
 	//DebugOutTitle(L"Running: %d", running_start);
+	DebugOutTitle(L"Render invisible: %d", renderInvisibleSprite);
+	if (untouchable && GetTickCount64() - last_invisible_time > MARIO_UNTOUCHABLE_BLINK_TIME)
+	{
+		last_invisible_time = GetTickCount64();
+		renderInvisibleSprite = !renderInvisibleSprite;
+	}
 	if (holdingObject != NULL)
 	{
 		if (!GetReadyToHold())
@@ -62,12 +68,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
+		renderInvisibleSprite = false;
 	}
 	/*if (GetState() == MARIO_STATE_FLY && GetTickCount64() - fly_start > MARIO_FLY_TIME)
 	{
 		SetState(MARIO_STATE_IDLE);
 	}*/
 	isOnPlatform = false;
+	
 	
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 	//DebugOutTitle(L"X: %f, Y: %f, VX: %f, VY: %f", x, y, vx, vy);
@@ -509,9 +517,21 @@ int CMario::GetAniIdRacoon()
 
 void CMario::Render()
 {
+	if (renderInvisibleSprite && GetTickCount64() - untouchable_start >= MARIO_BOOM_TIME)
+	{
+		CSprites::GetInstance()->Get(ID_SPRITE_MARIO_INVISIBLE)->Draw(x, y);
+		return;
+	}
+
+	if (untouchable && GetTickCount64() - untouchable_start < MARIO_BOOM_TIME)
+	{
+		CAnimations::GetInstance()->Get(ID_ANI_MARIO_BOOM)->Render(x, y);
+		return;
+	}
+	
+
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
-
 	if (state == MARIO_STATE_DIE)
 		aniId = ID_ANI_MARIO_DIE;
 	else if (level == MARIO_LEVEL_BIG)

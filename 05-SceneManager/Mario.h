@@ -100,6 +100,7 @@
 
 #define ID_ANI_MARIO_RACOON_SIT_RIGHT 2400
 #define ID_ANI_MARIO_RACOON_SIT_LEFT 2401
+#define ID_ANI_MARIO_BOOM 2501
 
 #pragma endregion
 
@@ -128,7 +129,9 @@
 #define MARIO_FLY_TIME 4000
 #define MARIO_FLY_SPEED 0.004f
 #define MARIO_UNTOUCHABLE_TIME 2500  //Todo: change to 2.5s
-#define MARIO_UNTOUCHABLE_BLINK_TIME 200
+#define MARIO_UNTOUCHABLE_BLINK_TIME 60
+#define MARIO_BOOM_TIME 210
+
 
 class CMario : public CGameObject
 {
@@ -139,15 +142,17 @@ class CMario : public CGameObject
 
 	int level;
 	int untouchable;
-	ULONGLONG untouchable_start;
-	ULONGLONG fly_start;
-	ULONGLONG running_start;
+	DWORD untouchable_start;
+	DWORD fly_start;
+	DWORD running_start;
+	DWORD last_invisible_time = -1;
 	BOOLEAN isOnPlatform;
 	BOOLEAN isFlying;
 	BOOLEAN isFlyable;
 	int coin;
 	CGameObject* holdingObject = NULL;
 	bool isReadyToHold = false;
+	bool renderInvisibleSprite = false;
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -196,7 +201,12 @@ public:
 
 	void SetLevel(int l);
 	int GetLevel() { return level; }
-	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+	void StartUntouchable() {
+		untouchable = 1; 
+		untouchable_start = GetTickCount64();
+		renderInvisibleSprite = true;
+		last_invisible_time = GetTickCount64();
+	}
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void SetHoldingObject(CGameObject* obj) { holdingObject = obj; }
