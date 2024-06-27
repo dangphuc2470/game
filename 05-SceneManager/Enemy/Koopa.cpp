@@ -126,6 +126,12 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 			//goomba->SetState(GOOMBA_STATE_DIE);
 			goomba->SetCollidable(false);
 		}
+		else if (dynamic_cast<CBrick*>(e->obj) && (this->state == KOOPA_STATE_DIE_SLIP))
+		{
+			CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+			brick->SetState(BRICK_STATE_BROKEN);
+			vx = -vx;
+		}
 
 		if (!e->obj->IsBlocking()) return;
 		if (e->ny != 0)
