@@ -18,6 +18,7 @@
 #include "../Enemy/Koopa.h"
 #include "../Enemy/Goomba.h"
 #include "../Enemy/Ptooie.h"
+#include "../Landscape/Wooden.h"
 
 #include "../Game/SampleKeyEventHandler.h"
 
@@ -127,10 +128,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
 	case OBJECT_TYPE_GOOMBA_WINGS: obj = new CGoomba(x, y, true); break;
-	case OBJECT_TYPE_KOOPA_RED: obj = new CKoopa(x, y, false, false); break;
-	case OBJECT_TYPE_KOOPA_RED_WINGS: obj = new CKoopa(x, y, false, true); break;
-	case OBJECT_TYPE_KOOPA_GREEN: obj = new CKoopa(x, y, true, false); break;
-	case OBJECT_TYPE_KOOPA_GREEN_WINGS: obj = new CKoopa(x, y, true, true); break;
+	case OBJECT_TYPE_KOOPA_RED: obj = new CKoopa(x, y, false, false, player); break;
+	case OBJECT_TYPE_KOOPA_RED_WINGS: obj = new CKoopa(x, y, false, true, player); break;
+	case OBJECT_TYPE_KOOPA_GREEN: obj = new CKoopa(x, y, true, false, player); break;
+	case OBJECT_TYPE_KOOPA_GREEN_WINGS: obj = new CKoopa(x, y, true, true, player); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_LARGE_BUSH_1: obj = new CLargeBush1(x, y); break;
@@ -173,6 +174,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 
 	}
+	case OBJECT_TYPE_WOODEN: obj = new CWooden(x, y); break;
 
 	case OBJECT_TYPE_PLATFORM:
 	{

@@ -26,7 +26,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"Time: %d", running_start - running);
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
 	//DebugOutTitle(L"Running: %d", running_start);
-	DebugOutTitle(L"Mario position: %f, %f", x, y);
+	//DebugOutTitle(L"Mario position: %f, %f", x, y);
 
 	if (untouchable && GetTickCount64() - last_invisible_time > MARIO_UNTOUCHABLE_BLINK_TIME)
 	{
@@ -217,11 +217,11 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithSpawner(LPCOLLISIONEVENT e)
 {
-	// Only spawn when go left to righr
+	// Only spawn when go left to righ
 	if (e->nx < 0)
 	{
 		CSpawner* spawner = dynamic_cast<CSpawner*>(e->obj);
-		spawner->Spawn();
+		spawner->Spawn(this);
 	}
 		
 }

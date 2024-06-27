@@ -1,7 +1,8 @@
 #include "Spawner.h"
 #include "../Scene/PlayScene.h"
-void CSpawner::Spawn()
+void CSpawner::Spawn(CGameObject* player)
 {
+	CMario * mario = dynamic_cast<CMario*>(player);
 	CGameObject* newObj;
 	switch (type)
 	{
@@ -12,10 +13,10 @@ void CSpawner::Spawn()
 		newObj = new CGoomba(objX, objY, true);
 		break;
 	case OBJECT_TYPE_KOOPA_GREEN:
-		newObj = new CKoopa(objX, objY, true, false);
+		newObj = new CKoopa(objX, objY, true, false, mario);
 		break;
 	case OBJECT_TYPE_KOOPA_GREEN_WINGS:
-		newObj = new CKoopa(objX, objY, true, true);
+		newObj = new CKoopa(objX, objY, true, true, mario);
 		break;
 	default:
 		newObj = new CBrick(objX, objY);

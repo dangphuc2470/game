@@ -108,6 +108,9 @@
     <ClCompile Include="Item\Mushroom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Landscape\Wooden.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Animation.h">
@@ -212,6 +215,9 @@
     <ClInclude Include="Landscape\Spawner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Landscape\Wooden.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Scene\scene_1.txt" />
@@ -224,5 +230,6 @@
     <Text Include="Landscape\black_background.txt" />
     <Text Include="Landscape\vertical_pipe.txt" />
     <Text Include="Landscape\mystery_box.txt" />
+    <Text Include="Landscape\wooden.txt" />
   </ItemGroup>
 </Project>

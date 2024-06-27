@@ -176,6 +176,7 @@
     <ClCompile Include="Game\Utils.cpp" />
     <ClCompile Include="Landscape\Vertical_Pipe.cpp" />
     <ClCompile Include="Landscape\Spawner.cpp" />
+    <ClCompile Include="Landscape\Wooden.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy\GuideObject.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="Game\Utils.h" />
     <ClInclude Include="Landscape\Vertical_Pipe.h" />
     <ClInclude Include="Landscape\Spawner.h" />
+    <ClInclude Include="Landscape\Wooden.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Landscape\black_background.txt" />
@@ -222,6 +224,7 @@
     <Text Include="Landscape\large_bush_2.txt" />
     <Text Include="Landscape\mystery_box.txt" />
     <Text Include="Landscape\vertical_pipe.txt" />
+    <Text Include="Landscape\wooden.txt" />
     <Text Include="Scene\scene_1.txt" />
     <Text Include="Landscape\small_bush.txt" />
   </ItemGroup>

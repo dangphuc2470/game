@@ -7,7 +7,7 @@
 #include "../Landscape/MysteryBox.h"
 
 #define KOOPA_GRAVITY 0.001f
-#define KOOPA_WALKING_SPEED -0.03f
+#define KOOPA_WALKING_SPEED 0.03f
 #define KOOPA_SLIP_SPEED 0.2f
 #define KOOPA_STATE_CHANGE_JUMP 0.1f
 #define KOOPA_REFLECT 10
@@ -49,6 +49,7 @@ protected:
 	DWORD respawnStartTime;
 	DWORD deleteStartTime;
 	string color;
+	CMario* marioToGetPos;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
@@ -105,10 +106,10 @@ protected:
 				this->vy = vy;*/
 				SetPosition(x - KOOPA_BBOX_WIDTH, y - 5);
 			}
-			else 
+			else
 				SetPosition(x + MARIO_BIG_BBOX_WIDTH, y - 5);
 		}
-		else 
+		else
 		{
 			vy += ay * dt;
 			vx += ax * dt;
@@ -153,7 +154,7 @@ protected:
 	};
 	virtual void Render()
 	{
-		 if (state == KOOPA_STATE_DIE || state == KOOPA_STATE_DIE_HOLD_LEFT || state == KOOPA_STATE_DIE_HOLD_RIGHT)
+		if (state == KOOPA_STATE_DIE || state == KOOPA_STATE_DIE_HOLD_LEFT || state == KOOPA_STATE_DIE_HOLD_RIGHT)
 		{
 			if (color == "green")
 				CSprites::GetInstance()->Get(ID_SPRITE_KOOPA_DIE_GREEN + 3)->Draw(x, y);
@@ -179,11 +180,11 @@ protected:
 				break;
 			case KOOPA_STATE_FLY:
 				if (color == "green")
-				vx > 0 ? aniID = ID_ANI_KOOPA_FLY_GREEN_RIGHT : aniID = ID_ANI_KOOPA_FLY_GREEN_LEFT;
-				else 
+					vx > 0 ? aniID = ID_ANI_KOOPA_FLY_GREEN_RIGHT : aniID = ID_ANI_KOOPA_FLY_GREEN_LEFT;
+				else
 					vx > 0 ? aniID = ID_ANI_KOOPA_FLY_RED_RIGHT : aniID = ID_ANI_KOOPA_FLY_RED_LEFT;
 				break;
-			
+
 
 			case KOOPA_STATE_FLASH:
 				if (color == "green")
@@ -191,7 +192,7 @@ protected:
 				else
 					aniID = ID_ANI_KOOPA_FLASH_RED;
 				break;
-		
+
 			default:
 				DebugOutTitle(L"[INFO] Koopa State Error: %d\n", state);
 				break;
@@ -212,8 +213,10 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public:
-	CKoopa(float x, float y, bool isGreen = false, bool isHaveWings = false)
+	CKoopa(float x, float y, bool isGreen, bool isHaveWings, CGameObject* player)
 	{
+		CMario* Cmario = dynamic_cast<CMario*>(player);
+		this->marioToGetPos = Cmario;
 		this->ax = 0;
 		this->ay = KOOPA_GRAVITY;
 		if (isGreen)
@@ -247,7 +250,10 @@ public:
 		{
 		case KOOPA_STATE_WALKING:
 			vy = -KOOPA_STATE_CHANGE_JUMP;
-			vx = KOOPA_WALKING_SPEED;
+			if (color == "green")
+				vx = -KOOPA_WALKING_SPEED;
+			else
+				vx = KOOPA_WALKING_SPEED;
 			if (previousState == KOOPA_STATE_FLY)
 				y -= (KOOPA_BBOX_HEIGHT_WINGS - KOOPA_BBOX_HEIGHT);
 			break;
@@ -262,13 +268,28 @@ public:
 
 		case KOOPA_STATE_DIE_SLIP:
 			vy = -KOOPA_STATE_CHANGE_JUMP;
-			vx = KOOPA_SLIP_SPEED * -nx;
-			break;
+			float marioX, marioY;
+			if (marioToGetPos != NULL)
+			{
+				marioToGetPos->GetPosition(marioX, marioY);
+				float marioVx, marioVy;
+				marioToGetPos->GetSpeed(marioVx, marioVy);
+
+				// Only work when mario is jumping
+				if (marioX > x && marioVy != 0)
+					vx = KOOPA_SLIP_SPEED * nx;
+				else
+					vx = -KOOPA_SLIP_SPEED * nx;
+					break;
+			}
 
 
 		case KOOPA_STATE_FLY:
 			vy = -KOOPA_STATE_CHANGE_JUMP;
-			vx = KOOPA_WALKING_SPEED;
+			if (color == "green")
+				vx = -KOOPA_WALKING_SPEED;
+			else
+				vx = KOOPA_WALKING_SPEED;
 			break;
 
 		case KOOPA_STATE_FLASH:
@@ -289,6 +310,7 @@ public:
 	{
 		CGameObject::SetState(state);
 		this->mario = mario;
+
 		vx = 0;
 		vy = 0;
 		float x, y;

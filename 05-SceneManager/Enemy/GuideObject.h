@@ -2,7 +2,7 @@
 #include "../GameObject/GameObject.h"
 #include "../GameObject/AssetIDs.h"
 #include "../Mario.h"
-#define GUIDE_BBOX_WIDTH 16
+#define GUIDE_BBOX_WIDTH 1
 #define GUIDE_BBOX_HEIGHT 21
 #define GUIDE_GRAVITY 0.0001f
 
@@ -25,7 +25,7 @@ public:
 	{
         //CSprites::GetInstance()->Get(ID_SPRITE_CLOUD_MIDDLE)->Draw(x, y);
 
-        //RenderBoundingBox();
+        RenderBoundingBox();
     }
 
     virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
