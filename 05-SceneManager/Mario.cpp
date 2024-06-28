@@ -27,7 +27,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"Time: %d", running_start - running);
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
 	//DebugOutTitle(L"Running: %d", running_start);
-	//DebugOutTitle(L"Mario position: %f, %f", x, y);
+	DebugOutTitle(L"Mario position: %f, %f", x, y);
 
 	if (untouchable && GetTickCount64() - last_invisible_time > MARIO_UNTOUCHABLE_BLINK_TIME)
 	{
@@ -145,7 +145,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CKoopa*>(e->obj))
 		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CBlackBackground*>(e->obj))
-		OnCollisionWithTheVoid(e);
+	{
+	//	OnCollisionWithTheVoid(e);
+	}
 	else if (dynamic_cast<CBrick*>(e->obj))
 	{
 		if (e->ny > 0)
@@ -586,7 +588,7 @@ void CMario::Render()
 	//DebugOutTitle(L"Animation ID: %d", aniId);
 	animations->Get(aniId)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 
 	//DebugOutTitle(L"Coins: %d", coin);
 }

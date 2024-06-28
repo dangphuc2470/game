@@ -144,6 +144,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BUTTON: obj = new CButton(x, y); break;
 	case OBJECT_TYPE_FLOWER: obj = new CFlower(x, y); break;
 	case OBJECT_TYPE_CLOUD_SOLID: obj = new CCloudSolid(x, y); break;
+	case OBJECT_TYPE_BUNKER: obj = new CBunker(x, y); break;
 	case OBJECT_TYPE_PTOOIE:
 	{
 		int isRed = atoi(tokens[3].c_str());
@@ -438,9 +439,13 @@ void CPlayScene::Update(DWORD dt)
 			finalCamY += rand() % 5 - 2;
 		}
 	}
+
 	if (finalCamY < -275)
 		finalCamY = -275;
-	DebugOutTitle(L"CamX: %f, CamY: %f", finalCamX, finalCamY);
+
+	if (finalCamX > 2610 && finalCamX < 3000) // End screen, > 3000 use for black underground
+		finalCamX = 2610;
+	//DebugOutTitle(L"CamX: %f, CamY: %f", finalCamX, finalCamY);
 	CGame::GetInstance()->SetCamPos(finalCamX, finalCamY);
 
 	PurgeDeletedObjects();

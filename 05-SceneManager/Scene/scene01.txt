@@ -20,6 +20,7 @@ Landscape\small_bush.txt
 Landscape\flower.txt
 Landscape\box.txt
 Landscape\black_background.txt
+Landscape\bunker.txt
 Landscape\vertical_pipe.txt
 Landscape\mystery_box.txt
 Landscape\wooden.txt
@@ -115,9 +116,32 @@ Landscape\cloud_solid.txt
 150	2200	136	0	0	158
 150	2180	184	0	0	151
 
+#back background end
+170	2710	0
+170	2900	0
+
+#bunker
+6	3200	199	15	40	55	61000	62000	63000 #top
+6	3200	15	15	40	55	61000	62000	63000 #bottom
+180	3342	100 #left
+180	3625	100 #right
+260	3492	172 #wooden
+260	3509	156
+260	3525	140
+260	3541	124
+260	3557	108
+260	3573	92
+260	3589	92
+260	3605	92
+
+300	3500	50 #bunker
+
+
 # MARIO
 #0	20	10
-0	1415	-100
+0	3373	50
+
+
 
 #ptooie
 200	350	176	1	0
@@ -145,7 +169,7 @@ Landscape\cloud_solid.txt
 6	1560	222	15	30	5	61000	62000	63000
 6	1680	222	15	30	38	61000	62000	63000
 6	2270	222	15	30	55	61000	62000	63000
-6	3090	250	15	500	3	61000	62000	63000  #Block from going to far right
+6	3000	250	15	500	3	61000	62000	63000  #Block from going to far right
 
 
 #Black_background
@@ -158,9 +182,8 @@ Landscape\cloud_solid.txt
 170	2070	430
 170	2390	430
 170	2710	430
-170	2710	0
-170	2910	430
-170	2910	0
+170	2900	430
+
 
 
 

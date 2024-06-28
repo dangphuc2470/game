@@ -145,3 +145,17 @@ class CCloudSolid : public CGameObject {
 		else return 0;
 	}
 };
+
+class CBunker : public CGameObject
+{
+public:
+	CBunker(float x, float y) : CGameObject(x, y) {}
+	void Render()
+	{
+		CSprites* s = CSprites::GetInstance();
+		s->Get(ID_SPRITE_BUNKER)->Draw(x, y);
+	};
+	void Update(DWORD dt) {}
+	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
+	int IsBlocking() { return 0; }
+};

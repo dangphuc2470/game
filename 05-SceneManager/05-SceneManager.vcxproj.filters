@@ -232,7 +232,6 @@
     <Text Include="Landscape\cloud_1.txt" />
     <Text Include="Landscape\cloud_2.txt" />
     <Text Include="Landscape\small_bush.txt" />
-    <Text Include="Landscape\box.txt" />
     <Text Include="Landscape\black_background.txt" />
     <Text Include="Landscape\vertical_pipe.txt" />
     <Text Include="Landscape\mystery_box.txt" />
@@ -240,5 +239,6 @@
     <Text Include="Item\button.txt" />
     <Text Include="Landscape\flower.txt" />
     <Text Include="Landscape\cloud_solid.txt" />
+    <Text Include="Landscape\box.txt" />
   </ItemGroup>
 </Project>
