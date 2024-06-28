@@ -146,6 +146,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Item\Button.cpp" />
     <ClCompile Include="Enemy\GuideObject.cpp" />
     <ClCompile Include="Enemy\Fireball.cpp" />
     <ClCompile Include="Item\Mushroom.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Landscape\Wooden.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Item\Button.h" />
     <ClInclude Include="Enemy\GuideObject.h" />
     <ClInclude Include="Enemy\Fireball.h" />
     <ClInclude Include="Game\Animation.h" />
@@ -216,6 +218,7 @@
     <ClInclude Include="Landscape\Wooden.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Item\button.txt" />
     <Text Include="Landscape\black_background.txt" />
     <Text Include="Landscape\box.txt" />
     <Text Include="Landscape\cloud_1.txt" />

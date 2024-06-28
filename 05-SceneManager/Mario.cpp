@@ -17,6 +17,7 @@
 
 #include "../05-SceneManager/GameObject/Collision.h"
 #include "Landscape/Spawner.h"
+#include "Item/Button.h"
 #define KOOPA_SPEED_FROM_MARIO_SPEED_MULTIPLER -5.0f
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -100,6 +101,11 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CFireBall*>(e->obj))
 	{
 		OnCollisionWithFireball(e);
+		return;
+	}
+	if (dynamic_cast<CButton*>(e->obj))
+	{
+		OnCollisionWithButton(e);
 		return;
 	}
 
@@ -226,6 +232,24 @@ void CMario::OnCollisionWithSpawner(LPCOLLISIONEVENT e)
 		CSpawner* spawner = dynamic_cast<CSpawner*>(e->obj);
 		spawner->Spawn(this);
 	}
+
+}
+
+void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
+{
+	CButton* button = dynamic_cast<CButton*>(e->obj);
+	if (e->ny > 0)
+	{
+		button->MoveUp();
+	}
+	else
+	{
+		button->SetState(BUTTON_STATE_PRESSED);
+		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+		scene->TurnBrickIntoCoin();
+	}
+
+
 
 }
 

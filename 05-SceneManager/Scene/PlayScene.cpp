@@ -7,6 +7,7 @@
 #include "../Game/Textures.h"
 #include "../Game/Sprites.h"
 #include "../Item/Coin.h"
+#include "../Item/Button.h"
 #include "../Landscape/Portal.h"
 #include "../Landscape/Platform.h"
 #include "../Landscape/BrickPlatform.h"
@@ -140,6 +141,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_CLOUD_2: obj = new CCloud2(x, y); break;
 	case OBJECT_TYPE_BLACK_BACKGROUND: obj = new CBlackBackground(x, y); break;
 	case OBJECT_TYPE_VERTICAL_PIPE: obj = new CVerticalPipe(x, y); break;
+	case OBJECT_TYPE_BUTTON: obj = new CButton(x, y); break;
 	case OBJECT_TYPE_PTOOIE: 	
 	{
 		int isRed = atoi(tokens[3].c_str());
@@ -465,4 +467,17 @@ void CPlayScene::PurgeDeletedObjects()
 	objects.erase(
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
+}
+
+void CPlayScene::TurnBrickIntoCoin()
+{
+	for (int i = 0; i < objects.size(); i++)
+	{
+		CBrick* brick = dynamic_cast<CBrick*>(objects[i]);
+		if (brick != NULL)
+		{
+			if (brick->GetState() != BRICK_STATE_BROKEN)
+				brick->TurnIntoCoin();
+		}
+	}
 }

@@ -5,6 +5,7 @@
 #include "../Game/Animations.h"
 #include "../Mario.h"
 #include "../GameObject/AssetIDs.h"
+#include "../Item/Coin.h"
 #include <stdio.h>
 #include <map>
 
@@ -91,5 +92,7 @@ public:
 			SetBlocking(false);
 		}
 	}
+
+	void TurnIntoCoin();
 
 };

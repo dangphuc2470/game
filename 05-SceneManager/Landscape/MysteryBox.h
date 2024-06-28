@@ -14,7 +14,7 @@
 class CMushroom;
 
 #define MBOX_BBOX_WIDTH 14
-#define MBOX_BBOX_HEIGHT 15
+#define MBOX_BBOX_HEIGHT 14
 #define MBOX_STATE_NORMAL 100
 #define MBOX_STATE_UNBOX 200
 
