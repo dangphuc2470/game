@@ -154,8 +154,10 @@ public:
 	{
 		CSprites* s = CSprites::GetInstance();
 		s->Get(ID_SPRITE_BUNKER)->Draw(x, y);
+
 	};
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
 	int IsBlocking() { return 0; }
 };
+

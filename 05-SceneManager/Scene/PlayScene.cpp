@@ -16,6 +16,7 @@
 #include "../Landscape/Vertical_Pipe.h"
 #include "../Landscape/MysteryBox.h"
 #include "../Landscape/Spawner.h"
+#include "../Landscape/Teleport.h"
 #include "../Enemy/Koopa.h"
 #include "../Enemy/Goomba.h"
 #include "../Enemy/Ptooie.h"
@@ -140,11 +141,27 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_CLOUD_1: obj = new CCloud1(x, y); break;
 	case OBJECT_TYPE_CLOUD_2: obj = new CCloud2(x, y); break;
 	case OBJECT_TYPE_BLACK_BACKGROUND: obj = new CBlackBackground(x, y); break;
-	case OBJECT_TYPE_VERTICAL_PIPE: obj = new CVerticalPipe(x, y); break;
 	case OBJECT_TYPE_BUTTON: obj = new CButton(x, y); break;
 	case OBJECT_TYPE_FLOWER: obj = new CFlower(x, y); break;
 	case OBJECT_TYPE_CLOUD_SOLID: obj = new CCloudSolid(x, y); break;
 	case OBJECT_TYPE_BUNKER: obj = new CBunker(x, y); break;
+	case OBJECT_TYPE_VERTICAL_PIPE:
+	{
+		if (tokens.size() > 3)
+		{
+			bool isGetdownAble= atoi(tokens[3].c_str());
+			obj = new CVerticalPipe(x, y, isGetdownAble);
+		}
+		else
+			obj = new CVerticalPipe(x, y); break;
+	}
+	case OBJECT_TYPE_TELEPORT:
+	{
+		int targetX = atoi(tokens[3].c_str());
+		int targetY = atoi(tokens[4].c_str());
+		obj = new CTeleport(x, y, targetX, targetY);
+		break;
+	}
 	case OBJECT_TYPE_PTOOIE:
 	{
 		int isRed = atoi(tokens[3].c_str());

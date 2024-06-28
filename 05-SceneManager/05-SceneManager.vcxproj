@@ -178,6 +178,7 @@
     <ClCompile Include="Landscape\Vertical_Pipe.cpp" />
     <ClCompile Include="Landscape\Spawner.cpp" />
     <ClCompile Include="Landscape\Wooden.cpp" />
+    <ClCompile Include="Landscape\Teleport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Item\Button.h" />
@@ -216,6 +217,7 @@
     <ClInclude Include="Landscape\Vertical_Pipe.h" />
     <ClInclude Include="Landscape\Spawner.h" />
     <ClInclude Include="Landscape\Wooden.h" />
+    <ClInclude Include="Landscape\Teleport.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Item\button.txt" />

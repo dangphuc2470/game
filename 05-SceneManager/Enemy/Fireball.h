@@ -59,8 +59,8 @@ public:
         if (dx > FIREBALL_DISTANCE_LAST || dy > FIREBALL_DISTANCE_LAST) {
             isDeleted = true;
         }
-
-
+        CGameObject::Update(dt);
+        //CCollision::GetInstance()->Process(this, dt, coObjects);
     }
 
     virtual void Render() override {

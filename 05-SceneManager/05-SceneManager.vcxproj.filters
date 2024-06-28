@@ -114,6 +114,9 @@
     <ClCompile Include="Item\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Landscape\Teleport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Animation.h">
@@ -224,6 +227,9 @@
     <ClInclude Include="Item\Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Landscape\Teleport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Scene\scene_1.txt" />
@@ -239,6 +245,5 @@
     <Text Include="Item\button.txt" />
     <Text Include="Landscape\flower.txt" />
     <Text Include="Landscape\cloud_solid.txt" />
-    <Text Include="Landscape\box.txt" />
   </ItemGroup>
 </Project>

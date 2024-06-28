@@ -18,6 +18,7 @@
 #include "../05-SceneManager/GameObject/Collision.h"
 #include "Landscape/Spawner.h"
 #include "Item/Button.h"
+#include "Landscape/Teleport.h"
 #define KOOPA_SPEED_FROM_MARIO_SPEED_MULTIPLER -5.0f
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -27,13 +28,42 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"Time: %d", running_start - running);
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
 	//DebugOutTitle(L"Running: %d", running_start);
-	DebugOutTitle(L"Mario position: %f, %f", x, y);
+	//DebugOutTitle(L"Mario position: %f, %f", x, y);
 
 	if (untouchable && GetTickCount64() - last_invisible_time > MARIO_UNTOUCHABLE_BLINK_TIME)
 	{
 		last_invisible_time = GetTickCount64();
 		renderInvisibleSprite = !renderInvisibleSprite;
 	}
+
+	if (isGetDownPipe)
+	{
+		if (GetTickCount64() - getDownPipeStart > MARIO_PIPE_TIME)
+		{
+			isGetDownPipe = false;
+			SetPosition(targetX, targetY);
+		}
+		else
+			vy = MARIO_PIPE_SPEED * dt;
+
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+		return;
+	}
+
+	if (isGetUpPipe)
+		{
+		if (GetTickCount64() - getUpPipeStart > MARIO_PIPE_TIME)
+		{
+			isGetUpPipe = false;
+			SetPosition(targetX, targetY);
+		}
+		else
+			vy = -MARIO_PIPE_SPEED * dt;
+
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+		return;
+	}
+
 	if (holdingObject != NULL)
 	{
 		if (!GetReadyToHold())
@@ -94,10 +124,17 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+
 	if (dynamic_cast<CGuideObject*>(e->obj))
 	{
 		return;
 	}
+	if (dynamic_cast<CTeleport*>(e->obj))
+	{
+		OnCollisionWithTeleport(e);
+		return;
+	}
+
 	if (dynamic_cast<CFireBall*>(e->obj))
 	{
 		OnCollisionWithFireball(e);
@@ -108,6 +145,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithButton(e);
 		return;
 	}
+	
 
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
@@ -183,6 +221,16 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			coin += 1000;
 		return;
 	}
+	else if (dynamic_cast<CVerticalPipe*>(e->obj))
+	{
+		
+		CVerticalPipe* pipe = dynamic_cast<CVerticalPipe*>(e->obj);
+		if (pipe->GetIsGetDownAble() && isSitting)
+		{
+			DebugOutTitle(L"Sitting");
+			pipe->BlockFor1s();
+		}
+	}
 	//DebugOutTitle(L"Collision at %f %f, Mario %f %f", x, y, top, bottom);
 	/*else if (dynamic_cast<CGoombaFlying*>(e->obj))
 		OnCollisionWithGoombaFlying(e);*/
@@ -257,6 +305,16 @@ void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
 
 
 
+}
+
+void CMario::OnCollisionWithTeleport(LPCOLLISIONEVENT e)
+{
+	CTeleport* teleport = dynamic_cast<CTeleport*>(e->obj);
+	teleport->GetTarget(targetX, targetY);
+	if (e-> ny > 0)
+		GetUpPipe();
+	else
+		GetDownPipe();
 }
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
@@ -659,7 +717,7 @@ void CMario::SetState(int state)
 		{
 			state = MARIO_STATE_IDLE;
 			isSitting = true;
-			vx = 0; vy = 0.0f;
+			vx = 0; vy = 0;
 			if (level == MARIO_LEVEL_BIG)
 				y += MARIO_SIT_HEIGHT_ADJUST;
 			else if (level == MARIO_LEVEL_RACOON)

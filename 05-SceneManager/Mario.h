@@ -14,6 +14,7 @@
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 
 #define MARIO_GRAVITY			0.002f
+#define MARIO_PIPE_SPEED			0.002f
 
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 
@@ -132,6 +133,7 @@
 #define MARIO_UNTOUCHABLE_TIME 2500  //Todo: change to 2.5s
 #define MARIO_UNTOUCHABLE_BLINK_TIME 60
 #define MARIO_BOOM_TIME 210
+#define MARIO_PIPE_TIME 2000
 
 
 class CMario : public CGameObject
@@ -155,6 +157,12 @@ class CMario : public CGameObject
 	CGameObject* holdingObject = NULL;
 	bool isReadyToHold = false;
 	bool renderInvisibleSprite = false;
+	bool isGetDownPipe = false;
+	bool isGetUpPipe = false;
+	DWORD getDownPipeStart = -1;
+	DWORD getUpPipeStart = -1;
+	float targetX, targetY;
+
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -164,6 +172,7 @@ class CMario : public CGameObject
 	void OnCollisionWithFireball(LPCOLLISIONEVENT e);
 	void OnCollisionWithSpawner(LPCOLLISIONEVENT e);
 	void OnCollisionWithButton(LPCOLLISIONEVENT e);
+	void OnCollisionWithTeleport(LPCOLLISIONEVENT e);
 	//void OnCollisionWithGuider(LPCOLLISIONEVENT e);
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -245,5 +254,16 @@ public:
 			break;
 		}
 
+	}
+
+	void GetDownPipe() {
+		isGetDownPipe = true;
+		getDownPipeStart = GetTickCount64();
+	}
+
+	void GetUpPipe() {
+		isGetUpPipe = true;
+		getUpPipeStart = GetTickCount64();
+		
 	}
 };
