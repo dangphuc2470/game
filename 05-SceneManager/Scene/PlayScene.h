@@ -6,7 +6,7 @@
 #include "../Landscape/Brick.h"
 #include "../Mario.h"
 #include <string>
-
+#define CAM_SHAKE_DURATION 500
 
 
 class CPlayScene: public CScene
@@ -16,6 +16,8 @@ protected:
 	LPGAMEOBJECT player;					
 
 	vector<LPGAMEOBJECT> objects;
+	bool isCameraShake = false;
+	DWORD cameraShakeStart = -1;
 
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
@@ -45,6 +47,7 @@ public:
 	}
 
 	void TurnBrickIntoCoin();
+	void ShakeCamera();
 };
 
 typedef CPlayScene* LPPLAYSCENE;

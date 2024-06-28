@@ -315,8 +315,10 @@ void CPlayScene::Load()
 
 void CPlayScene::Update(DWORD dt)
 {
+
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
+
 
 	vector<LPGAMEOBJECT> coObjects;
 	for (size_t i = 1; i < objects.size(); i++)
@@ -345,6 +347,8 @@ void CPlayScene::Update(DWORD dt)
 
 	CMario* mario = dynamic_cast<CMario*>(player);
 	
+	float finalCamX, finalCamY = 0;
+
 
 	int level = mario->GetLevel();
 	if (mario->GetIsFlying() || (cy < -100 && cx > 500))
@@ -375,9 +379,14 @@ void CPlayScene::Update(DWORD dt)
 			}
 			if (cam_y > 0)
 				cam_y = 0;
-			CGame::GetInstance()->SetCamPos(cx, cam_y);
+
+			finalCamX = cx;
+			finalCamY = cam_y;
 		}
-		else CGame::GetInstance()->SetCamPos(cx, cy);
+		else {
+			finalCamX = cx;
+			finalCamY = cy;
+		}
 	}
 	else
 	{
@@ -402,11 +411,26 @@ void CPlayScene::Update(DWORD dt)
 		}
 
 		// Cập nhật vị trí camera
-		CGame::GetInstance()->SetCamPos(cx, cam_y);
+		finalCamX = cx;
+		finalCamY = cam_y;
 	}
 	
 
+	if (isCameraShake)
+	{
+		DWORD now = GetTickCount64();
+		if (now - cameraShakeStart > CAM_SHAKE_DURATION)
+		{
+			isCameraShake = false;
+		}
+		else
+		{
+			finalCamX += rand() % 5 - 2;
+			finalCamY += rand() % 5 - 2;
+		}
+	}
 	
+		CGame::GetInstance()->SetCamPos(finalCamX, finalCamY);
 
 	PurgeDeletedObjects();
 }
@@ -480,4 +504,10 @@ void CPlayScene::TurnBrickIntoCoin()
 				brick->TurnIntoCoin();
 		}
 	}
+}
+
+void CPlayScene::ShakeCamera()
+{
+	isCameraShake = true;
+	cameraShakeStart = GetTickCount64();
 }

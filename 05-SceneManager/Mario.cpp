@@ -244,9 +244,13 @@ void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
 	}
 	else
 	{
-		button->SetState(BUTTON_STATE_PRESSED);
-		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-		scene->TurnBrickIntoCoin();
+		if (button->GetState() == BUTTON_STATE_NORMAL)
+		{
+			button->SetState(BUTTON_STATE_PRESSED);
+			CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+			scene->TurnBrickIntoCoin();
+			scene->ShakeCamera();
+		}
 	}
 
 
