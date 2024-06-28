@@ -17,11 +17,13 @@ Landscape\large_bush_2.txt
 Landscape\cloud_1.txt
 Landscape\cloud_2.txt
 Landscape\small_bush.txt
+Landscape\flower.txt
 Landscape\box.txt
 Landscape\black_background.txt
 Landscape\vertical_pipe.txt
 Landscape\mystery_box.txt
 Landscape\wooden.txt
+Landscape\cloud_solid.txt
 
 #
 [OBJECTS]
@@ -30,7 +32,8 @@ Landscape\wooden.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 
-# BRICKS
+#Flower
+280	1208	-100
 
 
 #COIN
@@ -42,7 +45,23 @@ Landscape\wooden.txt
 4	1110	115
 4	1140	90
 4	1170	65
-4	1200	40
+4	1287	-100
+4	1302	-100
+4	1317	-100
+4	1425	-80
+4	1440	-80
+4	1485	-60
+4	1500	-60
+4	1515	-60
+4	1530	-60
+4	1560	-80
+4	1575	-80
+4	1590	-80
+4	1605	-80
+4	1635	-40
+4	1665	-80
+4	1710	-100
+4	1740	-80
 
 
 
@@ -92,13 +111,13 @@ Landscape\wooden.txt
 150	1380	159	0	0	160
 150	1350	175	0	0	154
 150	1308	191	0	0	157
-150	1288	-20	0	0	153
+150	1288	-26	0	0	153
 150	2200	136	0	0	158
 150	2180	184	0	0	151
 
 # MARIO
 #0	20	10
-0	2250	10
+0	1415	-100
 
 #ptooie
 200	350	176	1	0
@@ -172,6 +191,7 @@ Landscape\wooden.txt
 190	656	185	1	220
 190	704	150	1	0
 190	1482	160	1	0
+190	1390	-70	1	220	1
 
 
 
@@ -238,12 +258,30 @@ Landscape\wooden.txt
 1	2018	170
 1	2034	170
 270	2050	170 #Button
-190	2050	170	0	0
+190	2050	170	0	0	
 1	2050	170
 1	2114	185
 1	2050	185
 
 
+#Cloud_solid
+290	1365	-10
+290	1380	-10
+290	1395	-10
+290	1410	-10
+290	1440	-25
+290	1455	-25
+290	1470	-25
+290	1485	-25
+290	1500	-25
+290	1515	-25
+290	1530	-25
+290	1545	-25
+290	1560	-25
+290	1575	-25
+290	1590	-25
+290	1605	-25
+290	1620	-25
 
 
 

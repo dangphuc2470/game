@@ -19,14 +19,16 @@ class CMushroom;
 #define MBOX_STATE_UNBOX 200
 
 class CMysteryBox : public CGameObject {
+	bool isBrick;
 public:
 	int objectToSpawn;
-	CMysteryBox(float x, float y, bool isOpenable, int objectToSpawn) : CGameObject(x, y) {
-	if (isOpenable)
-		state = MBOX_STATE_NORMAL;
-	else
-		state = MBOX_STATE_UNBOX;
-	this->objectToSpawn = objectToSpawn;
+	CMysteryBox(float x, float y, bool isOpenable, int objectToSpawn, bool isBrick = false) : CGameObject(x, y) {
+		this->isBrick = isBrick;
+		if (isOpenable)
+			state = MBOX_STATE_NORMAL;
+		else
+			state = MBOX_STATE_UNBOX;
+		this->objectToSpawn = objectToSpawn;
 	}
 	void Render()
 	{
@@ -38,14 +40,19 @@ public:
 		}
 		else
 		{
+			int aniID = ID_ANI_MYSTERY_BOX;
+			if (isBrick)
+				aniID = ID_ANI_BRICK;
+
 			CAnimations* animations = CAnimations::GetInstance();
-			animations->Get(ID_ANI_MYSTERY_BOX)->Render(x, y);
+			animations->Get(aniID)->Render(x, y);
+
 		}
 		//RenderBoundingBox();
 	};
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-		
+
 		CGameObject::Update(dt);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	};

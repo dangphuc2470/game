@@ -108,3 +108,40 @@ public:
 	};
 };
 
+class CFlower : public CGameObject {
+	public:
+	CFlower(float x, float y) : CGameObject(x, y) {}
+	void Render()
+	{
+		CSprites* s = CSprites::GetInstance();
+		s->Get(ID_SPRITE_FLOWER)->Draw(x, y);
+	};
+	void Update(DWORD dt) {}
+	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
+	int IsBlocking() { return 0; }
+};
+
+class CCloudSolid : public CGameObject {
+	float size = 15;
+	public:
+	CCloudSolid(float x, float y) : CGameObject(x, y) {
+	}
+	void Render()
+	{
+		CSprites* s = CSprites::GetInstance();
+		s->Get(ID_SPRITE_CLOUD_SOLID)->Draw(x, y);
+		//RenderBoundingBox();
+	};
+	void Update(DWORD dt) {}
+	void GetBoundingBox(float& l, float& t, float& r, float& b) {
+		l = x - size / 2;
+		t = y - size / 2;
+		r = l + size;
+		b = t + size;
+	};
+	int IsDirectionColliable(float nx, float ny)
+	{
+		if (nx == 0 && ny == -1) return 1;
+		else return 0;
+	}
+};

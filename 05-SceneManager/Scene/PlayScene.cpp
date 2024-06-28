@@ -142,7 +142,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BLACK_BACKGROUND: obj = new CBlackBackground(x, y); break;
 	case OBJECT_TYPE_VERTICAL_PIPE: obj = new CVerticalPipe(x, y); break;
 	case OBJECT_TYPE_BUTTON: obj = new CButton(x, y); break;
-	case OBJECT_TYPE_PTOOIE: 	
+	case OBJECT_TYPE_FLOWER: obj = new CFlower(x, y); break;
+	case OBJECT_TYPE_CLOUD_SOLID: obj = new CCloudSolid(x, y); break;
+	case OBJECT_TYPE_PTOOIE:
 	{
 		int isRed = atoi(tokens[3].c_str());
 		int isBite = atoi(tokens[4].c_str());
@@ -150,13 +152,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_SPAWNER:
 	{
-	int type = atoi(tokens[3].c_str());
+		int type = atoi(tokens[3].c_str());
 		float objX = atoi(tokens[4].c_str());
 		float objY = atoi(tokens[5].c_str());
 		obj = new CSpawner(x, y, type, objX, objY);
 		break;
 	}
-	case OBJECT_TYPE_MYSTERY_BOX: 
+	case OBJECT_TYPE_MYSTERY_BOX:
 	{
 		bool isOpened = atoi(tokens[3].c_str());
 		int objectToSpawn = -1;
@@ -164,7 +166,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		{
 			objectToSpawn = atoi(tokens[4].c_str());
 		}
-		obj = new CMysteryBox(x, y, isOpened, objectToSpawn); break;
+
+		if (tokens.size() > 5)
+		{
+			bool isBrick = atoi(tokens[5].c_str());
+			obj = new CMysteryBox(x, y, isOpened, objectToSpawn, isBrick);
+		}
+		else
+			obj = new CMysteryBox(x, y, isOpened, objectToSpawn); break;
 	}
 	case OBJECT_TYPE_BOX_PLATFORM:
 	{
@@ -337,7 +346,7 @@ void CPlayScene::Update(DWORD dt)
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);
-	
+
 
 	CGame* game = CGame::GetInstance();
 	cx -= game->GetBackBufferWidth() / 2;
@@ -346,7 +355,7 @@ void CPlayScene::Update(DWORD dt)
 	if (cx < 0) cx = 0;
 
 	CMario* mario = dynamic_cast<CMario*>(player);
-	
+
 	float finalCamX, finalCamY = 0;
 
 
@@ -355,7 +364,7 @@ void CPlayScene::Update(DWORD dt)
 	{
 		float x, y;
 		mario->GetPosition(x, y);
-		if (y>30)
+		if (y > 30)
 		{
 			float targetCamY = cy;
 			float camMoveSpeedY = 0.05 * dt;
@@ -379,7 +388,7 @@ void CPlayScene::Update(DWORD dt)
 			}
 			if (cam_y > 0)
 				cam_y = 0;
-
+			
 			finalCamX = cx;
 			finalCamY = cam_y;
 		}
@@ -391,12 +400,12 @@ void CPlayScene::Update(DWORD dt)
 	else
 	{
 		float targetCamY = 0.0f;
-		float camMoveSpeedY = 0.05 * dt; 
+		float camMoveSpeedY = 0.05 * dt;
 
 		if (cam_y < targetCamY)
 		{
 			cam_y += camMoveSpeedY * dt;
-			if (cam_y > targetCamY) 
+			if (cam_y > targetCamY)
 			{
 				cam_y = targetCamY;
 			}
@@ -404,7 +413,7 @@ void CPlayScene::Update(DWORD dt)
 		else if (cam_y > targetCamY)
 		{
 			cam_y -= camMoveSpeedY * dt;
-			if (cam_y < targetCamY) 
+			if (cam_y < targetCamY)
 			{
 				cam_y = targetCamY;
 			}
@@ -414,7 +423,7 @@ void CPlayScene::Update(DWORD dt)
 		finalCamX = cx;
 		finalCamY = cam_y;
 	}
-	
+
 
 	if (isCameraShake)
 	{
@@ -429,8 +438,10 @@ void CPlayScene::Update(DWORD dt)
 			finalCamY += rand() % 5 - 2;
 		}
 	}
-	
-		CGame::GetInstance()->SetCamPos(finalCamX, finalCamY);
+	if (finalCamY < -275)
+		finalCamY = -275;
+	DebugOutTitle(L"CamX: %f, CamY: %f", finalCamX, finalCamY);
+	CGame::GetInstance()->SetCamPos(finalCamX, finalCamY);
 
 	PurgeDeletedObjects();
 }
