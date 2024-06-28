@@ -244,7 +244,7 @@ void CMario::OnCollisionWithButton(LPCOLLISIONEVENT e)
 	}
 	else
 	{
-		if (button->GetState() == BUTTON_STATE_NORMAL)
+		if (button->GetState() == BUTTON_STATE_NORMAL && button->GetIsPressable())
 		{
 			button->SetState(BUTTON_STATE_PRESSED);
 			CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();

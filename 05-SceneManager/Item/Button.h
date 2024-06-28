@@ -12,6 +12,7 @@
 #define BUTTON_STATE_PRESSED 200
 
 class CButton : public CGameObject {
+	bool isPressable = false;
 	float targetY;
 	bool isMovingUp = false;
 public:
@@ -30,6 +31,7 @@ public:
 				y -= 0.1f * dt;
 			else
 			{
+				isPressable = true;
 				isMovingUp = false;
 			}
 		}
@@ -65,6 +67,11 @@ public:
 	void MoveUp()
 	{
 		isMovingUp = true;
+	}
+
+	bool GetIsPressable()
+	{
+		return isPressable;
 	}
 
 };
