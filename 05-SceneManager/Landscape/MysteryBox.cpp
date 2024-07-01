@@ -15,6 +15,9 @@ void CMysteryBox::SetState(int state)
 		case OBJECT_TYPE_MUSHROOM:
 			newObj = new CMushroom(x, y);
 			break;
+		case OBJECT_TYPE_MUSHROOM_GREEN:
+			newObj = new CMushroom(x, y, false);
+			break;
 		default:
 			break;
 			/*case ID_OBJECT_MUSHROOM:

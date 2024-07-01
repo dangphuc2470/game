@@ -23,7 +23,7 @@ class CMushroom : public CGameObject
 protected:
 	float ax;
 	float ay;
-
+	bool isRed;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
 			left = x - MUSHROOM_BBOX_WIDTH / 2;
@@ -52,7 +52,10 @@ protected:
 
 	virtual void Render()
 	{
+		if (isRed)
 		CSprites::GetInstance()->Get(ID_SPRITE_MUSHROOM_RED)->Draw(x, y);
+				else
+			CSprites::GetInstance()->Get(ID_SPRITE_MUSHROOM_GREEN)->Draw(x, y);
 		//RenderBoundingBox();
 	};
 
@@ -70,10 +73,11 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public:
-	CMushroom(float x, float y, bool isHaveWing = 0)
+	CMushroom(float x, float y, bool isRed = true)
 	{
 		this->ax = 0;
 		this->ay = MUSHROOM_GRAVITY;
+		this->isRed = isRed;
 		SetState(MUSHROOM_STATE_WALKING);
 		CGameObject::SetCollidable(true);
 	}
