@@ -153,6 +153,7 @@ class CMario : public CGameObject
 	BOOLEAN isFlying;
 	BOOLEAN isFlyable;
 	BOOLEAN noFlash = false;
+	BOOLEAN noBoom = false;
 	int coin;
 	CGameObject* holdingObject = NULL;
 	bool isReadyToHold = false;
@@ -213,10 +214,11 @@ public:
 
 	void SetLevel(int l);
 	int GetLevel() { return level; }
-	void StartUntouchable(bool noFlash = false) {
+	void StartUntouchable(bool noFlash = false, bool noBoom = false) {
 		untouchable = 1; 
 		untouchable_start = GetTickCount64();
 		this->noFlash = noFlash;
+		this->noBoom = noBoom;
 		renderInvisibleSprite = true;
 		last_invisible_time = GetTickCount64();
 	}

@@ -78,7 +78,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					koopa->SetState(KOOPA_STATE_DIE);
 				else
 					koopa->SetState(KOOPA_STATE_DIE_SLIP, vx * KOOPA_SPEED_FROM_MARIO_SPEED_MULTIPLER);
-				StartUntouchable(true);
+				StartUntouchable(true, true);
 			}
 			SetHoldingObject(NULL);
 		}
@@ -623,7 +623,7 @@ void CMario::Render()
 		return;
 	}
 
-	if (untouchable && GetTickCount64() - untouchable_start < MARIO_BOOM_TIME && !noFlash)
+	if (untouchable && GetTickCount64() - untouchable_start < MARIO_BOOM_TIME && !noBoom)
 	{
 		CAnimations::GetInstance()->Get(ID_ANI_MARIO_BOOM)->Render(x, y);
 		return;
@@ -812,6 +812,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 void CMario::SetLevel(int l)
 {
 	// Adjust position to avoid falling off platform
+	StartUntouchable(true, false);
 	if (this->level == MARIO_LEVEL_SMALL)
 	{
 		if (l == MARIO_LEVEL_RACOON)
