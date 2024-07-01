@@ -2,21 +2,29 @@
 
 void CMysteryBox::SetState(int state)
 {
-	if (this->state == MBOX_STATE_NORMAL && state == MBOX_STATE_UNBOX)
-	{
-		//coin++;
+	
+		//if (dynamic_cast<CMushroom*>(objectSpawned))
+		//{
+		//	CMushroom* mushroom = dynamic_cast<CMushroom*>(objectSpawned);
+		//	//mushroom->SetState(MUSHROOM_STATE_MOVING_UP);
+		//}
+		//
+	
+	CGameObject::SetState(state);
+}
 
-		CGameObject* newObj = NULL;
+CMysteryBox::CMysteryBox(float x, float y, bool isOpenable, int objectToSpawn, bool isBrick)
+{
 		switch (objectToSpawn)
 		{
 		case OBJECT_TYPE_GOOMBA:
-			newObj = new CGoomba(x, y);
+			objectSpawned = new CGoomba(x, y);
 			break;
 		case OBJECT_TYPE_MUSHROOM:
-			newObj = new CMushroom(x, y);
+			objectSpawned = new CMushroom(x, y);
 			break;
 		case OBJECT_TYPE_MUSHROOM_GREEN:
-			newObj = new CMushroom(x, y, false);
+			objectSpawned = new CMushroom(x, y, false);
 			break;
 		default:
 			break;
@@ -31,12 +39,16 @@ void CMysteryBox::SetState(int state)
 				break;*/
 		}
 		// Add new object to the scene
-		if (newObj != NULL)
+		if (objectSpawned != NULL)
 		{
 			CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-			newObj->SetPosition(x, y - 30);
-			scene->AddObject(newObj);
+			objectSpawned->SetPosition(x, y);
+			scene->AddObject(objectSpawned);
 		}
-	};
-	CGameObject::SetState(state);
+		this->isBrick = isBrick;
+		if (isOpenable)
+			state = MBOX_STATE_NORMAL;
+		else
+			state = MBOX_STATE_UNBOX;
+		this->objectToSpawn = objectToSpawn;
 }

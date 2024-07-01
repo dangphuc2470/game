@@ -9,12 +9,15 @@
 #define MUSHROOM_WALKING_SPEED 0.05f
 
 #define MUSHROOM_BBOX_WIDTH 16
-#define MUSHROOM_BBOX_HEIGHT 15
+#define MUSHROOM_BBOX_HEIGHT 13
 
 #define MUSHROOM_DIE_TIMEOUT 500
 
 #define MUSHROOM_STATE_WALKING 100
 #define MUSHROOM_STATE_DIE 200
+#define MUSHROOM_STATE_MOVING_UP 300
+#define MUSHROOM_STATE_IDLE 400
+#define MUSHROOM_MOVINGUP_TIME 500
 class CKoopa;
 
 
@@ -24,6 +27,7 @@ protected:
 	float ax;
 	float ay;
 	bool isRed;
+	DWORD movingUpTime = -1;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
 			left = x - MUSHROOM_BBOX_WIDTH / 2;
@@ -34,8 +38,26 @@ protected:
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
-		vy += ay * dt;
-		vx += ax * dt;
+		if (state == MUSHROOM_STATE_IDLE)
+		{
+			vx = 0;
+			vy = 0;
+			return;
+		}
+
+		if (state == MUSHROOM_STATE_MOVING_UP)
+		{
+			vy = -0.03f;
+			if (GetTickCount64() - movingUpTime > MUSHROOM_MOVINGUP_TIME)
+			{
+				SetState(MUSHROOM_STATE_WALKING);
+			}
+		}
+		else
+		{
+			vy += ay * dt;
+			vx += ax * dt;
+		}
 
 		if (state == MUSHROOM_STATE_DIE)
 		{
@@ -55,7 +77,7 @@ protected:
 		if (isRed)
 		CSprites::GetInstance()->Get(ID_SPRITE_MUSHROOM_RED)->Draw(x, y);
 				else
-			CSprites::GetInstance()->Get(ID_SPRITE_MUSHROOM_GREEN)->Draw(x, y);
+		CSprites::GetInstance()->Get(ID_SPRITE_MUSHROOM_GREEN)->Draw(x, y);
 		//RenderBoundingBox();
 	};
 
@@ -78,16 +100,23 @@ public:
 		this->ax = 0;
 		this->ay = MUSHROOM_GRAVITY;
 		this->isRed = isRed;
-		SetState(MUSHROOM_STATE_WALKING);
+		SetState(MUSHROOM_STATE_IDLE);
 		CGameObject::SetCollidable(true);
 	}
 
 
 	virtual void SetState(int state)
 	{
+		if (state == MUSHROOM_STATE_MOVING_UP)
+		{
+			vx = 0;
+			movingUpTime = GetTickCount64();
+		}
+		else if (state == MUSHROOM_STATE_WALKING)
+		{
+			vx = -MUSHROOM_WALKING_SPEED;
+		}
 		CGameObject::SetState(state);
-		vx = -MUSHROOM_WALKING_SPEED;
-		
 	};
 };
 

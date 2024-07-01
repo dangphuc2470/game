@@ -22,14 +22,8 @@ class CMysteryBox : public CGameObject {
 	bool isBrick;
 public:
 	int objectToSpawn;
-	CMysteryBox(float x, float y, bool isOpenable, int objectToSpawn, bool isBrick = false) : CGameObject(x, y) {
-		this->isBrick = isBrick;
-		if (isOpenable)
-			state = MBOX_STATE_NORMAL;
-		else
-			state = MBOX_STATE_UNBOX;
-		this->objectToSpawn = objectToSpawn;
-	}
+	CGameObject* objectSpawned = NULL;
+	CMysteryBox(float x, float y, bool isOpenable, int objectToSpawn, bool isBrick = false);
 	void Render()
 	{
 		//DebugOutTitle(L"MBOX state: %d\n", state);
