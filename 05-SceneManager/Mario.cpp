@@ -28,7 +28,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"Time: %d", running_start - running);
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
 	//DebugOutTitle(L"Running: %d", running_start);
-	//DebugOutTitle(L"Mario position: %f, %f", x, y);
+	DebugOutTitle(L"Mario position: %f, %f", x, y);
 
 	if (untouchable && GetTickCount64() - last_invisible_time > MARIO_UNTOUCHABLE_BLINK_TIME)
 	{
@@ -124,7 +124,7 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-
+	// Collison with object that is not collidable
 	if (dynamic_cast<CGuideObject*>(e->obj))
 	{
 		return;
@@ -145,8 +145,14 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithButton(e);
 		return;
 	}
-	
 
+	if (dynamic_cast<CLeaf*>(e->obj))
+	{
+		OnCollisionWithLeaf(e);
+		return;
+	}
+	
+	// Collision with object that is collidable
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		float x, y;
@@ -213,30 +219,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (dynamic_cast<CMushroom*>(e->obj))
 	{
-		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
-		int ny = e->ny;
-		int nx = e->nx;
-
-		if (mushroom->GetState() == MUSHROOM_STATE_IDLE && e->ny > 0)
-		{
-			mushroom->SetState(MUSHROOM_STATE_MOVING_UP);
-			return;
-		}
-		else if 
-			(mushroom->GetState() != MUSHROOM_STATE_WALKING && mushroom->GetState() != MUSHROOM_STATE_MOVING_UP)
-			return;
-		
-		if (level == MARIO_LEVEL_SMALL)
-		{
-			SetLevel(MARIO_LEVEL_BIG);
-			mushroom->SetState(MUSHROOM_STATE_DIE);
-		}
-		else
-		{
-			mushroom->SetState(MUSHROOM_STATE_POINT);
-			point += 1000;
-		}
-		return;
+		OnCollisionWithMushroom(e);
 	}
 	else if (dynamic_cast<CVerticalPipe*>(e->obj))
 	{
@@ -507,6 +490,71 @@ int CMario::GetAniIdSmall()
 	if (aniId == -1) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
 
 	return aniId;
+}
+
+void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
+{
+	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+	int ny = e->ny;
+	int nx = e->nx;
+
+	if (mushroom->GetState() == MUSHROOM_STATE_IDLE)
+	{
+		if (e->ny > 0)
+			mushroom->SetState(MUSHROOM_STATE_MOVING_UP);
+	}
+	else if (mushroom->GetState() == MUSHROOM_STATE_WALKING)
+	{
+		if (level == MARIO_LEVEL_SMALL)
+		{
+			if (mushroom->IsRed())
+			{
+				SetLevel(MARIO_LEVEL_BIG);
+				mushroom->SetState(MUSHROOM_STATE_DIE);
+			}
+			else
+			{
+				mushroom->SetState(MUSHROOM_STATE_POINT);
+				live++;
+			}
+		}
+		else
+		{
+			mushroom->SetState(MUSHROOM_STATE_POINT);
+			point += 1000;
+		}
+	}
+}
+
+void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
+{
+	CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
+	int ny = e->ny;
+	int nx = e->nx;
+
+	if (leaf->GetState() == LEAF_STATE_IDLE)
+	{
+		if (e->ny > 0)
+		{
+			if (level == MARIO_LEVEL_SMALL)
+				leaf->ChangeToMushroom();
+			else
+				leaf->SetState(LEAF_STATE_MOVING_UP);
+		}
+	}
+	else if (leaf->GetState() == LEAF_STATE_FALLING)
+	{
+		if (level == MARIO_LEVEL_BIG)
+		{
+			SetLevel(MARIO_LEVEL_RACOON);
+			leaf->SetState(LEAF_STATE_DIE);
+		}
+		else
+		{
+			leaf->SetState(LEAF_STATE_POINT);
+			point += 1000;
+		}
+	}
 }
 
 
