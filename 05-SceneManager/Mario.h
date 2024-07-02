@@ -161,6 +161,7 @@ class CMario : public CGameObject
 	bool isGetDownPipe = false;
 	bool isGetUpPipe = false;
 	int point = 0;
+	int live = 4;
 	ULONGLONG getDownPipeStart = -1;
 	ULONGLONG getUpPipeStart = -1;
 	float targetX, targetY;
@@ -175,6 +176,8 @@ class CMario : public CGameObject
 	void OnCollisionWithSpawner(LPCOLLISIONEVENT e);
 	void OnCollisionWithButton(LPCOLLISIONEVENT e);
 	void OnCollisionWithTeleport(LPCOLLISIONEVENT e);
+	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
+	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
 	//void OnCollisionWithGuider(LPCOLLISIONEVENT e);
 	int GetAniIdBig();
 	int GetAniIdSmall();

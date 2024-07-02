@@ -8,7 +8,7 @@
 #define MUSHROOM_GRAVITY 0.001f
 #define MUSHROOM_WALKING_SPEED 0.05f
 
-#define MUSHROOM_BBOX_WIDTH 15
+#define MUSHROOM_BBOX_WIDTH 12
 #define MUSHROOM_BBOX_HEIGHT 15
 
 #define MUSHROOM_DIE_TIMEOUT 500
@@ -89,7 +89,7 @@ protected:
 		CSprites::GetInstance()->Get(ID_SPRITE_MUSHROOM_RED)->Draw(x, y);
 			else
 		CSprites::GetInstance()->Get(ID_SPRITE_MUSHROOM_GREEN)->Draw(x, y);
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	};
 
 	virtual int IsCollidable() { return isCollidable; };
@@ -144,5 +144,10 @@ public:
 
 		CGameObject::SetState(state);
 	};
+
+	bool IsRed()
+	{
+		return isRed;
+	}
 };
 

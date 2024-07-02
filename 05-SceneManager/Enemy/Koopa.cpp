@@ -141,6 +141,18 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 			if (mushroom->GetState() == MUSHROOM_STATE_IDLE)
 			mushroom->SetState(MUSHROOM_STATE_MOVING_UP);
 		}
+		else if (dynamic_cast<CLeaf*>(e->obj) && (this->state == KOOPA_STATE_DIE_SLIP))
+		{
+			CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
+			if (marioToGetPos->GetLevel() == MARIO_LEVEL_SMALL)
+			{
+				leaf->ChangeToMushroom();
+			}
+			else
+			{
+				leaf->SetState(LEAF_STATE_MOVING_UP);
+			}
+		}
 
 		if (!e->obj->IsBlocking()) return;
 		if (e->ny != 0)

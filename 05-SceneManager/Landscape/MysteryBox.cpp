@@ -26,6 +26,9 @@ CMysteryBox::CMysteryBox(float x, float y, bool isOpenable, int objectToSpawn, b
 		case OBJECT_TYPE_MUSHROOM_GREEN:
 			objectSpawned = new CMushroom(x, y, false);
 			break;
+		case OBJECT_TYPE_LEAF:
+			objectSpawned = new CLeaf(x, y);
+			break;
 		default:
 			break;
 			/*case ID_OBJECT_MUSHROOM:
@@ -44,6 +47,7 @@ CMysteryBox::CMysteryBox(float x, float y, bool isOpenable, int objectToSpawn, b
 			CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
 			objectSpawned->SetPosition(x, y);
 			scene->AddObject(objectSpawned);
+	
 		}
 		this->isBrick = isBrick;
 		if (isOpenable)

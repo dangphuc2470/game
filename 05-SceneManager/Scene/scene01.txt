@@ -5,6 +5,7 @@ Landscape\brick.txt
 Item\coin.txt
 Item\mushroom.txt
 Item\button.txt
+Item\leaf.txt
 Item\point.txt
 Enemy\goomba.txt
 Enemy\koopa.txt
@@ -228,15 +229,16 @@ Landscape\cloud_solid.txt
 #1	185	150
 
 #mystery_box
+#id	x	y	openable	type	isBrickSprite
 190	176	150	1	0
 190	191	150	1	0
 190	218	102	1	0
-190	233	102	1	220
+190	233	102	1	220 #mushroom
 190	416	118	1	0
-190	656	185	1	220
+190	656	185	1	330 #leaf
 190	704	150	1	0
-190	1482	160	1	0
-190	1390	-70	1	320	1
+190	1482	160	1	330 #leaf
+190	1390	-70	1	320	1	#mushroom green
 
 
 
@@ -251,10 +253,11 @@ Landscape\cloud_solid.txt
 50	30	170	40	180	2���
 
 #spawn point
-230	650	100	2	900	150
-230	650	100	2	950	150
-230	650	100	7	1000	150
-230	357	100	3	550	150
+#id	x	y	type	objX	objY
+230	680	100	2	900	150	#goomba
+230	680	100	2	950	150	
+230	680	100	7	1000	150	#goomba red
+230	357	100	3	550	150	#koopa red
 230	900	100	3	550	150
 
 230	1110	100	10	1325	90
