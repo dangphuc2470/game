@@ -27,7 +27,7 @@ public:
 	void Render()
 	{
 		//DebugOutTitle(L"MBOX state: %d\n", state);
-		if (state == MBOX_STATE_UNBOX)
+		/*if (state == MBOX_STATE_UNBOX)
 		{
 			CSprites* sprites = CSprites::GetInstance();
 			sprites->Get(ID_SPRITE_MYSTERY_BOX_UNBOX)->Draw(x, y);
@@ -41,8 +41,8 @@ public:
 			CAnimations* animations = CAnimations::GetInstance();
 			animations->Get(aniID)->Render(x, y);
 
-		}
-		//RenderBoundingBox();
+		}*/
+		RenderBoundingBox();
 	};
 
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {

@@ -135,6 +135,12 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 				brick->SetState(BRICK_STATE_BROKEN);
 			}
 		}
+		else if (dynamic_cast<CMushroom*>(e->obj) && (this->state == KOOPA_STATE_DIE_SLIP))
+		{
+			CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+			if (mushroom->GetState() == MUSHROOM_STATE_IDLE)
+			mushroom->SetState(MUSHROOM_STATE_MOVING_UP);
+		}
 
 		if (!e->obj->IsBlocking()) return;
 		if (e->ny != 0)

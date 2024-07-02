@@ -8,8 +8,8 @@
 #define MUSHROOM_GRAVITY 0.001f
 #define MUSHROOM_WALKING_SPEED 0.05f
 
-#define MUSHROOM_BBOX_WIDTH 16
-#define MUSHROOM_BBOX_HEIGHT 13
+#define MUSHROOM_BBOX_WIDTH 15
+#define MUSHROOM_BBOX_HEIGHT 15
 
 #define MUSHROOM_DIE_TIMEOUT 500
 
@@ -79,14 +79,17 @@ protected:
 	{
 		if (state == MUSHROOM_STATE_POINT)
 		{
+			if (isRed)
 			CSprites::GetInstance()->Get(ID_SPRITE_POINT_1000)->Draw(x, y);
+			else 
+				CSprites::GetInstance()->Get(ID_SPRITE_POINT_1UP)->Draw(x, y);
 			return;
 		}
 		if (isRed)
 		CSprites::GetInstance()->Get(ID_SPRITE_MUSHROOM_RED)->Draw(x, y);
 			else
 		CSprites::GetInstance()->Get(ID_SPRITE_MUSHROOM_GREEN)->Draw(x, y);
-		//RenderBoundingBox();
+		RenderBoundingBox();
 	};
 
 	virtual int IsCollidable() { return isCollidable; };
