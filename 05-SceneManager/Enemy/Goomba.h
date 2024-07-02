@@ -28,9 +28,9 @@ class CGoomba : public CGameObject
 protected:
 	float ax;
 	float ay;
-	DWORD lastStateChange;
+	ULONGLONG lastStateChange;
 	int flyWalkCycle;
-	DWORD flyWalkTimes[8] = { 2000, 100, 100, 100, 100, 100, 1000, 500 }; //ms
+	ULONGLONG flyWalkTimes[8] = { 2000, 100, 100, 100, 100, 100, 1000, 500 }; //ms
 	ULONGLONG die_start;
 
 	float GOOMBA_JUMP_SPEED = 0.1f;
@@ -91,10 +91,10 @@ protected:
 			return;
 		}
 
-		DWORD now = GetTickCount64();
+		ULONGLONG now = GetTickCount64();
 		if (state == GOOMBA_STATE_FLYING_WALK || state == GOOMBA_STATE_FLYING_FLY)
 		{
-			DWORD changeTime = flyWalkTimes[flyWalkCycle % 8];
+			ULONGLONG changeTime = flyWalkTimes[flyWalkCycle % 8];
 			if (flyWalkCycle % 8 == 6)
 				GOOMBA_JUMP_SPEED = 0.25f;
 			else

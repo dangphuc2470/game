@@ -145,10 +145,10 @@ class CMario : public CGameObject
 
 	int level;
 	int untouchable;
-	DWORD untouchable_start;
-	DWORD fly_start;
-	DWORD running_start;
-	DWORD last_invisible_time = -1;
+	ULONGLONG untouchable_start;
+	ULONGLONG fly_start;
+	ULONGLONG running_start;
+	ULONGLONG last_invisible_time = -1;
 	BOOLEAN isOnPlatform;
 	BOOLEAN isFlying;
 	BOOLEAN isFlyable;
@@ -160,8 +160,9 @@ class CMario : public CGameObject
 	bool renderInvisibleSprite = false;
 	bool isGetDownPipe = false;
 	bool isGetUpPipe = false;
-	DWORD getDownPipeStart = -1;
-	DWORD getUpPipeStart = -1;
+	int point = 0;
+	ULONGLONG getDownPipeStart = -1;
+	ULONGLONG getUpPipeStart = -1;
 	float targetX, targetY;
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);

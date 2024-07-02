@@ -44,10 +44,10 @@ protected:
 	int previousState = -1;
 	CMario* mario;
 	CGuideObject* guide;
-	DWORD lastJumpTime;
-	DWORD dieStartTime;
-	DWORD respawnStartTime;
-	DWORD deleteStartTime;
+	ULONGLONG lastJumpTime;
+	ULONGLONG dieStartTime;
+	ULONGLONG respawnStartTime;
+	ULONGLONG deleteStartTime;
 	string color;
 	CMario* marioToGetPos;
 
@@ -126,7 +126,7 @@ protected:
 			if (IsFalling() && (state == KOOPA_STATE_WALKING))
 				ChangeDirection();
 
-			DWORD now = GetTickCount64();
+			ULONGLONG now = GetTickCount64();
 			if (!isCollidable && now - deleteStartTime > KOOPA_DELETE_TIME)
 			{
 				isDeleted = true;

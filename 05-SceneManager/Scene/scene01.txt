@@ -5,6 +5,7 @@ Landscape\brick.txt
 Item\coin.txt
 Item\mushroom.txt
 Item\button.txt
+Item\point.txt
 Enemy\goomba.txt
 Enemy\koopa.txt
 Enemy\ptooie.txt

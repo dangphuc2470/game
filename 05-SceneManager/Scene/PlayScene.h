@@ -9,6 +9,7 @@
 #define CAM_SHAKE_DURATION 500
 
 
+
 class CPlayScene: public CScene
 {
 protected: 
@@ -17,7 +18,7 @@ protected:
 
 	vector<LPGAMEOBJECT> objects;
 	bool isCameraShake = false;
-	DWORD cameraShakeStart = -1;
+	ULONGLONG cameraShakeStart = -1;
 
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);

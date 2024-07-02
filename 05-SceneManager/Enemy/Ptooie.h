@@ -37,8 +37,8 @@ protected:
 	bool isMovingUp = false;
 	float targetY;
 	float retractY; 
-	DWORD lastMoveTime; 
-	DWORD lastFireballTime;
+	ULONGLONG lastMoveTime; 
+	ULONGLONG lastFireballTime;
 	CGameObject* mario;
 	bool isBite;
 	bool isRed;
@@ -55,7 +55,7 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		
-		DWORD now = GetTickCount64();
+		ULONGLONG now = GetTickCount64();
 		float marioX, marioY;
 		CMario* marioObj = dynamic_cast<CMario*>(mario);
 		marioObj->GetPosition(marioX, marioY);
@@ -63,7 +63,7 @@ protected:
 			if (distance < PIPE_WIDTH || distance > PTOOIE_DISTANCE_TO_EXTEND)
 			{
 				//DebugOutTitle(L"Be hon");
-				if (now - lastMoveTime > TIME_BETWEEN_STATE)
+				if ((now - lastMoveTime) > TIME_BETWEEN_STATE)
 				{
 					vy = -PTOOIE_SPEED;
 					SetState(PTOOIE_STATE_RETRACT);
@@ -101,7 +101,7 @@ protected:
 						{
 							y = targetY;
 						}
-						if (now - lastMoveTime > TIME_BETWEEN_STATE)
+						if ((now - lastMoveTime) > TIME_BETWEEN_STATE)
 							SetState(PTOOIE_STATE_RETRACT);
 					}
 				}
@@ -120,7 +120,7 @@ protected:
 						{
 							y = retractY;
 						}
-						if (now - lastMoveTime > TIME_BETWEEN_STATE)
+						if ((now - lastMoveTime) > TIME_BETWEEN_STATE)
 							SetState(PTOOIE_STATE_EXTEND);
 					}
 				}
@@ -247,7 +247,7 @@ public:
 		float normDirY = dirY / distance;
 
 		// Calculate the velocity of the fireball
-		vx = normDirX * fireballSpeed + 0.01;
+		vx = normDirX * fireballSpeed + 0.01f;
 		vy = normDirY * fireballSpeed;
 	}
 

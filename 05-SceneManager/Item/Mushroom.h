@@ -18,6 +18,7 @@
 #define MUSHROOM_STATE_MOVING_UP 300
 #define MUSHROOM_STATE_IDLE 400
 #define MUSHROOM_MOVINGUP_TIME 500
+#define MUSHROOM_STATE_POINT 600
 class CKoopa;
 
 
@@ -27,7 +28,8 @@ protected:
 	float ax;
 	float ay;
 	bool isRed;
-	DWORD movingUpTime = -1;
+	ULONGLONG movingUpTime = -1;
+	ULONGLONG pointTime = -1;
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
 			left = x - MUSHROOM_BBOX_WIDTH / 2;
@@ -38,6 +40,12 @@ protected:
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
+		if (state == MUSHROOM_STATE_POINT && GetTickCount64() - pointTime > MUSHROOM_DIE_TIMEOUT)
+		{
+			isDeleted = true;
+		}
+
+
 		if (state == MUSHROOM_STATE_IDLE)
 		{
 			vx = 0;
@@ -59,12 +67,7 @@ protected:
 			vx += ax * dt;
 		}
 
-		if (state == MUSHROOM_STATE_DIE)
-		{
-			isDeleted = true;
-			return;
-		}
-
+		
 	
 		//DebugOutTitle(L"[INFO] CMushroom::Update state: %d\n", state);
 		CGameObject::Update(dt, coObjects);
@@ -74,9 +77,14 @@ protected:
 
 	virtual void Render()
 	{
+		if (state == MUSHROOM_STATE_POINT)
+		{
+			CSprites::GetInstance()->Get(ID_SPRITE_POINT_1000)->Draw(x, y);
+			return;
+		}
 		if (isRed)
 		CSprites::GetInstance()->Get(ID_SPRITE_MUSHROOM_RED)->Draw(x, y);
-				else
+			else
 		CSprites::GetInstance()->Get(ID_SPRITE_MUSHROOM_GREEN)->Draw(x, y);
 		//RenderBoundingBox();
 	};
@@ -116,6 +124,21 @@ public:
 		{
 			vx = -MUSHROOM_WALKING_SPEED;
 		}
+		else if (state == MUSHROOM_STATE_DIE)
+		{
+			vx = 0;
+			vy = 0;
+			isDeleted = true;
+		}
+		else if (state == MUSHROOM_STATE_POINT)
+		{
+			vx = 0;
+			vy = 0;
+			SetBlocking(false);
+			ay = POINT_GRAVITY;
+			pointTime = GetTickCount64();
+		}
+
 		CGameObject::SetState(state);
 	};
 };

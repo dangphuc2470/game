@@ -221,6 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Item\button.txt" />
+    <Text Include="Item\point.txt" />
     <Text Include="Landscape\cloud_solid.txt" />
     <Text Include="Landscape\flower.txt" />
     <Text Include="Landscape\black_background.txt" />

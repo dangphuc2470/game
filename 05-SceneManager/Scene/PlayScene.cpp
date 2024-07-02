@@ -89,7 +89,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 	LPANIMATION ani = new CAnimation();
 
 	int ani_id = atoi(tokens[0].c_str());
-	for (int i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
+	for (size_t i = 1; i < tokens.size(); i += 2)	// why i+=2 ?  sprite_id | frame_time  
 	{
 		int sprite_id = atoi(tokens[i].c_str());
 		int frame_time = atoi(tokens[i + 1].c_str());
@@ -157,8 +157,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_TELEPORT:
 	{
-		int targetX = atoi(tokens[3].c_str());
-		int targetY = atoi(tokens[4].c_str());
+		float targetX = static_cast<float>(atof(tokens[3].c_str()));
+				float targetY = static_cast<float>(atof(tokens[4].c_str()));
 		obj = new CTeleport(x, y, targetX, targetY);
 		break;
 	}
@@ -171,8 +171,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_SPAWNER:
 	{
 		int type = atoi(tokens[3].c_str());
-		float objX = atoi(tokens[4].c_str());
-		float objY = atoi(tokens[5].c_str());
+		float objY = static_cast<float>(atoi(tokens[5].c_str()));
+		float objX = static_cast<float>(atoi(tokens[4].c_str()));
 		obj = new CSpawner(x, y, type, objX, objY);
 		break;
 	}
@@ -195,8 +195,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case OBJECT_TYPE_BOX_PLATFORM:
 	{
-		float width = atoi(tokens[3].c_str());
-		float height = atoi(tokens[4].c_str());
+		float width = static_cast<float>(atoi(tokens[3].c_str()));
+		float height = static_cast<float>(atoi(tokens[4].c_str()));
 		int box_type_sprite_id = atoi(tokens[5].c_str());
 		obj = new CBoxPlatform(x, y, width, height, box_type_sprite_id);
 		break;
@@ -385,7 +385,7 @@ void CPlayScene::Update(DWORD dt)
 		if (y > 30)
 		{
 			float targetCamY = cy;
-			float camMoveSpeedY = 0.05 * dt;
+			float camMoveSpeedY = static_cast<float>(0.05 * dt);
 
 			// Cập nhật vị trí camera Y dần dần về mục tiêu
 			if (cam_y < targetCamY)
@@ -418,7 +418,7 @@ void CPlayScene::Update(DWORD dt)
 	else
 	{
 		float targetCamY = 0.0f;
-		float camMoveSpeedY = 0.05 * dt;
+		float camMoveSpeedY = static_cast<float>(0.05 * dt);
 
 		if (cam_y < targetCamY)
 		{
@@ -445,7 +445,7 @@ void CPlayScene::Update(DWORD dt)
 
 	if (isCameraShake)
 	{
-		DWORD now = GetTickCount64();
+		ULONGLONG now = GetTickCount64();
 		if (now - cameraShakeStart > CAM_SHAKE_DURATION)
 		{
 			isCameraShake = false;
@@ -470,7 +470,7 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
-	for (int i = 0; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 }
 
@@ -495,7 +495,7 @@ void CPlayScene::Clear()
 */
 void CPlayScene::Unload()
 {
-	for (int i = 0; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 		delete objects[i];
 
 	objects.clear();
@@ -528,7 +528,7 @@ void CPlayScene::PurgeDeletedObjects()
 
 void CPlayScene::TurnBrickIntoCoin()
 {
-	for (int i = 0; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		CBrick* brick = dynamic_cast<CBrick*>(objects[i]);
 		if (brick != NULL)

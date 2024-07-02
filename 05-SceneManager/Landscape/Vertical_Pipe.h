@@ -8,7 +8,7 @@
 class CVerticalPipe : public CGameObject
 {
 	bool isGetDownAble;
-	DWORD block_start = -1;
+	ULONGLONG block_start = -1;
 public:
 	CVerticalPipe(float x, float y, bool isGetDownAble = false) : CGameObject(x, y) {
 		this->isGetDownAble = isGetDownAble;

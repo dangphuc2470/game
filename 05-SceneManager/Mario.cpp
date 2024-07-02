@@ -77,7 +77,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				else if (vx == 0)
 					koopa->SetState(KOOPA_STATE_DIE);
 				else
-					koopa->SetState(KOOPA_STATE_DIE_SLIP, vx * KOOPA_SPEED_FROM_MARIO_SPEED_MULTIPLER);
+					koopa->SetState(KOOPA_STATE_DIE_SLIP, static_cast<int> (vx * KOOPA_SPEED_FROM_MARIO_SPEED_MULTIPLER));
 				StartUntouchable(true, true);
 			}
 			SetHoldingObject(NULL);
@@ -219,11 +219,16 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			mushroom->SetState(MUSHROOM_STATE_MOVING_UP);
 			return;
 		}
-		mushroom->SetState(MUSHROOM_STATE_DIE);
 		if (level == MARIO_LEVEL_SMALL)
+		{
 			SetLevel(MARIO_LEVEL_BIG);
+			mushroom->SetState(MUSHROOM_STATE_DIE);
+		}
 		else
-			coin += 1000;
+		{
+			mushroom->SetState(MUSHROOM_STATE_POINT);
+			point += 1000;
+		}
 		return;
 	}
 	else if (dynamic_cast<CVerticalPipe*>(e->obj))
@@ -372,9 +377,10 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 					SetHoldingObject(koopa);
 					break;
 				default:
-					koopa->SetState(KOOPA_STATE_DIE_SLIP, e->nx);
+					koopa->SetState(KOOPA_STATE_DIE_SLIP, static_cast<int>(e->nx));
 					break;
 				}
+
 
 
 			}
