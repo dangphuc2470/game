@@ -28,7 +28,37 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"Time: %d", running_start - running);
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
 	//DebugOutTitle(L"Running: %d", running_start);
-	DebugOutTitle(L"Mario position: %f, %f", x, y);
+
+	//Debugout diestart
+	DebugOutTitle(L"Diestart: %d", die_start);
+
+	if (y > 2000 && die_start == -1) // Mario die
+	{
+		x = 4000;
+		die_start = GetTickCount64();
+		return;
+	}
+
+	if (die_start != -1 && GetTickCount64() - die_start > 1000)
+	{
+			die_start = -1;
+			setLive(getLive() -1);
+			CGame::GetInstance()->InitiateSwitchScene(5);
+		// Change world
+		return;
+	}
+
+	if (time_remaining == 0)
+	{
+		SetState(MARIO_STATE_DIE);
+	}
+
+	//DebugOutTitle(L"Mario position: %f, %f", x, y);
+	if (one_second_count && GetTickCount64() - one_second_count > 1000)
+	{
+		one_second_count = GetTickCount64();
+		time_remaining--;
+	}
 
 	if (untouchable && GetTickCount64() - last_invisible_time > MARIO_UNTOUCHABLE_BLINK_TIME)
 	{
@@ -413,7 +443,8 @@ void CMario::OnCollisionWithFireball(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
-	coin++;
+	setCoin(getCoin() + 1);
+	setPoint(getPoint() + 100);
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
@@ -510,18 +541,20 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 			if (mushroom->IsRed())
 			{
 				SetLevel(MARIO_LEVEL_BIG);
-				mushroom->SetState(MUSHROOM_STATE_DIE);
+				mushroom->SetState(MUSHROOM_STATE_POINT);
+				setPoint(getPoint() + 1000);
 			}
 			else
 			{
 				mushroom->SetState(MUSHROOM_STATE_POINT);
-				live++;
+				setLive(getLive() + 1);
+				setPoint(getPoint() + 1000);
 			}
 		}
 		else
 		{
 			mushroom->SetState(MUSHROOM_STATE_POINT);
-			point += 1000;
+			setPoint(getPoint() + 1000);
 		}
 	}
 }
@@ -547,12 +580,15 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 		if (level == MARIO_LEVEL_BIG)
 		{
 			SetLevel(MARIO_LEVEL_RACOON);
-			leaf->SetState(LEAF_STATE_DIE);
+			leaf->SetState(LEAF_STATE_POINT);
+			setPoint(getPoint() + 1000);
+
 		}
 		else
 		{
 			leaf->SetState(LEAF_STATE_POINT);
-			point += 1000;
+			setPoint(getPoint() + 1000);
+
 		}
 	}
 }
@@ -722,7 +758,9 @@ void CMario::SetState(int state)
 	//DebugOutTitle(L"Set state %d", state);
 	// DIE is the end state, cannot be changed! 
 	if (this->state == MARIO_STATE_DIE)
+	{
 		return;
+	}
 
 	switch (state)
 	{
@@ -818,6 +856,7 @@ void CMario::SetState(int state)
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 		vx = 0;
 		ax = 0;
+
 		break;
 
 	}

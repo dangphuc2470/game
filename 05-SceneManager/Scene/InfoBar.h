@@ -5,6 +5,7 @@
 #include "../Game/Animations.h"
 #include "../GameObject/AssetIDs.h"
 #include "../Mario.h"
+#include "PlayScene.h"
 
 
 class CLetter : public CGameObject {
@@ -26,6 +27,8 @@ public:
 #define WORLD_X -155
 #define LIVE_X -155
 #define POINT_X -130
+#define TIME_X -25
+#define COIN_X -20
 #define TOP_Y -7
 
 #define BOTTOM_Y 2
@@ -33,7 +36,7 @@ public:
 class CInfoBar : public CGameObject {
 public:
 	CGameObject* mario;
-
+	CPlayScene* playscene;
 	int charToNumber(char c) {
 		if (c >= 'A' && c <= 'Z') {
 			return c - 'A' + 1; // Maps A to 1, B to 2, ..., Z to 26
@@ -55,8 +58,9 @@ public:
 		return numbers;
 	}
 
-	CInfoBar(float x, float y, CGameObject* mario) : CGameObject(x, y) {
+	CInfoBar(float x, float y, CGameObject* mario, CPlayScene* playscene) : CGameObject(x, y) {
 		this->mario = mario;
+		this->playscene = playscene;
 	}
 	void Render()
 	{
@@ -66,13 +70,13 @@ public:
 
 		s->Get(ID_SPRITE_LETTER_1)->Draw(x + WORLD_X, y + TOP_Y);
 
-		std::vector<int> live = stringToNumbers(to_string(mario->getLive()));
+		std::vector<int> live = stringToNumbers(to_string(playscene->GetLive()));
 		for (int i = 0; i < live.size(); i++) {
 			CLetter* letter = new CLetter(x + LIVE_X + i * 8, y + BOTTOM_Y, live[i]);
 			letter->Render();
 		}
 
-		string pointString = to_string(mario->getPoint());
+		string pointString = to_string(playscene->GetPoint());
 		if (pointString.length() < 7) {
 			pointString = string(7 - pointString.length(), '0') + pointString;
 		}
@@ -80,6 +84,18 @@ public:
 		std::vector<int> point = stringToNumbers(pointString);
 		for (int i = 0; i < point.size(); i++) {
 			CLetter* letter = new CLetter(x + POINT_X + i * 8, y + BOTTOM_Y, point[i]);
+			letter->Render();
+		}
+
+		std::vector<int> time = stringToNumbers(to_string(mario->getTimeRemaining()));
+		for (int i = 0; i < time.size(); i++) {
+			CLetter* letter = new CLetter(x + TIME_X + i * 8, y + BOTTOM_Y, time[i]);
+			letter->Render();
+		}
+
+		std::vector<int> coin = stringToNumbers(to_string(playscene->GetCoin()));
+		for (int i = 0; i < coin.size(); i++) {
+			CLetter* letter = new CLetter(x + COIN_X + i * 8, y + TOP_Y, coin[i]);
 			letter->Render();
 		}
 

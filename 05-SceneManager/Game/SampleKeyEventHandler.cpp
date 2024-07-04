@@ -38,7 +38,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetState(MARIO_STATE_DIE);
 		break;
 	case DIK_R: // reset
-		CGame::GetInstance()->InitiateSwitchScene(2);
+		CGame::GetInstance()->InitiateSwitchScene(5);
 		break;
 	case DIK_J:
 	case DIK_RCONTROL:

@@ -1,20 +1,10 @@
 # list of object assets to load in this scene
 [ASSETS]
 mario.txt
-Landscape\brick.txt
-Item\coin.txt
-Enemy\goomba.txt
-Enemy\koopa.txt
-Landscape\cloud.txt
-Landscape\brick_platform.txt
-Landscape\large_bush_1.txt
-Landscape\large_bush_2.txt
-Landscape\cloud_1.txt
-Landscape\cloud_2.txt
-Landscape\small_bush.txt
-Landscape\box.txt
-Landscape\black_background.txt
-
+brick.txt
+coin.txt
+goomba.txt
+cloud.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -22,7 +12,38 @@ Landscape\black_background.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	120	10
+0	20	10
+
+# BRICKS
+1	0	148
+1	0	164
+
+1	0	180
+1	16	180
+1	32	180
+1	48	180
+1	64	180
+1	80	180
+1	96	180
+1	112	180
+1	128	180
+1	144	180
+1	160	180
+1	176	180
+1	192	180
+1	208	180
+1	224	180
+1	240	180
+1	256	180
+1	272	180
+1	288	180
+1	304	180
+1	320	180
+1	336	180
+1	352	180
+
+1	352	148
+1	352	164
 
 #COIN
 4	100	120
@@ -31,27 +52,12 @@ Landscape\black_background.txt
 4	160	120
 4	180	120
 
-
-4	100	100
-4	120	100
-4	140	100
-4	160	100
-4	180	100
-
-4	100	80
-4	120	80
-4	140	80
-4	160	80
-4	220	80
-
-
-
+#Goomba
+2	300	10
 
 #Platform
-#Left Top Width Height Length 
-5 	100	180	16	15	90	51000	52000	53000
-5	140	140	16	15	26	51000	52000	53000
+5	90	136	16	15	16	51000	52000	53000
+5	120	90	16	16	8	20001	20001	20001
 
 #Portal 
-50	200	160	216	180	2
-
+50	300	110	316	140	2

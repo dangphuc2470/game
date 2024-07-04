@@ -124,7 +124,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
-		obj = new CMario(x, y);
+		obj = new CMario(x, y, &coin, &point, &live);
 		player = (CMario*)obj;
 
 		DebugOut(L"[INFO] Player object has been created!\n");
@@ -148,7 +148,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BUNKER: obj = new CBunker(x, y); break;
 	case OBJECT_TYPE_INFO_BAR:
 	{
-		obj = new CInfoBar(x, y, player);
+		obj = new CInfoBar(x, y, player, this);
 		this->infoBar = obj;
 		break;
 	}

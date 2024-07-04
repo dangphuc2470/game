@@ -134,6 +134,8 @@
 #define MARIO_UNTOUCHABLE_BLINK_TIME 60
 #define MARIO_BOOM_TIME 210
 #define MARIO_PIPE_TIME 2000
+#define LIVE_TIME 300
+#define MARIO_DIE_TIME 3000
 
 
 class CMario : public CGameObject
@@ -145,23 +147,26 @@ class CMario : public CGameObject
 
 	int level;
 	int untouchable;
+	int time_remaining = LIVE_TIME;
 	ULONGLONG untouchable_start;
 	ULONGLONG fly_start;
 	ULONGLONG running_start;
 	ULONGLONG last_invisible_time = -1;
+	ULONGLONG one_second_count = -1;
+	ULONGLONG die_start = -1;
 	BOOLEAN isOnPlatform;
 	BOOLEAN isFlying;
 	BOOLEAN isFlyable;
 	BOOLEAN noFlash = false;
 	BOOLEAN noBoom = false;
-	int coin;
+	int* coin;
 	CGameObject* holdingObject = NULL;
 	bool isReadyToHold = false;
 	bool renderInvisibleSprite = false;
 	bool isGetDownPipe = false;
 	bool isGetUpPipe = false;
-	int point = 0;
-	int live = 4;
+	int* point;
+	int* live;
 	ULONGLONG getDownPipeStart = -1;
 	ULONGLONG getUpPipeStart = -1;
 	float targetX, targetY;
@@ -184,7 +189,7 @@ class CMario : public CGameObject
 	int GetAniIdRacoon();
 
 public:
-	CMario(float x, float y) : CGameObject(x, y)
+	CMario(float x, float y, int* coin, int* point, int* live) : CGameObject(x, y)
 	{
 		isSitting = false;
 		maxVx = 0.0f;
@@ -197,10 +202,14 @@ public:
 		untouchable_start = -1;
 		running_start = -1;
 		fly_start = -1;
+		die_start = -1;
 		isOnPlatform = false;
-		coin = 0;
 		isFlying = false;
 		isFlyable = false;
+		one_second_count = GetTickCount64();
+		this->coin = coin;
+		this->point = point;
+		this->live = live;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -273,11 +282,12 @@ public:
 		
 	}
 
-	int getLive() { return live; }
-	void setLive(int l) { live = l; }
-	void setPoint(int p) { point = p; }
-	int getPoint() { return point; }
-	int getCoin() { return coin; }
-	void setCoin(int c) { coin = c; }
-
+	int getLive() { return *live; }
+	void setLive(int l) { *live = l; }
+	void setPoint(int p) { *point = p; }
+	int getPoint() { return *point; }
+	int getCoin() { return *coin; }
+	void setCoin(int c) { *coin = c; }
+	int getTimeRemaining() { return time_remaining; }
+	void setTimeRemaining(int t) { time_remaining = t; }
 };
