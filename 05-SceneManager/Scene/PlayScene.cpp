@@ -21,6 +21,7 @@
 #include "../Enemy/Goomba.h"
 #include "../Enemy/Ptooie.h"
 #include "../Landscape/Wooden.h"
+#include "InfoBar.h"
 
 #include "../Game/SampleKeyEventHandler.h"
 
@@ -145,11 +146,23 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_FLOWER: obj = new CFlower(x, y); break;
 	case OBJECT_TYPE_CLOUD_SOLID: obj = new CCloudSolid(x, y); break;
 	case OBJECT_TYPE_BUNKER: obj = new CBunker(x, y); break;
+	case OBJECT_TYPE_INFO_BAR:
+	{
+		obj = new CInfoBar(x, y, player);
+		this->infoBar = obj;
+		break;
+	}
+	case OBJECT_TYPE_LETTER_NUMBER_BAR:
+	{
+		int letter = atoi(tokens[3].c_str());
+		obj = new CLetter(x, y, letter);
+		break;
+	}
 	case OBJECT_TYPE_VERTICAL_PIPE:
 	{
 		if (tokens.size() > 3)
 		{
-			bool isGetdownAble= atoi(tokens[3].c_str());
+			bool isGetdownAble = atoi(tokens[3].c_str());
 			obj = new CVerticalPipe(x, y, isGetdownAble);
 		}
 		else
@@ -158,7 +171,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_TELEPORT:
 	{
 		float targetX = static_cast<float>(atof(tokens[3].c_str()));
-				float targetY = static_cast<float>(atof(tokens[4].c_str()));
+		float targetY = static_cast<float>(atof(tokens[4].c_str()));
 		obj = new CTeleport(x, y, targetX, targetY);
 		break;
 	}
@@ -406,7 +419,7 @@ void CPlayScene::Update(DWORD dt)
 			}
 			if (cam_y > 0)
 				cam_y = 0;
-			
+
 			finalCamX = cx;
 			finalCamY = cam_y;
 		}
@@ -464,7 +477,8 @@ void CPlayScene::Update(DWORD dt)
 		finalCamX = 2610;
 	//DebugOutTitle(L"CamX: %f, CamY: %f", finalCamX, finalCamY);
 	CGame::GetInstance()->SetCamPos(finalCamX, finalCamY);
-
+	if (infoBar != NULL)
+		infoBar->SetPosition(finalCamX + 240, finalCamY + 240);
 	PurgeDeletedObjects();
 }
 

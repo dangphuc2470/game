@@ -27,6 +27,7 @@ Landscape\vertical_pipe.txt
 Landscape\mystery_box.txt
 Landscape\wooden.txt
 Landscape\cloud_solid.txt
+Scene\info_bar.txt
 
 #
 [OBJECTS]
@@ -337,3 +338,6 @@ Landscape\cloud_solid.txt
 
 
 210	100	140
+
+#info bar
+23000	240	240

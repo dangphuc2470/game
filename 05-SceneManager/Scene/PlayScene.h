@@ -14,7 +14,8 @@ class CPlayScene: public CScene
 {
 protected: 
 	// A play scene has to have player, right? 
-	LPGAMEOBJECT player;					
+	LPGAMEOBJECT player;
+	LPGAMEOBJECT infoBar;
 
 	vector<LPGAMEOBJECT> objects;
 	bool isCameraShake = false;

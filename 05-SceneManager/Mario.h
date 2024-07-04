@@ -272,4 +272,12 @@ public:
 		getUpPipeStart = GetTickCount64();
 		
 	}
+
+	int getLive() { return live; }
+	void setLive(int l) { live = l; }
+	void setPoint(int p) { point = p; }
+	int getPoint() { return point; }
+	int getCoin() { return coin; }
+	void setCoin(int c) { coin = c; }
+
 };

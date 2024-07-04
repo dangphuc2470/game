@@ -169,6 +169,7 @@
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Landscape\Platform.cpp" />
     <ClCompile Include="Enemy\Ptooie.cpp" />
+    <ClCompile Include="Scene\InfoBar.cpp" />
     <ClCompile Include="Scene\PlayScene.cpp" />
     <ClCompile Include="Landscape\Portal.cpp" />
     <ClCompile Include="Game\SampleKeyEventHandler.cpp" />
@@ -207,6 +208,7 @@
     <ClInclude Include="Landscape\Platform.h" />
     <ClInclude Include="Landscape\MysteryBox.h" />
     <ClInclude Include="Enemy\Ptooie.h" />
+    <ClInclude Include="Scene\InfoBar.h" />
     <ClInclude Include="Scene\PlayScene.h" />
     <ClInclude Include="Landscape\Portal.h" />
     <ClInclude Include="Game\SampleKeyEventHandler.h" />
@@ -234,6 +236,7 @@
     <Text Include="Landscape\mystery_box.txt" />
     <Text Include="Landscape\vertical_pipe.txt" />
     <Text Include="Landscape\wooden.txt" />
+    <Text Include="Scene\info_bar.txt" />
     <Text Include="Scene\scene_1.txt" />
     <Text Include="Landscape\small_bush.txt" />
   </ItemGroup>
