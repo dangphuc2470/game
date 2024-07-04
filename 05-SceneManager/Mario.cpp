@@ -30,7 +30,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"Running: %d", running_start);
 
 	//Debugout diestart
-	DebugOutTitle(L"Diestart: %d", die_start);
 
 	if (y > 2000 && die_start == -1) // Mario die
 	{
@@ -115,6 +114,31 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	vy += ay * dt;
 	vx += ax * dt;
+
+	float thisVx, thisVy;
+	GetSpeed(thisVx, thisVy);
+	//DebugOutTitle(L"Vx: %f, Vy: %f", thisVx, thisVy);
+	if ((thisVx > 0.2f || thisVx < -0.2f) && thisVy > 0)
+	{
+		if (running_start == -1)
+			running_start = GetTickCount64();
+
+		if (running_start && GetTickCount64() - running_start > 400)
+		{
+			running_start = GetTickCount64();
+			running_count++;
+		}
+	}
+	else
+	{
+		if (running_start && GetTickCount64() - running_start > 200)
+		{
+			running_start = GetTickCount64();
+			if (running_count > 0)
+				running_count--;
+		}
+	}
+	DebugOutTitle(L"Running count: %d", running_count);
 	if (isFlying)
 	{
 		if (GetTickCount64() - fly_start > MARIO_FLY_TIME)

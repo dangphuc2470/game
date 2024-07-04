@@ -160,6 +160,7 @@ class CMario : public CGameObject
 	BOOLEAN noFlash = false;
 	BOOLEAN noBoom = false;
 	int* coin;
+	int running_count = 0;
 	CGameObject* holdingObject = NULL;
 	bool isReadyToHold = false;
 	bool renderInvisibleSprite = false;
