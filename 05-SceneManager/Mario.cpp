@@ -118,33 +118,34 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	float thisVx, thisVy;
 	GetSpeed(thisVx, thisVy);
 	//DebugOutTitle(L"Vx: %f, Vy: %f", thisVx, thisVy);
-	if (((thisVx > 0.2f || thisVx < -0.2f) && thisVy > 0) || isFlying)
+	if (((thisVx >= MARIO_RUNNING_SPEED || thisVx <= -MARIO_RUNNING_SPEED) && thisVy > 0) || isFlying)
 	{
 		if (running_start == -1)
 			running_start = GetTickCount64();
 
-		if (running_start && GetTickCount64() - running_start > 400)
+		if (running_start && GetTickCount64() - running_start > MARIO_INCREASE_RUNNING_COUNT_TIME)
 		{
 			running_start = GetTickCount64();
-			if (running_count < 8)
+			if (running_count < MAX_STAMITA)
 			running_count++;
 		}
 	}
 	else
 	{
-		if (running_start && GetTickCount64() - running_start > 200)
+		if (running_start && GetTickCount64() - running_start > MARIO_DECREASE_RUNNING_COUNT_TIME)
 		{
 			running_start = GetTickCount64();
 			if (running_count > 0)
 				running_count--;
 		}
 	}
-	DebugOutTitle(L"Running count: %d", running_count);
+	DebugOutTitle(L"Running count: %d", GetLive());
 	if (isFlying)
 	{
 		if (GetTickCount64() - fly_start > MARIO_FLY_TIME)
 		{
 			isFlying = false;
+			running_count = 2;
 			vy = 0;
 		}
 		else
@@ -578,7 +579,9 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 		}
 		else
 		{
+			if (!mushroom->IsRed())
 			mushroom->SetState(MUSHROOM_STATE_POINT);
+			SetLive(GetLive() + 1);
 			SetPoint(GetPoint() + 1000);
 		}
 	}

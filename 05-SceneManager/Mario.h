@@ -5,7 +5,7 @@
 #include "../05-SceneManager/Game/debug.h"
 
 #define MARIO_WALKING_SPEED		0.1f
-#define MARIO_RUNNING_SPEED		0.2f
+#define MARIO_RUNNING_SPEED		0.156f
 
 #define MARIO_ACCEL_WALK_X	0.0005f
 #define MARIO_ACCEL_RUN_X	0.0007f
@@ -128,7 +128,7 @@
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
-#define MARIO_FLY_TIME 4000
+#define MARIO_FLY_TIME 500
 #define MARIO_FLY_SPEED 0.004f
 #define MARIO_UNTOUCHABLE_TIME 2500  //Todo: change to 2.5s
 #define MARIO_UNTOUCHABLE_BLINK_TIME 60
@@ -136,7 +136,10 @@
 #define MARIO_PIPE_TIME 2000
 #define LIVE_TIME 300
 #define MARIO_DIE_TIME 3000
-
+#define MARIO_DECREASE_RUNNING_COUNT_TIME 220
+#define MARIO_INCREASE_RUNNING_COUNT_TIME 350
+#define MAX_STAMITA 9
+#define STAMINA_TO_FLY 7
 
 class CMario : public CGameObject
 {
@@ -243,6 +246,10 @@ public:
 	bool GetReadyToHold() { return isReadyToHold; }
 	void SetIsFlying(bool flying) {
 		isFlying = flying;
+		if (!flying)
+			ay = MARIO_GRAVITY;
+		else
+			ay = MARIO_GRAVITY*0.1;
 		fly_start = GetTickCount64();
 	}
 	bool GetIsFlying() { return isFlying; }

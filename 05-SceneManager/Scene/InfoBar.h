@@ -68,6 +68,9 @@ public:
 		this->mario = mario;
 		this->playscene = playscene;
 	}
+
+
+
 	void Render()
 	{
 		CSprites* s = CSprites::GetInstance();
@@ -124,7 +127,10 @@ public:
 
 	};
 	void Update(DWORD dt) {
-		
+		CMario* mario = dynamic_cast<CMario*>(this->mario);
+		if (mario->GetLive() != 0) {
+			this->Render();
+		}
 	}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
 	int IsBlocking() { return 0; }

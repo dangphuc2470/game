@@ -391,7 +391,7 @@ void CPlayScene::Update(DWORD dt)
 
 
 	int level = mario->GetLevel();
-	if (mario->GetIsFlying() || (cy < -100 && cx > 500))
+	if (mario->GetIsFlying() || (cy < -120 && cx > 500))
 	{
 		float x, y;
 		mario->GetPosition(x, y);

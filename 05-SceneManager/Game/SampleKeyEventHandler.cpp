@@ -19,8 +19,10 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_K:
 		case DIK_UP:
-		mario->SetState(MARIO_STATE_JUMP);
-		
+		if (mario->GetLevel() == MARIO_LEVEL_RACOON && mario->GetRunningCount() >= STAMINA_TO_FLY)
+			mario->SetIsFlying(true);
+		else
+			mario->SetState(MARIO_STATE_JUMP);
 		break;
 	case DIK_3:
 		mario->SetLevel(MARIO_LEVEL_RACOON);
