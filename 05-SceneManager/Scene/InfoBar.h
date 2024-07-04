@@ -80,7 +80,7 @@ public:
 		s->Get(ID_SPRITE_LETTER_1)->Draw(x + WORLD_X, y + TOP_Y);
 
 		std::vector<int> live = stringToNumbers(to_string(playscene->GetLive()));
-		for (int i = 0; i < live.size(); i++) {
+		for (int i = 0; i < (live.size()); i++) {
 			CLetter* letter = new CLetter(x + LIVE_X + i * 8, y + BOTTOM_Y, live[i]);
 			letter->Render();
 		}
@@ -91,19 +91,19 @@ public:
 		}
 
 		std::vector<int> point = stringToNumbers(pointString);
-		for (int i = 0; i < point.size(); i++) {
+		for (int i = 0; i < (point.size()); i++) {
 			CLetter* letter = new CLetter(x + POINT_X + i * 8, y + BOTTOM_Y, point[i]);
 			letter->Render();
 		}
 
 		std::vector<int> time = stringToNumbers(to_string(mario->GetTimeRemaining()));
-		for (int i = 0; i < time.size(); i++) {
+		for (int i = 0; i < (time.size()); i++) {
 			CLetter* letter = new CLetter(x + TIME_X + i * 8, y + BOTTOM_Y, time[i]);
 			letter->Render();
 		}
 
 		std::vector<int> coin = stringToNumbers(to_string(playscene->GetCoin()));
-		for (int i = 0; i < coin.size(); i++) {
+		for (int i = 0; i < (coin.size()); i++) {
 			CLetter* letter = new CLetter(x + COIN_X + i * 8, y + TOP_Y, coin[i]);
 			letter->Render();
 		}

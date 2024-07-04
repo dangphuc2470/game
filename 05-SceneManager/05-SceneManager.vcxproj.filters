@@ -259,5 +259,6 @@
     <Text Include="Landscape\cloud_solid.txt" />
     <Text Include="Item\point.txt" />
     <Text Include="Scene\info_bar.txt" />
+    <Text Include="Landscape\map.txt" />
   </ItemGroup>
 </Project>

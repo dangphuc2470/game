@@ -141,6 +141,7 @@
 #define MARIO_INCREASE_RUNNING_COUNT_TIME 350
 #define MAX_STAMITA 9
 #define STAMINA_TO_FLY 7
+#define MARIO_MAP_MOVE 26
 
 class CMario : public CGameObject
 {
@@ -359,19 +360,19 @@ public:
 	int IsBlocking() { return 0; }
 
 	void MoveDown() {
-		targetY += 16;
+		targetY += MARIO_MAP_MOVE;
 	}
 
 	void MoveUp() {
-		targetY -= 16;
+		targetY -= MARIO_MAP_MOVE;
 	}
 
 	void MoveLeft() {
-		targetX -= 16;
+		targetX -= MARIO_MAP_MOVE;
 	}
 
 	void MoveRight() {
-		targetX += 16;
+		targetX += MARIO_MAP_MOVE;
 	}
 
 	

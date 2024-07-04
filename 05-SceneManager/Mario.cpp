@@ -554,8 +554,8 @@ int CMario::GetAniIdSmall()
 void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
 	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
-	int ny = e->ny;
-	int nx = e->nx;
+	float ny = e->ny;
+	float nx = e->nx;
 
 	if (mushroom->GetState() == MUSHROOM_STATE_IDLE)
 	{
@@ -592,8 +592,8 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 {
 	CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
-	int ny = e->ny;
-	int nx = e->nx;
+	float ny = e->ny;
+	float nx = e->nx;
 
 	if (leaf->GetState() == LEAF_STATE_IDLE)
 	{

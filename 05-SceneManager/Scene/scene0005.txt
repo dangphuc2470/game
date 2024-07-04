@@ -12,6 +12,7 @@ Enemy\koopa.txt
 Enemy\ptooie.txt
 Enemy\fireball.txt
 Landscape\cloud.txt
+Landscape\map.txt
 Landscape\brick.txt
 Landscape\brick_platform.txt
 Landscape\large_bush_1.txt
@@ -40,7 +41,6 @@ Scene\info_bar.txt
 # MARIO
 #0	20	10
 0	50	160	1	#Mario no countdown
-350	50	160 #Mario Map
 
 
 
@@ -72,6 +72,13 @@ Scene\info_bar.txt
 #Portal�
 #��x, y, right, bottom
 50	40	170	2000	180	1���
+
+#Map
+340	225	135
+
+#Mario Map
+350	74	60
+
 
 
 #info bar

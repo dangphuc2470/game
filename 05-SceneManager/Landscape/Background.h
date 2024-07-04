@@ -167,9 +167,8 @@ public:
 	CMap(float x, float y) : CGameObject(x, y) {}
 	void Render()
 	{
-		CSprites* s = CSprites::GetInstance();
-		s->Get(ID_SPRITE_MAP)->Draw(x, y);
-
+		CAnimations* animations = CAnimations::GetInstance();
+		animations->Get(ID_ANI_MAP)->Render(x, y);
 	};
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
