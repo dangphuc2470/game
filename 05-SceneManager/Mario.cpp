@@ -41,7 +41,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (die_start != -1 && GetTickCount64() - die_start > 1000)
 	{
 			die_start = -1;
-			setLive(getLive() -1);
+			SetLive(GetLive() -1);
 			CGame::GetInstance()->InitiateSwitchScene(5);
 		// Change world
 		return;
@@ -118,7 +118,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	float thisVx, thisVy;
 	GetSpeed(thisVx, thisVy);
 	//DebugOutTitle(L"Vx: %f, Vy: %f", thisVx, thisVy);
-	if ((thisVx > 0.2f || thisVx < -0.2f) && thisVy > 0)
+	if (((thisVx > 0.2f || thisVx < -0.2f) && thisVy > 0) || isFlying)
 	{
 		if (running_start == -1)
 			running_start = GetTickCount64();
@@ -126,6 +126,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (running_start && GetTickCount64() - running_start > 400)
 		{
 			running_start = GetTickCount64();
+			if (running_count < 8)
 			running_count++;
 		}
 	}
@@ -467,8 +468,8 @@ void CMario::OnCollisionWithFireball(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
-	setCoin(getCoin() + 1);
-	setPoint(getPoint() + 100);
+	SetCoin(GetCoin() + 1);
+	SetPoint(GetPoint() + 100);
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
@@ -566,19 +567,19 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 			{
 				SetLevel(MARIO_LEVEL_BIG);
 				mushroom->SetState(MUSHROOM_STATE_POINT);
-				setPoint(getPoint() + 1000);
+				SetPoint(GetPoint() + 1000);
 			}
 			else
 			{
 				mushroom->SetState(MUSHROOM_STATE_POINT);
-				setLive(getLive() + 1);
-				setPoint(getPoint() + 1000);
+				SetLive(GetLive() + 1);
+				SetPoint(GetPoint() + 1000);
 			}
 		}
 		else
 		{
 			mushroom->SetState(MUSHROOM_STATE_POINT);
-			setPoint(getPoint() + 1000);
+			SetPoint(GetPoint() + 1000);
 		}
 	}
 }
@@ -605,13 +606,13 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 		{
 			SetLevel(MARIO_LEVEL_RACOON);
 			leaf->SetState(LEAF_STATE_POINT);
-			setPoint(getPoint() + 1000);
+			SetPoint(GetPoint() + 1000);
 
 		}
 		else
 		{
 			leaf->SetState(LEAF_STATE_POINT);
-			setPoint(getPoint() + 1000);
+			SetPoint(GetPoint() + 1000);
 
 		}
 	}

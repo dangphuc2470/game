@@ -283,12 +283,14 @@ public:
 		
 	}
 
-	int getLive() { return *live; }
-	void setLive(int l) { *live = l; }
-	void setPoint(int p) { *point = p; }
-	int getPoint() { return *point; }
-	int getCoin() { return *coin; }
-	void setCoin(int c) { *coin = c; }
-	int getTimeRemaining() { return time_remaining; }
-	void setTimeRemaining(int t) { time_remaining = t; }
+	int GetLive() { return *live; }
+	void SetLive(int l) { *live = l; }
+	void SetPoint(int p) { *point = p; }
+	int GetPoint() { return *point; }
+	int GetCoin() { return *coin; }
+	void SetCoin(int c) { *coin = c; }
+	int GetTimeRemaining() { return time_remaining; }
+	void SetTimeRemaining(int t) { time_remaining = t; }
+	int GetRunningCount() { return running_count; }
+	void SetRunningCount(int r) { running_count = r; }
 };

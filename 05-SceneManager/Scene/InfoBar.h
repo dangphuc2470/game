@@ -31,6 +31,12 @@ public:
 #define COIN_X -20
 #define TOP_Y -7
 
+#define STAMINA_X -90
+#define STAMINA_WHITE_X -131
+#define BLACK_STAMINA 37
+#define WHITE_STAMINA 38
+#define WHITE_P 39
+
 #define BOTTOM_Y 2
 
 class CInfoBar : public CGameObject {
@@ -87,7 +93,7 @@ public:
 			letter->Render();
 		}
 
-		std::vector<int> time = stringToNumbers(to_string(mario->getTimeRemaining()));
+		std::vector<int> time = stringToNumbers(to_string(mario->GetTimeRemaining()));
 		for (int i = 0; i < time.size(); i++) {
 			CLetter* letter = new CLetter(x + TIME_X + i * 8, y + BOTTOM_Y, time[i]);
 			letter->Render();
@@ -97,6 +103,23 @@ public:
 		for (int i = 0; i < coin.size(); i++) {
 			CLetter* letter = new CLetter(x + COIN_X + i * 8, y + TOP_Y, coin[i]);
 			letter->Render();
+		}
+
+		CLetter* letter = new CLetter(x + STAMINA_X, y + TOP_Y - 2, BLACK_STAMINA);
+		letter->Render();
+
+		int running_count = mario->GetRunningCount();
+		for (int i = 0; i < running_count; i++) {
+			if (i == 6)
+				{
+				CLetter* letter = new CLetter(x + STAMINA_WHITE_X - 1 + i * 13, y + TOP_Y - 2, WHITE_P);
+				letter->Render();
+				break;
+			}
+			else {
+				CLetter* letter = new CLetter(x + STAMINA_WHITE_X + i * 12, y + TOP_Y - 2, WHITE_STAMINA);
+				letter->Render();
+			}
 		}
 
 	};
