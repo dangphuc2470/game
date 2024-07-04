@@ -10,7 +10,27 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+	CMarioMap* marioMap = (CMarioMap *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetMarioMap();
+	if (marioMap != NULL)
+	{
+		switch (KeyCode)
+		{
+		case DIK_S:
+			marioMap->MoveDown();
+			break;
+		case DIK_W:
+			marioMap->MoveUp();
+			break;
+		case DIK_A:
+			marioMap->MoveLeft();
+			break;
+		case DIK_D:
+			marioMap->MoveRight();
+			break;
+		}
 
+	}
+	
 	switch (KeyCode)
 	{
 	case DIK_S:

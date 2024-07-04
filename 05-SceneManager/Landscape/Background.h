@@ -161,3 +161,18 @@ public:
 	int IsBlocking() { return 0; }
 };
 
+class CMap : public CGameObject
+{
+public:
+	CMap(float x, float y) : CGameObject(x, y) {}
+	void Render()
+	{
+		CSprites* s = CSprites::GetInstance();
+		s->Get(ID_SPRITE_MAP)->Draw(x, y);
+
+	};
+	void Update(DWORD dt) {}
+	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
+	int IsBlocking() { return 0; }
+};
+

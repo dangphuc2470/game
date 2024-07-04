@@ -3,6 +3,7 @@
 #include "../05-SceneManager/Game/Animation.h"
 #include "../05-SceneManager/Game/Animations.h"
 #include "../05-SceneManager/Game/debug.h"
+#include "../05-SceneManager/GameObject/AssetIDs.h"
 
 #define MARIO_WALKING_SPEED		0.1f
 #define MARIO_RUNNING_SPEED		0.156f
@@ -169,6 +170,7 @@ class CMario : public CGameObject
 	bool renderInvisibleSprite = false;
 	bool isGetDownPipe = false;
 	bool isGetUpPipe = false;
+	bool isNoCountDown = false;
 	int* point;
 	int* live;
 	ULONGLONG getDownPipeStart = -1;
@@ -193,13 +195,13 @@ class CMario : public CGameObject
 	int GetAniIdRacoon();
 
 public:
-	CMario(float x, float y, int* coin, int* point, int* live) : CGameObject(x, y)
+	CMario(float x, float y, int* coin, int* point, int* live, bool isNoCountDown) : CGameObject(x, y)
 	{
 		isSitting = false;
 		maxVx = 0.0f;
 		ax = 0.0f;
 		ay = MARIO_GRAVITY;
-
+		this->isNoCountDown = isNoCountDown;
 		//level = MARIO_LEVEL_BIG;
 		level = 3;
 		untouchable = 0;
@@ -210,7 +212,7 @@ public:
 		isOnPlatform = false;
 		isFlying = false;
 		isFlyable = false;
-		one_second_count = GetTickCount64();
+			one_second_count = GetTickCount64();
 		this->coin = coin;
 		this->point = point;
 		this->live = live;
@@ -300,4 +302,77 @@ public:
 	void SetTimeRemaining(int t) { time_remaining = t; }
 	int GetRunningCount() { return running_count; }
 	void SetRunningCount(int r) { running_count = r; }
+};
+
+
+class CMarioMap: public CGameObject
+{
+	float targetX, targetY;
+	int ax = 0; int  ay = 0;
+public:
+	CMarioMap(float x, float y) : CGameObject(x, y) {
+		targetX = x;
+		targetY = y;
+		SetBlocking(0);
+		SetCollidable(0);
+	}
+	void Render()
+	{
+		CAnimations* animations = CAnimations::GetInstance();
+		animations->Get(ID_ANI_MARIO_MAP)->Render(x, y);
+	};
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+		//Debug out x y targetX targetY
+		DebugOutTitle(L"x: %f, y: %f, targetX: %f, targetY: %f", x, y, targetX, targetY);
+		if (x < targetX)
+		{
+			x += MARIO_RUNNING_SPEED * dt;
+			if (x > targetX)
+				x = targetX;
+		}
+		else if (x > targetX)
+		{
+			x -= MARIO_RUNNING_SPEED * dt;
+			if (x < targetX)
+				x = targetX;
+		}
+		if (y < targetY)
+		{
+			y += MARIO_RUNNING_SPEED * dt;
+			if (y > targetY)
+				y = targetY;
+		}
+		else if (y > targetY)
+		{
+			y -= MARIO_RUNNING_SPEED * dt;
+			if (y < targetY)
+				y = targetY;
+		}
+
+
+
+
+		CGameObject::Update(dt, coObjects);
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	}
+	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
+	int IsBlocking() { return 0; }
+
+	void MoveDown() {
+		targetY += 16;
+	}
+
+	void MoveUp() {
+		targetY -= 16;
+	}
+
+	void MoveLeft() {
+		targetX -= 16;
+	}
+
+	void MoveRight() {
+		targetX += 16;
+	}
+
+	
 };

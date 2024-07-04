@@ -124,7 +124,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
-		obj = new CMario(x, y, &coin, &point, &live);
+		if (tokens.size() > 4)
+		{
+			int isNoCountDown = atoi(tokens[3].c_str());
+			obj = new CMario(x, y, &coin, &point, &live, isNoCountDown);
+		}
+		else
+		{
+			obj = new CMario(x, y, &coin, &point, &live, false);
+		}
 		player = (CMario*)obj;
 
 		DebugOut(L"[INFO] Player object has been created!\n");
@@ -146,6 +154,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_FLOWER: obj = new CFlower(x, y); break;
 	case OBJECT_TYPE_CLOUD_SOLID: obj = new CCloudSolid(x, y); break;
 	case OBJECT_TYPE_BUNKER: obj = new CBunker(x, y); break;
+	case OBJECT_TYPE_MARIO_MAP: 
+	{
+		obj = new CMarioMap(x, y);
+		this->marioMap = dynamic_cast<CMarioMap*>(obj);
+		break;
+	}
 	case OBJECT_TYPE_INFO_BAR:
 	{
 		obj = new CInfoBar(x, y, player, this);

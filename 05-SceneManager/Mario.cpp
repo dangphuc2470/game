@@ -56,6 +56,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (one_second_count && GetTickCount64() - one_second_count > 1000)
 	{
 		one_second_count = GetTickCount64();
+		if (isNoCountDown)
+			return;
 		time_remaining--;
 	}
 

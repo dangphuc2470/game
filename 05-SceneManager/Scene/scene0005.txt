@@ -1,63 +1,78 @@
-# list of object assets to load in this scene
+﻿# list of object assets to load in this scene
 [ASSETS]
 mario.txt
-brick.txt
-coin.txt
-goomba.txt
-cloud.txt
+Landscape\brick.txt
+Item\coin.txt
+Item\mushroom.txt
+Item\button.txt
+Item\leaf.txt
+Item\point.txt
+Enemy\goomba.txt
+Enemy\koopa.txt
+Enemy\ptooie.txt
+Enemy\fireball.txt
+Landscape\cloud.txt
+Landscape\brick.txt
+Landscape\brick_platform.txt
+Landscape\large_bush_1.txt
+Landscape\large_bush_2.txt
+Landscape\cloud_1.txt
+Landscape\cloud_2.txt
+Landscape\small_bush.txt
+Landscape\flower.txt
+Landscape\box.txt
+Landscape\black_background.txt
+Landscape\bunker.txt
+Landscape\vertical_pipe.txt
+Landscape\mystery_box.txt
+Landscape\wooden.txt
+Landscape\cloud_solid.txt
+Scene\info_bar.txt
+
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
 # See OBJECT_TYPE constants in AssetIDs.h
 
+
+
 # MARIO
-0	20	10
+#0	20	10
+0	50	160	1	#Mario no countdown
+350	50	160 #Mario Map
 
-# BRICKS
-1	0	148
-1	0	164
 
-1	0	180
-1	16	180
-1	32	180
-1	48	180
-1	64	180
-1	80	180
-1	96	180
-1	112	180
-1	128	180
-1	144	180
-1	160	180
-1	176	180
-1	192	180
-1	208	180
-1	224	180
-1	240	180
-1	256	180
-1	272	180
-1	288	180
-1	304	180
-1	320	180
-1	336	180
-1	352	180
 
-1	352	148
-1	352	164
+#Brick Platform
+#ID x��y��Width Height Length�
+6	10	250	15	500	3	61000	62000	63000  #Block from going back from start
+6	-100	222	15	30	42	61000	62000	63000
+6	100	250	15	500	3	61000	62000	63000
 
-#COIN
-4	100	120
-4	120	120
-4	140	120
-4	160	120
-4	180	120
 
-#Goomba
-2	300	10
+#Black_background
+170	150	430
+170	470	430
+170	790	430
+170	1110	430
+170	1430	430
+170	1750	430
+170	2070	430
+170	2390	430
+170	2710	430
+170	2900	430
+170	4000	300
+170	4200	300
+170	4000	0
+170	4300	0
 
-#Platform
-5	90	136	16	15	16	51000	52000	53000
-5	120	90	16	16	8	20001	20001	20001
 
-#Portal 
-50	300	110	316	140	2
+
+#Portal�
+#��x, y, right, bottom
+50	40	170	2000	180	1���
+
+
+#info bar
+23000	240	240

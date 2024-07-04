@@ -255,7 +255,7 @@ Scene\info_bar.txt
 
 #Portal�
 #��x, y, right, bottom
-50	30	170	40	180	2���
+50	30	170	40	180	5���
 
 #spawn point
 #id	x	y	type	objX	objY

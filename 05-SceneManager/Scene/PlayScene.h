@@ -15,6 +15,7 @@ class CPlayScene: public CScene
 protected: 
 	// A play scene has to have player, right? 
 	LPGAMEOBJECT player;
+	LPGAMEOBJECT marioMap = NULL;
 	LPGAMEOBJECT infoBar;
 	int live = 4;
 	int point = 0;
@@ -40,6 +41,7 @@ public:
 	virtual void Unload();
 
 	LPGAMEOBJECT GetPlayer() { return player; }
+	LPGAMEOBJECT GetMarioMap() { return marioMap; }
 
 	void Clear();
 	void PurgeDeletedObjects();
