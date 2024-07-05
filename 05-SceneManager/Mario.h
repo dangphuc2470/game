@@ -316,7 +316,6 @@ class CMarioMap: public CGameObject
 
 	int currentIndexX = 0;
 	int currentIndexY = 1;
-
 public:
 	CMarioMap(float x, float y, CGameObject* obj) : CGameObject(x, y) {
 		targetX = x;
@@ -331,11 +330,13 @@ public:
 	{
 		CAnimations* animations = CAnimations::GetInstance();
 		animations->Get(ID_ANI_MARIO_MAP)->Render(x, y);
+
+		
 	};
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		//Debug out current index x y
-		DebugOutTitle(L"Current index X: %d, Y: %d", currentIndexX, currentIndexY);
-				
+		
+
 		if (x < targetX)
 		{
 			x += MARIO_RUNNING_SPEED * dt;
@@ -401,7 +402,7 @@ public:
 
 	void MoveToMap()
 	{
-		map->MoveToMap(currentIndexX, currentIndexY);
+		map->MoveToMap(currentIndexX, currentIndexY, this);
 	}
 
 

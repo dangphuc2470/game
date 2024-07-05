@@ -165,6 +165,9 @@ public:
 
 class CMap : public CGameObject
 {
+	ULONGLONG map_loading_start = -1;
+	int currentScene = 0;
+	CGameObject* mario;
 public:
 	std::vector<float> mapX;
 	std::vector<float> mapY;
@@ -183,44 +186,100 @@ public:
 	{
 		CAnimations* animations = CAnimations::GetInstance();
 		animations->Get(ID_ANI_MAP)->Render(x, y);
+
+		if (map_loading_start != -1)
+		{
+			mario->SetPosition(-100, -100); // Hide mario when loading map
+			CBlackBackground *blackBackground = new CBlackBackground(x + 74, y + 16);
+			CBlackBackground *blackBackground2 = new CBlackBackground(x - 50, y + 16);
+			blackBackground->Render();
+			blackBackground2->Render();
+		}
 	};
-	void Update(DWORD dt) {}
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+		if (map_loading_start != -1 && GetTickCount64() - map_loading_start > 500)
+		{
+			SwitchToScene(currentScene);
+		}
+
+		CGameObject::Update(dt, coObjects);
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
 	int IsBlocking() { return 0; }
 
-	void MoveToMap(int currentIndexX, int currentIndexY)
+	void SwitchToScene(int sceneID)
 	{
+		CGame::GetInstance()->InitiateSwitchScene(sceneID);
+	}
+
+	void MoveToMap(int currentIndexX, int currentIndexY, CGameObject* mario)
+	{
+		this->mario = mario;
 		if (currentIndexX == 1 && currentIndexY == 0)
-			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 1
+		{
+			currentScene = 1; //Scene 1
+			map_loading_start = GetTickCount64();
+		}
 		else if (currentIndexX == 3 && currentIndexY == 0)
-			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 2
+		{
+			currentScene = 1; //Scene 2
+			map_loading_start = GetTickCount64();
+		}
 		else if (currentIndexX == 4 && currentIndexY == 0)
-			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 3
+		{
+			currentScene = 1; //Scene 3
+			map_loading_start = GetTickCount64();
+		}
 
 		else if (currentIndexX == 5 && currentIndexY == 1)
-			CGame::GetInstance()->InitiateSwitchScene(1); //Scene Mushroom
+		{
+			currentScene = 1; //Scene Mushroom
+			map_loading_start = GetTickCount64();
+		}
 		else if (currentIndexX == 4 && currentIndexY == 1)
-			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 4
+		{
+			currentScene = 1; //Scene 4
+			map_loading_start = GetTickCount64();
+		}
 
 		else if (currentIndexX == 3 && currentIndexY == 2)
-			CGame::GetInstance()->InitiateSwitchScene(1); //Scene Spades
-
+		{
+			currentScene = 1; //Scene Spades
+			map_loading_start = GetTickCount64();
+		}
 
 		else if (currentIndexX == 2 && currentIndexY == 2)
-			CGame::GetInstance()->InitiateSwitchScene(1); //Scene Tower
-
+		{
+			currentScene = 1; //Scene Tower
+			map_loading_start = GetTickCount64();
+		}
 
 		else if (currentIndexX == 1 && currentIndexY == 4)
-			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 5
+		{
+			currentScene = 1; //Scene 5
+			map_loading_start = GetTickCount64();
+		}
 		else if (currentIndexX == 3 && currentIndexY == 4)
-			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 6
+		{
+			currentScene = 1; //Scene 6
+			map_loading_start = GetTickCount64();
+		}
 
 		else if (currentIndexX == 2 && currentIndexY == 3)
-			CGame::GetInstance()->InitiateSwitchScene(1); //Scene Mushroom 2
+		{
+			currentScene = 1; //Scene Mushroom 2
+			map_loading_start = GetTickCount64();
+		}
 
 		else if (currentIndexX == 5 && currentIndexY == 3)
-			CGame::GetInstance()->InitiateSwitchScene(1); //Scene End
+		{
+			currentScene = 1; //Scene End
+			map_loading_start = GetTickCount64();
+		}
 
+
+			
 	}
 };
 
