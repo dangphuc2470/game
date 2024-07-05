@@ -130,19 +130,21 @@
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
+#define MARIO_SPINNING_TIME 200
 #define MARIO_FLY_TIME 500
 #define MARIO_FLY_SPEED 0.004f
 #define MARIO_UNTOUCHABLE_TIME 2500  //Todo: change to 2.5s
 #define MARIO_UNTOUCHABLE_BLINK_TIME 60
 #define MARIO_BOOM_TIME 210
 #define MARIO_PIPE_TIME 2000
-#define LIVE_TIME 300
+#define LIVE_TIME 300 // 300s
 #define MARIO_DIE_TIME 3000
 #define MARIO_DECREASE_RUNNING_COUNT_TIME 220
-#define MARIO_INCREASE_RUNNING_COUNT_TIME 350
+#define MARIO_INCREASE_RUNNING_COUNT_TIME 320
 #define MAX_STAMITA 9
 #define STAMINA_TO_FLY 7
 #define MARIO_MAP_MOVE_CORRECTION 5
+#define MARIO_RACOON_GRAVITY_J 0.15f
 
 
 class CMario : public CGameObject
@@ -174,8 +176,11 @@ class CMario : public CGameObject
 	bool isGetDownPipe = false;
 	bool isGetUpPipe = false;
 	bool isNoCountDown = false;
+	bool isSpinning = false;
+	bool isFacingRight = true;
 	int* point;
 	int* live;
+	ULONGLONG spinning_start = -1;
 	ULONGLONG getDownPipeStart = -1;
 	ULONGLONG getUpPipeStart = -1;
 	float targetX, targetY;
@@ -246,6 +251,11 @@ public:
 		last_invisible_time = GetTickCount64();
 	}
 
+	void StartSpinning() {
+		isSpinning = true;
+		spinning_start = GetTickCount64();
+	}
+
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void SetHoldingObject(CGameObject* obj) { holdingObject = obj; }
 	void SetReadyToHold(bool ready) { isReadyToHold = ready; }
@@ -258,10 +268,17 @@ public:
 			ay = MARIO_GRAVITY*0.1;
 		fly_start = GetTickCount64();
 	}
+	bool GetIsOnPlatform() { return isOnPlatform; }
+
+	void SetGravity(float gravity) { ay = gravity; }
 	bool GetIsFlying() { return isFlying; }
 	bool GetIsFlyable() { return isFlyable; }
 	void SetIsFlyable(bool flyable) {
 		isFlyable = flyable;
+	}
+	void SetIsFacingRight(bool facingRight) { isFacingRight = facingRight; }
+	void SetIsOnPlatform(bool onPlatform) { isOnPlatform = onPlatform; 
+	ay = MARIO_GRAVITY;
 	}
 	void SetRunningStartToNow() { running_start = GetTickCount64(); }
 	void MarioChangeSmallerLevel()

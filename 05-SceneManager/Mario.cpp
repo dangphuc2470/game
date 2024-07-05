@@ -55,6 +55,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 
+	if (isSpinning && GetTickCount64() - spinning_start > MARIO_SPINNING_TIME)
+	{
+		isSpinning = false;
+		spinning_start = -1;
+	}
+
 	if (time_remaining == 0)
 	{
 		SetState(MARIO_STATE_DIE);
@@ -149,7 +155,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				running_count--;
 		}
 	}
-	DebugOutTitle(L"Running count: %d", GetLive());
 	if (isFlying)
 	{
 		if (GetTickCount64() - fly_start > MARIO_FLY_TIME)
@@ -175,11 +180,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		SetState(MARIO_STATE_IDLE);
 	}*/
-	isOnPlatform = false;
+	SetIsOnPlatform(false);
 
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-	//DebugOutTitle(L"X: %f, Y: %f, VX: %f, VY: %f", x, y, vx, vy);
+	DebugOutTitle(L"aX: %f, aY: %f, VX: %f, VY: %f", ax, ay, vx, vy);
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -233,7 +238,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		//DebugOutTitle(L"Collision at %f %f, Mario %f %f", x, y, t, b);
 		vy = 0;
 		if (e->ny < 0) {
-			isOnPlatform = true;
+			SetIsOnPlatform(true);
 			//DebugOutTitle(L"On Platform\n");
 		}
 		//DebugOutTitle(L"Not on Platform\n");*/
@@ -778,6 +783,28 @@ void CMario::Render()
 		return;
 	}
 
+	ULONGLONG elapsedSpinningTime = GetTickCount64() - spinning_start;
+	if (isSpinning && elapsedSpinningTime < MARIO_SPINNING_TIME)
+	{
+		ULONGLONG interval = MARIO_SPINNING_TIME / 3;
+		// Debugout the spinning time
+		int spriteID = 0;
+		if (elapsedSpinningTime <= interval) {
+			spriteID = ID_SPRITE_MARIO_SPINNING_FRONT;
+		}
+		else if (elapsedSpinningTime <= interval * 2) {
+			if (isFacingRight)
+				spriteID = ID_SPRITE_MARIO_RACOON_IDLE_LEFT;
+			else
+				spriteID = ID_SPRITE_MARIO_RACOON_IDLE_RIGHT;
+		}
+		else {
+			spriteID = ID_SPRITE_MARIO_SPINNING_BACK;
+		}
+		CSprites::GetInstance()->Get(spriteID)->Draw(x, y);
+		return;
+	}
+
 
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
@@ -802,7 +829,6 @@ void CMario::Render()
 
 void CMario::SetState(int state)
 {
-	//DebugOutTitle(L"Set state %d", state);
 	// DIE is the end state, cannot be changed! 
 	if (this->state == MARIO_STATE_DIE)
 	{
@@ -856,11 +882,23 @@ void CMario::SetState(int state)
 			else
 				vy = -MARIO_JUMP_SPEED_Y;
 		}
+		else if (level == MARIO_LEVEL_RACOON)
+		{
+			vy = -MARIO_RACOON_GRAVITY_J;
+		}
 		break;
 
 	case MARIO_STATE_RELEASE_JUMP:
-		if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
-		ay = MARIO_GRAVITY;
+		if (vy < 0) 
+		{
+			if (level != MARIO_LEVEL_RACOON)
+				vy += MARIO_JUMP_SPEED_Y / 2;
+
+		}
+
+
+		if (level != MARIO_LEVEL_RACOON)
+			ay = MARIO_GRAVITY;
 		break;
 
 	case MARIO_STATE_SIT:

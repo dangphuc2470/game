@@ -41,12 +41,12 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_K:
-		case DIK_UP:
-		if (mario->GetLevel() == MARIO_LEVEL_RACOON && mario->GetRunningCount() >= STAMINA_TO_FLY)
-			mario->SetIsFlying(true);
-		else
-			mario->SetState(MARIO_STATE_JUMP);
-		break;
+	case DIK_UP:
+	if (mario->GetLevel() == MARIO_LEVEL_RACOON && mario->GetRunningCount() >= STAMINA_TO_FLY)
+		mario->SetIsFlying(true);
+	else
+		mario->SetState(MARIO_STATE_JUMP);
+	break;
 	case DIK_3:
 		mario->SetLevel(MARIO_LEVEL_RACOON);
 		break;
@@ -73,6 +73,9 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 			mario->SetIsFlyable(true);
 		}
 		isPressingRun = true;
+
+		if (mario->GetLevel() == MARIO_LEVEL_RACOON)
+			mario->StartSpinning();
 		break;
 	}
 
@@ -121,6 +124,9 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 
 	if (game->IsKeyDown(DIK_D) || game->IsKeyDown(DIK_RIGHT))
 	{
+		mario->SetIsFacingRight(true);
+
+
 		if (game->IsKeyDown(DIK_J) || game->IsKeyDown(DIK_RCONTROL))
 			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
 		else
@@ -132,6 +138,8 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	}
 	else if (game->IsKeyDown(DIK_A) || game->IsKeyDown(DIK_LEFT))
 	{
+		mario->SetIsFacingRight(false);
+
 		if (game->IsKeyDown(DIK_J) || game->IsKeyDown(DIK_RCONTROL))
 			mario->SetState(MARIO_STATE_RUNNING_LEFT);
 
