@@ -29,7 +29,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
 	//DebugOutTitle(L"Running: %d", running_start);
 	//Debug out the position
-	DebugOutTitle(L"Position: %f, %f", x, y);
 
 	if (isFallingSlow && vy > -0.2) 
 	{

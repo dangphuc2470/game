@@ -8,9 +8,8 @@ height	240
 [SCENES]
 0	Scene\intro.txt
 1	Scene\scene01.txt
-2	Scene\scene02.txt
-5	Scene\scene0005.txt
-10  Scene\scene_1.txt
+2	Scene\scene_intro.txt
+5	Scene\scene_map.txt
 
 # id	file 
 [TEXTURES]

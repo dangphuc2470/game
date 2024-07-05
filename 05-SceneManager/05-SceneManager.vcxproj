@@ -243,7 +243,6 @@
     <Text Include="Landscape\vertical_pipe.txt" />
     <Text Include="Landscape\wooden.txt" />
     <Text Include="Scene\info_bar.txt" />
-    <Text Include="Scene\scene_1.txt" />
     <Text Include="Landscape\small_bush.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

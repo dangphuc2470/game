@@ -30,6 +30,7 @@ using namespace std;
 CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
 	CScene(id, filePath)
 {
+	DebugOutTitle(L"Super Mario Bros 3");
 	player = NULL;
 	key_handler = new CSampleKeyHandler(this);
 }
