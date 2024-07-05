@@ -178,6 +178,7 @@ class CMario : public CGameObject
 	bool isNoCountDown = false;
 	bool isSpinning = false;
 	bool isFacingRight = true;
+	bool isFallingSlow = false;
 	int* point;
 	int* live;
 	ULONGLONG spinning_start = -1;
@@ -278,7 +279,9 @@ public:
 	}
 	void SetIsFacingRight(bool facingRight) { isFacingRight = facingRight; }
 	void SetIsOnPlatform(bool onPlatform) { isOnPlatform = onPlatform; 
-	ay = MARIO_GRAVITY;
+	if (isOnPlatform)
+		ay = MARIO_GRAVITY;
+	isFallingSlow = false;
 	}
 	void SetRunningStartToNow() { running_start = GetTickCount64(); }
 	void MarioChangeSmallerLevel()

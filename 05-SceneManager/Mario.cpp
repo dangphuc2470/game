@@ -30,6 +30,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"Running: %d", running_start);
 
 	//Debugout diestart
+	if (isFallingSlow && vy > -0.2) 
+	{
+		DebugOutTitle(L"aX: %f, aY: %f, VX: %f, VY: %f", ax, ay, vx, vy);
+		ay = MARIO_GRAVITY / 10;
+	}
+
 
 	if (y > 2000 && die_start == -1) // Mario die
 	{
@@ -184,7 +190,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-	DebugOutTitle(L"aX: %f, aY: %f, VX: %f, VY: %f", ax, ay, vx, vy);
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -195,6 +200,8 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	SetGravity(MARIO_GRAVITY);
+	isFallingSlow = false;
 	// Collison with object that is not collidable
 	if (dynamic_cast<CGuideObject*>(e->obj))
 	{
@@ -884,7 +891,7 @@ void CMario::SetState(int state)
 		}
 		else if (level == MARIO_LEVEL_RACOON)
 		{
-			vy = -MARIO_RACOON_GRAVITY_J;
+			isFallingSlow = true;
 		}
 		break;
 
