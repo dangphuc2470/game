@@ -108,6 +108,10 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 
 				koopa->SetState(KOOPA_STATE_DIE);
 				koopa->SetColliable(false);
+				if (this->mario!= NULL)
+				{
+					this->mario->AddPoint(100);
+				}
 				//koopa->isDeleted = true;
 			}
 			return;
@@ -124,6 +128,10 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 			//goomba->SetState(GOOMBA_STATE_DIE);
+			if (this->mario != NULL)
+			{
+				this->mario->AddPoint(100);
+			}
 			goomba->SetCollidable(false);
 		}
 		else if (dynamic_cast<CBrick*>(e->obj) && (this->state == KOOPA_STATE_DIE_SLIP))

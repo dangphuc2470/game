@@ -205,8 +205,7 @@ public:
 		ax = 0.0f;
 		ay = MARIO_GRAVITY;
 		this->isNoCountDown = isNoCountDown;
-		//level = MARIO_LEVEL_BIG;
-		level = 3;
+		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;
 		running_start = -1;
@@ -223,6 +222,8 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
+
+	void AppearPoint(int point);
 
 	int IsCollidable()
 	{
@@ -293,6 +294,21 @@ public:
 		isGetUpPipe = true;
 		getUpPipeStart = GetTickCount64();
 		
+	}
+
+	void AddPoint(int point)
+	{
+		SetPoint(GetPoint() + point);
+	}
+
+	void AddCoin(int coin)
+	{
+		SetCoin(GetCoin() + coin);
+	}
+
+	void AddLive(int live)
+	{
+		SetLive(GetLive() + live);
 	}
 
 	int GetLive() { return *live; }
@@ -370,6 +386,7 @@ public:
 	}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
 	int IsBlocking() { return 0; }
+
 
 
 	void MoveRight() {

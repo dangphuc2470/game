@@ -49,7 +49,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				SetLive(4);
 			}
 			else
-			SetLive(GetLive() -1);
+			AddLive( -1);
 			CGame::GetInstance()->InitiateSwitchScene(5);
 		// Change world
 		return;
@@ -270,8 +270,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			if (e->obj->GetState() == MBOX_STATE_NORMAL)
 			{
 				e->obj->SetState(MBOX_STATE_UNBOX);
-				SetPoint(GetPoint() + 100);
-				SetCoin(GetCoin() + 1);
+				AddPoint(100);
+				AddCoin(1);
 			}
 
 		}
@@ -317,16 +317,19 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		if (goomba->GetState() == GOOMBA_STATE_WALKING)
 		{
 			goomba->SetState(GOOMBA_STATE_DIE);
+			AppearPoint(100);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 		else if (goomba->GetState() == GOOMBA_STATE_FLYING_NO_WINGS)
 		{
 			goomba->SetState(GOOMBA_STATE_FLYING_DIE);
+			AppearPoint(100);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 		else
 		{
 			goomba->SetState(GOOMBA_STATE_FLYING_NO_WINGS);
+			AppearPoint(100);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
@@ -400,15 +403,19 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			break;
 
 		case KOOPA_STATE_DIE_SLIP:
+			AppearPoint(100);
 			stateToSet = KOOPA_STATE_DIE;
 			break;
 
 		case KOOPA_STATE_WALKING:
 			stateToSet = KOOPA_STATE_DIE;
+			AppearPoint(100);
+
 			break;
 
 		case KOOPA_STATE_FLY:
 			stateToSet = KOOPA_STATE_WALKING;
+			AppearPoint(100);
 			break;
 
 		}
@@ -481,8 +488,8 @@ void CMario::OnCollisionWithFireball(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
-	SetCoin(GetCoin() + 1);
-	SetPoint(GetPoint() + 100);
+	AddCoin(1);
+	AddPoint(100);
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
@@ -585,14 +592,14 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 			else
 			{
 				mushroom->SetState(MUSHROOM_STATE_POINT);
-				SetLive(GetLive() + 1);
+				AddLive(1);
 				SetPoint(GetPoint() + 1000);
 			}
 		}
 		else
 		{
 			if (!mushroom->IsRed())
-				SetLive(GetLive() + 1);
+				AddLive(1);
 			mushroom->SetState(MUSHROOM_STATE_POINT);
 			SetPoint(GetPoint() + 1000);
 		}
@@ -904,7 +911,13 @@ void CMario::SetState(int state)
 
 	CGameObject::SetState(state);
 }
-
+void CMario::AppearPoint(int pointNum)
+{
+	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+	CPoint* point = new CPoint(x, y, pointNum);
+	scene->AddObject(point);
+	AddPoint(pointNum);
+}
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (level == MARIO_LEVEL_BIG)
