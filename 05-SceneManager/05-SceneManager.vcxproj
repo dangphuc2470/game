@@ -224,6 +224,7 @@
     <ClInclude Include="Landscape\Teleport.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Landscape\intro.txt" />
     <Text Include="Landscape\map.txt" />
     <Text Include="Item\button.txt" />
     <Text Include="Item\point.txt" />

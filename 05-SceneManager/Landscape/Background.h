@@ -283,3 +283,16 @@ public:
 	}
 };
 
+class CIntro : public CGameObject
+{
+public:
+	CIntro(float x, float y) : CGameObject(x, y) {}
+	void Render()
+	{
+		CAnimations* animations = CAnimations::GetInstance();
+		animations->Get(ID_ANI_INTRO)->Render(x, y);
+	};
+	void Update(DWORD dt) {}
+	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
+	int IsBlocking() { return 0; }
+};

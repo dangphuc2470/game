@@ -154,6 +154,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_FLOWER: obj = new CFlower(x, y); break;
 	case OBJECT_TYPE_CLOUD_SOLID: obj = new CCloudSolid(x, y); break;
 	case OBJECT_TYPE_BUNKER: obj = new CBunker(x, y); break;
+	case OBJECT_TYPE_INTRO: obj = new CIntro(x, y); break;
 	case OBJECT_TYPE_MAP: 
 	{
 		obj = new CMap(x, y); 

@@ -481,14 +481,14 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 }
 
-void CMario::OnCollisionWithTheVoid(LPCOLLISIONEVENT e)
-{
-	DebugOut(L">>> Mario VOID >>> \n");
-	CBlackBackground* p = (CBlackBackground*)e->obj;
-	//SetState(MARIO_STATE_DIE);
-	//Todo: Go Die
-	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
-}
+//void CMario::OnCollisionWithTheVoid(LPCOLLISIONEVENT e)
+//{
+//	DebugOut(L">>> Mario VOID >>> \n");
+//	CBlackBackground* p = (CBlackBackground*)e->obj;
+//	//SetState(MARIO_STATE_DIE);
+//	//Todo: Go Die
+//	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+//}
 
 //
 // Get animation ID for small Mario

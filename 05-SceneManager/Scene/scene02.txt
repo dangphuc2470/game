@@ -1,19 +1,35 @@
-# list of object assets to load in this scene
+﻿# list of object assets to load in this scene
 [ASSETS]
 mario.txt
 Landscape\brick.txt
 Item\coin.txt
+Item\mushroom.txt
+Item\button.txt
+Item\leaf.txt
+Item\point.txt
 Enemy\goomba.txt
 Enemy\koopa.txt
+Enemy\ptooie.txt
+Enemy\fireball.txt
 Landscape\cloud.txt
+Landscape\map.txt
+Landscape\intro.txt
+Landscape\brick.txt
 Landscape\brick_platform.txt
 Landscape\large_bush_1.txt
 Landscape\large_bush_2.txt
 Landscape\cloud_1.txt
 Landscape\cloud_2.txt
 Landscape\small_bush.txt
+Landscape\flower.txt
 Landscape\box.txt
 Landscape\black_background.txt
+Landscape\bunker.txt
+Landscape\vertical_pipe.txt
+Landscape\mystery_box.txt
+Landscape\wooden.txt
+Landscape\cloud_solid.txt
+Scene\info_bar.txt
 
 #
 [OBJECTS]
@@ -22,62 +38,19 @@ Landscape\black_background.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 
-# BRICKS
 
-#COIN
-4	100	120
-4	120	120
-4	140	120
-4	160	120
+# MARIO
+#0	20	10
+0	50	160	1	#Mario no countdown
 
 
-
-#Goomba
-#2	300	10
- 
-#Cloud Platform
-#ID Left Top Width Height Length 
 
 #Brick Platform
 #ID x��y��Width Height Length�
-6	8	222	15	30	42	61000	62000	63000
-6	639	207	15	30	31	61000	62000	63000
-6	1150	222	15	30	24	61000	62000	63000
-6	1550	222	15	30	5	61000	62000	63000
-6	1680	222	15	30	77	61000	62000	63000
-6	-29	250	15	500	3	61000	62000	63000  #Block from going back from start
+6	10	250	15	500	3	61000	62000	63000  #Block from going back from start
+6	-100	222	15	30	42	61000	62000	63000
+6	100	250	15	500	3	61000	62000	63000
 
-#Large bush
-100	1000	168
-110	905	160
-110	90	175
-
-#Small bush
-140	168	199	3
-140	679	184	6
-140	1050	184	2
-140	1200	199	3
-140	1740	199	3
-
-#Cloud
-120	345	80
-120	666	70
-120	1192	70
-120	2346	70
-
-
-130	144	60
-130	761	80
-130	1685	40
-
-#Box (W = H = 0 to set default size)
-#id	x	y	Width	Height	Box type
-150	290	167	0	0	159
-150	255	183	0	0	151
-150	539	151	0	0	162
-150	490	167	0	0	163
-150	440	183	0	0	156
-150	560	191	0	0	157
 
 #Black_background
 170	150	430
@@ -89,11 +62,19 @@ Landscape\black_background.txt
 170	2070	430
 170	2390	430
 170	2710	430
+170	2900	430
+170	4000	300
+170	4200	300
+170	4000	0
+170	4300	0
 
-# MARIO
-#0	20	10
-0	20	135
+
 
 #Portal�
 #��x, y, right, bottom
-50	60	170	130	180	1���
+50	40	170	2000	180	5���
+
+#Intro
+360	225	135
+
+

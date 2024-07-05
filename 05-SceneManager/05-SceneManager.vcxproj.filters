@@ -260,5 +260,6 @@
     <Text Include="Item\point.txt" />
     <Text Include="Scene\info_bar.txt" />
     <Text Include="Landscape\map.txt" />
+    <Text Include="Landscape\intro.txt" />
   </ItemGroup>
 </Project>
