@@ -158,6 +158,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_CLOUD_1: obj = new CCloud1(x, y); break;
 	case OBJECT_TYPE_CLOUD_2: obj = new CCloud2(x, y); break;
 	case OBJECT_TYPE_BLACK_BACKGROUND: obj = new CBlackBackground(x, y); break;
+	case OBJECT_TYPE_BLACK_END: obj = new CBlackEnd(x, y); break;
 	case OBJECT_TYPE_BUTTON: obj = new CButton(x, y); break;
 	case OBJECT_TYPE_FLOWER: obj = new CFlower(x, y); break;
 	case OBJECT_TYPE_CLOUD_SOLID: obj = new CCloudSolid(x, y); break;

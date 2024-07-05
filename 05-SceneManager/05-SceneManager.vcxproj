@@ -227,6 +227,7 @@
     <ClInclude Include="Landscape\Teleport.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Landscape\black_end.txt" />
     <Text Include="Landscape\intro.txt" />
     <Text Include="Landscape\map.txt" />
     <Text Include="Item\button.txt" />

@@ -14,6 +14,7 @@ Enemy\fireball.txt
 Landscape\cloud.txt
 Landscape\brick.txt
 Landscape\brick_platform.txt
+Landscape\black_end.txt
 Landscape\large_bush_1.txt
 Landscape\large_bush_2.txt
 Landscape\cloud_1.txt
@@ -125,6 +126,10 @@ Scene\info_bar.txt
 170	2710	-210
 170	2900	-210	
 
+#black end
+370	2800	111
+
+
 #bunker
 6	3200	199	15	40	55	61000	62000	63000 #top
 6	3196	15	15	40	26	61000	62000	63000 #bottom
@@ -157,8 +162,8 @@ Scene\info_bar.txt
 
 
 # MARIO
-#0	2100	10
-0	15	50
+0	2800	10
+#0	15	50
 
 #Teleport
 310	2276	-70	3373	50
@@ -255,7 +260,7 @@ Scene\info_bar.txt
 
 #Portal�
 #��x, y, right, bottom
-#50	30	170	40	180	5���
+50	2990	100	3000	300	5���
 
 #spawn point
 #id	x	y	type	objX	objY

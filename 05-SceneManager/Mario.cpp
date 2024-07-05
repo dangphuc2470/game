@@ -28,11 +28,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//DebugOutTitle(L"Time: %d", running_start - running);
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
 	//DebugOutTitle(L"Running: %d", running_start);
+	//Debug out the position
+	DebugOutTitle(L"Position: %f, %f", x, y);
 
-	//Debugout diestart
 	if (isFallingSlow && vy > -0.2) 
 	{
-		DebugOutTitle(L"aX: %f, aY: %f, VX: %f, VY: %f", ax, ay, vx, vy);
 		ay = MARIO_GRAVITY / 10;
 	}
 
