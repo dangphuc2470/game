@@ -154,11 +154,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_FLOWER: obj = new CFlower(x, y); break;
 	case OBJECT_TYPE_CLOUD_SOLID: obj = new CCloudSolid(x, y); break;
 	case OBJECT_TYPE_BUNKER: obj = new CBunker(x, y); break;
-	case OBJECT_TYPE_MAP: obj = new CMap(x, y); break;
+	case OBJECT_TYPE_MAP: 
+	{
+		obj = new CMap(x, y); 
+		this->map = obj;
+		break;
+	}
 	case OBJECT_TYPE_MARIO_MAP: 
 	{
-		obj = new CMarioMap(x, y);
-		this->marioMap = dynamic_cast<CMarioMap*>(obj);
+		obj = new CMarioMap(x, y, map);
+		this->marioMap = obj;
 		break;
 	}
 	case OBJECT_TYPE_INFO_BAR:

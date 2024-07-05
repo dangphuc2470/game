@@ -27,6 +27,9 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		case DIK_D:
 			marioMap->MoveRight();
 			break;
+		case DIK_K:
+			marioMap->MoveToMap();
+			break;
 		}
 
 	}

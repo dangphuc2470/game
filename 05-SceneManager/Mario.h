@@ -4,6 +4,7 @@
 #include "../05-SceneManager/Game/Animations.h"
 #include "../05-SceneManager/Game/debug.h"
 #include "../05-SceneManager/GameObject/AssetIDs.h"
+#include "Landscape/Background.h"
 
 #define MARIO_WALKING_SPEED		0.1f
 #define MARIO_RUNNING_SPEED		0.156f
@@ -141,7 +142,8 @@
 #define MARIO_INCREASE_RUNNING_COUNT_TIME 350
 #define MAX_STAMITA 9
 #define STAMINA_TO_FLY 7
-#define MARIO_MAP_MOVE 26
+#define MARIO_MAP_MOVE_CORRECTION 5
+
 
 class CMario : public CGameObject
 {
@@ -308,23 +310,32 @@ public:
 
 class CMarioMap: public CGameObject
 {
+	CMap* map;
 	float targetX, targetY;
 	int ax = 0; int  ay = 0;
+
+	int currentIndexX = 0;
+	int currentIndexY = 1;
+
 public:
-	CMarioMap(float x, float y) : CGameObject(x, y) {
+	CMarioMap(float x, float y, CGameObject* obj) : CGameObject(x, y) {
 		targetX = x;
 		targetY = y;
+		map = dynamic_cast<CMap*>(obj);
 		SetBlocking(0);
 		SetCollidable(0);
 	}
+
+
 	void Render()
 	{
 		CAnimations* animations = CAnimations::GetInstance();
 		animations->Get(ID_ANI_MARIO_MAP)->Render(x, y);
 	};
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-		//Debug out x y targetX targetY
-		DebugOutTitle(L"x: %f, y: %f, targetX: %f, targetY: %f", x, y, targetX, targetY);
+		//Debug out current index x y
+		DebugOutTitle(L"Current index X: %d, Y: %d", currentIndexX, currentIndexY);
+				
 		if (x < targetX)
 		{
 			x += MARIO_RUNNING_SPEED * dt;
@@ -359,21 +370,39 @@ public:
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
 	int IsBlocking() { return 0; }
 
-	void MoveDown() {
-		targetY += MARIO_MAP_MOVE;
-	}
 
-	void MoveUp() {
-		targetY -= MARIO_MAP_MOVE;
+	void MoveRight() {
+		if (currentIndexX < static_cast<int>(map->mapX.size()) - 1) {
+			currentIndexX++;
+			targetX = map->mapX[currentIndexX];
+		}
 	}
 
 	void MoveLeft() {
-		targetX -= MARIO_MAP_MOVE;
+		if (currentIndexX > 0) {
+			currentIndexX--;
+			targetX = map->mapX[currentIndexX];
+		}
 	}
 
-	void MoveRight() {
-		targetX += MARIO_MAP_MOVE;
+	void MoveUp() {
+		if (currentIndexY > 0) {
+			currentIndexY--;
+			targetY = map->mapY[currentIndexY];
+		}
 	}
 
-	
+	void MoveDown() {
+		if (currentIndexY < static_cast<int>(map->mapY.size()) - 1) {
+			currentIndexY++;
+			targetY = map->mapY[currentIndexY];
+		}
+	}
+
+	void MoveToMap()
+	{
+		map->MoveToMap(currentIndexX, currentIndexY);
+	}
+
+
 };

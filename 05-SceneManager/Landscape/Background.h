@@ -6,6 +6,8 @@
 #include "../GameObject/AssetIDs.h"
 
 
+
+
 class CLargeBush1 : public CGameObject {
 public:
 	CLargeBush1(float x, float y) : CGameObject(x, y) {}
@@ -164,7 +166,19 @@ public:
 class CMap : public CGameObject
 {
 public:
-	CMap(float x, float y) : CGameObject(x, y) {}
+	std::vector<float> mapX;
+	std::vector<float> mapY;
+
+	CMap(float x, float y) : CGameObject(x, y) {
+		SetMapScenePosition();
+	}
+
+	void SetMapScenePosition()
+	{
+		mapX = { 74, 123, 166, 210, 249, 296 };
+		mapY = { 16, 60, 104, 148, 192 };
+	}
+
 	void Render()
 	{
 		CAnimations* animations = CAnimations::GetInstance();
@@ -173,5 +187,40 @@ public:
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
 	int IsBlocking() { return 0; }
+
+	void MoveToMap(int currentIndexX, int currentIndexY)
+	{
+		if (currentIndexX == 1 && currentIndexY == 0)
+			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 1
+		else if (currentIndexX == 3 && currentIndexY == 0)
+			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 2
+		else if (currentIndexX == 4 && currentIndexY == 0)
+			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 3
+
+		else if (currentIndexX == 5 && currentIndexY == 1)
+			CGame::GetInstance()->InitiateSwitchScene(1); //Scene Mushroom
+		else if (currentIndexX == 4 && currentIndexY == 1)
+			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 4
+
+		else if (currentIndexX == 3 && currentIndexY == 2)
+			CGame::GetInstance()->InitiateSwitchScene(1); //Scene Spades
+
+
+		else if (currentIndexX == 2 && currentIndexY == 2)
+			CGame::GetInstance()->InitiateSwitchScene(1); //Scene Tower
+
+
+		else if (currentIndexX == 1 && currentIndexY == 4)
+			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 5
+		else if (currentIndexX == 3 && currentIndexY == 4)
+			CGame::GetInstance()->InitiateSwitchScene(1); //Scene 6
+
+		else if (currentIndexX == 2 && currentIndexY == 3)
+			CGame::GetInstance()->InitiateSwitchScene(1); //Scene Mushroom 2
+
+		else if (currentIndexX == 5 && currentIndexY == 3)
+			CGame::GetInstance()->InitiateSwitchScene(1); //Scene End
+
+	}
 };
 

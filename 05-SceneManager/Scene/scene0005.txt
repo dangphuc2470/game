@@ -71,7 +71,7 @@ Scene\info_bar.txt
 
 #Portal�
 #��x, y, right, bottom
-50	40	170	2000	180	1���
+#50	40	170	2000	180	1���
 
 #Map
 340	225	135

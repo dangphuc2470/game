@@ -16,6 +16,7 @@ protected:
 	// A play scene has to have player, right? 
 	LPGAMEOBJECT player;
 	LPGAMEOBJECT marioMap = NULL;
+	LPGAMEOBJECT map = NULL;
 	LPGAMEOBJECT infoBar;
 	int live = 4;
 	int point = 0;
@@ -42,6 +43,7 @@ public:
 
 	LPGAMEOBJECT GetPlayer() { return player; }
 	LPGAMEOBJECT GetMarioMap() { return marioMap; }
+	LPGAMEOBJECT GetMap() { return map; }
 
 	void Clear();
 	void PurgeDeletedObjects();
