@@ -204,7 +204,7 @@ protected:
 		if (dynamic_cast<CVerticalPipe*>(e->obj))
 		{
 			y += 10;
-			DebugOutTitle(L"Ptooie clip");
+			//DebugOutTitle(L"Ptooie clip");
 		}
 
 	};

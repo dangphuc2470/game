@@ -59,7 +59,7 @@ public:
 
         if (dynamic_cast<CMario*> (e->obj))
         {
-            DebugOutTitle(L"GuideObject Collision Mario");
+            //DebugOutTitle(L"GuideObject Collision Mario");
             return;
         }
 

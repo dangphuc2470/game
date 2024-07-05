@@ -334,7 +334,7 @@ public:
 		}
 		SetColliable(false);
 		previousState = state;
-		DebugOutTitle(L"[INFO] Koopa SetState hold: %d\n", state);
+		//DebugOutTitle(L"[INFO] Koopa SetState hold: %d\n", state);
 	}
 
 	void GetPosition(float& x, float& y)

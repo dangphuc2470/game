@@ -101,7 +101,7 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		//
 		if (dynamic_cast<CKoopa*>(e->obj))
 		{
-			DebugOutTitle(L"[INFO] Koopa Collision with Koopa\n");
+			//DebugOutTitle(L"[INFO] Koopa Collision with Koopa\n");
 			if (this->state == KOOPA_STATE_DIE_SLIP)
 			{
 				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);

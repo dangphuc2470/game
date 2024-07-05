@@ -142,11 +142,12 @@
 #define LIVE_TIME 300 // 300s
 #define MARIO_DIE_TIME 3000
 #define MARIO_DECREASE_RUNNING_COUNT_TIME 220
-#define MARIO_INCREASE_RUNNING_COUNT_TIME 320
+#define MARIO_INCREASE_RUNNING_COUNT_TIME 300
 #define MAX_STAMITA 9
 #define STAMINA_TO_FLY 7
 #define MARIO_MAP_MOVE_CORRECTION 5
 #define MARIO_RACOON_GRAVITY_J 0.15f
+#define MARIO_TOTAL_FLY_TIME 5000
 
 
 class CMario : public CGameObject
@@ -165,6 +166,7 @@ class CMario : public CGameObject
 	ULONGLONG last_invisible_time = -1;
 	ULONGLONG one_second_count = -1;
 	ULONGLONG die_start = -1;
+	ULONGLONG fly_total_start = -1;
 	BOOLEAN isOnPlatform;
 	BOOLEAN isFlying;
 	BOOLEAN isFlyable;
@@ -221,7 +223,7 @@ public:
 		die_start = -1;
 		isOnPlatform = false;
 		isFlying = false;
-		isFlyable = false;
+		isFlyable = true;
 		one_second_count = GetTickCount64();
 		this->coin = coin;
 		this->point = point;
@@ -279,8 +281,10 @@ public:
 	}
 	void SetIsFacingRight(bool facingRight) { isFacingRight = facingRight; }
 	void SetIsOnPlatform(bool onPlatform) { isOnPlatform = onPlatform; 
-	if (isOnPlatform)
+	if (!isOnPlatform)
+	{
 		ay = MARIO_GRAVITY;
+	}
 	isFallingSlow = false;
 	}
 	void SetRunningStartToNow() { running_start = GetTickCount64(); }

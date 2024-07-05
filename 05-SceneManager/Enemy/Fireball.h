@@ -33,7 +33,7 @@ public:
         if (!e->obj->IsBlocking()) return;
 		if (dynamic_cast<CMario*> (e->obj))
 		{
-			DebugOutTitle(L"Fireball Collision Mario");
+			//DebugOutTitle(L"Fireball Collision Mario");
 			return;
 		}
 		if (e->ny != 0)

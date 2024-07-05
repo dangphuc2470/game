@@ -27,8 +27,18 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	//Debug out title the time
 	//DebugOutTitle(L"Time: %d", running_start - running);
 	//DebugOutTitle(L"Ready to hold: %d", GetReadyToHold());
-	//DebugOutTitle(L"Running: %d", running_start);
 	//Debug out the position
+	if (fly_total_start == -1 && running_count>=7)
+	{
+		fly_total_start = GetTickCount64();
+	}
+
+	if (fly_total_start != -1 && GetTickCount64() - fly_total_start > MARIO_TOTAL_FLY_TIME)
+	{
+		SetRunningCount(0);
+		fly_total_start = -1;
+		return;
+	}
 
 	if (isFallingSlow && vy > -0.2) 
 	{
@@ -306,7 +316,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		CVerticalPipe* pipe = dynamic_cast<CVerticalPipe*>(e->obj);
 		if (pipe->GetIsGetDownAble() && isSitting)
 		{
-			DebugOutTitle(L"Sitting");
+			//DebugOutTitle(L"Sitting");
 			pipe->BlockFor1s();
 		}
 	}
@@ -835,7 +845,7 @@ void CMario::Render()
 
 void CMario::StartSpinning()
 {
-	DebugOutTitle(L"Start spinning");
+	//DebugOutTitle(L"Start spinning");
 
 	float fireball_Speed = MARIO_FIREBALL_SPEED;
 	float fireball_X;
