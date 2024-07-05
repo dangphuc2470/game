@@ -18,9 +18,7 @@ protected:
 	LPGAMEOBJECT marioMap = NULL;
 	LPGAMEOBJECT map = NULL;
 	LPGAMEOBJECT infoBar;
-	int live = 4;
-	int point = 0;
-	int coin = 0;
+
 	vector<LPGAMEOBJECT> objects;
 	bool isCameraShake = false;
 	ULONGLONG cameraShakeStart = -1;
@@ -57,36 +55,7 @@ public:
 	void TurnBrickIntoCoin();
 	void ShakeCamera();
 
-	int GetLive()
-	{
-		return live;
-	}
 
-	int GetPoint()
-	{
-		return point;
-	}
-
-	int GetCoin()
-	{
-		return coin;
-	}
-
-	void SetLive(int live)
-	{
-		this->live = live;
-	}
-
-	void SetCoin(int coin)
-
-	{
-		this->coin = coin;
-	}
-
-	void SetPoint(int point)
-	{
-		this->point = point;
-	}
 };
 
 typedef CPlayScene* LPPLAYSCENE;

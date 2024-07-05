@@ -41,6 +41,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (die_start != -1 && GetTickCount64() - die_start > 1000)
 	{
 			die_start = -1;
+			if (GetLive() == 0)
+			{
+				CGame::GetInstance()->InitiateSwitchScene(5); // Reset game
+				SetCoin(0);
+				SetPoint(0);
+				SetLive(4);
+			}
+			else
 			SetLive(GetLive() -1);
 			CGame::GetInstance()->InitiateSwitchScene(5);
 		// Change world

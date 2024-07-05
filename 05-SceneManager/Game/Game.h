@@ -56,6 +56,9 @@ class CGame
 	unordered_map<int, LPSCENE> scenes;
 	int current_scene;
 	int next_scene = -1;
+	int live = 4;
+	int point = 0;
+	int coin = 0;
 
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
@@ -114,6 +117,40 @@ public:
 
 	void _ParseSection_TEXTURES(string line);
 
+	int GetLive()
+	{
+		return live;
+	}
+
+	int GetPoint()
+	{
+		return point;
+	}
+
+	int GetCoin()
+	{
+		return coin;
+	}
+
+	void SetLive(int live)
+	{
+		this->live = live;
+	}
+
+	void SetCoin(int coin)
+
+	{
+		this->coin = coin;
+	}
+
+	void SetPoint(int point)
+	{
+		this->point = point;
+	}
+
+	int* GetLivePtr() { return &live; }
+	int* GetPointPtr() { return &point; }
+	int* GetCoinPtr() { return &coin; }
 
 	~CGame();
 };

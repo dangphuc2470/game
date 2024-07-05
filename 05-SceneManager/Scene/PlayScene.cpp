@@ -127,11 +127,19 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		if (tokens.size() > 4)
 		{
 			int isNoCountDown = atoi(tokens[3].c_str());
-			obj = new CMario(x, y, &coin, &point, &live, isNoCountDown);
+			CGame* game = CGame::GetInstance();
+			int* coinPtr = game->GetCoinPtr(); 
+			int* pointPtr = game->GetPointPtr(); 
+			int* livePtr = game->GetLivePtr(); 
+			obj = new CMario(x, y, coinPtr, pointPtr, livePtr, isNoCountDown);
 		}
 		else
 		{
-			obj = new CMario(x, y, &coin, &point, &live, false);
+			CGame* game = CGame::GetInstance();
+			int* coinPtr = game->GetCoinPtr(); 
+			int* pointPtr = game->GetPointPtr(); 
+			int* livePtr = game->GetLivePtr(); 
+			obj = new CMario(x, y, coinPtr, pointPtr, livePtr, false);
 		}
 		player = (CMario*)obj;
 
