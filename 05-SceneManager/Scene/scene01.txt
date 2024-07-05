@@ -128,6 +128,7 @@ Scene\info_bar.txt
 
 #black end
 370	2800	111
+380	2800	135
 
 
 #bunker
@@ -162,8 +163,8 @@ Scene\info_bar.txt
 
 
 # MARIO
-0	2800	10
-#0	15	50
+#0	2800	10
+0	15	50
 
 #Teleport
 310	2276	-70	3373	50

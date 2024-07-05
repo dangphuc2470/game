@@ -5,6 +5,7 @@
 #include "../Game/Animations.h"
 #include "../GameObject/AssetIDs.h"
 
+#define RANDOM_SPRITE_CHANGE_TIME 200
 
 
 
@@ -309,4 +310,45 @@ public:
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {};
 	int IsBlocking() { return 0; }
+};
+
+class CRandom: public CGameObject
+{
+	public:
+	CRandom(float x, float y) : CGameObject(x, y) {}
+	void Render()
+	{
+		ULONGLONG currentTime = GetTickCount64();
+		int changeTime = RANDOM_SPRITE_CHANGE_TIME;
+		int timeMod = currentTime % changeTime;
+		int spriteId = 0;
+		if (timeMod < changeTime / 3) {
+			spriteId = ID_SPRITE_MUSHROOM_RED;
+		}
+		else if (timeMod < (changeTime / 3) * 2) {
+			spriteId = ID_SPRITE_STAR;
+		}
+		else 
+			spriteId = ID_SPRITE_FLOWER_RANDOM;
+		CSprites* s = CSprites::GetInstance();
+		s->Get(spriteId)->Draw(x, y);
+	};
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+	{
+		CGameObject::Update(dt);
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	};
+	void GetBoundingBox(float& l, float& t, float& r, float& b) {
+		l = x - 8;
+		t = y - 8;
+		r = x + 8;
+		b = y + 8;
+	};
+	int IsBlocking() { return 0; }
+	int IsCollidable() { return 1; }
+
+	void OnCollisionWith(LPCOLLISIONEVENT e)
+	{
+		isDeleted = true;
+	}
 };
