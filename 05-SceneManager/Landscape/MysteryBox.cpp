@@ -9,6 +9,12 @@ void CMysteryBox::SetState(int state)
 		//	//mushroom->SetState(MUSHROOM_STATE_MOVING_UP);
 		//}
 		//
+	if (state == MBOX_STATE_UNBOX && objectToSpawn == 0)
+	{
+		CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+		CCoinSplash* coinSplash = new CCoinSplash(x, y);
+		scene->AddObject(coinSplash);
+	}
 	
 	CGameObject::SetState(state);
 }

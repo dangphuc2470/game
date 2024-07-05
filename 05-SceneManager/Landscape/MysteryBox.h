@@ -32,6 +32,8 @@ public:
 		{
 			CSprites* sprites = CSprites::GetInstance();
 			sprites->Get(ID_SPRITE_MYSTERY_BOX_UNBOX)->Draw(x, y);
+			
+			
 		}
 		else
 		{

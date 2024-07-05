@@ -242,6 +242,9 @@
     <ClInclude Include="Scene\InfoBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Item\Point.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Scene\scene_1.txt" />

@@ -270,6 +270,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			if (e->obj->GetState() == MBOX_STATE_NORMAL)
 			{
 				e->obj->SetState(MBOX_STATE_UNBOX);
+				SetPoint(GetPoint() + 100);
+				SetCoin(GetCoin() + 1);
 			}
 
 		}
@@ -590,8 +592,8 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 		else
 		{
 			if (!mushroom->IsRed())
+				SetLive(GetLive() + 1);
 			mushroom->SetState(MUSHROOM_STATE_POINT);
-			SetLive(GetLive() + 1);
 			SetPoint(GetPoint() + 1000);
 		}
 	}

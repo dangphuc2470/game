@@ -15,3 +15,35 @@ void CCoin::GetBoundingBox(float& l, float& t, float& r, float& b)
 	r = l + COIN_BBOX_WIDTH;
 	b = t + COIN_BBOX_HEIGHT;
 }
+
+void CCoinSplash::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+
+	if (y > targetY && !isFalling)
+	{
+		y -= 0.1f * dt;
+		if (y < targetY)
+			y = targetY;
+	}
+
+	if (y == targetY)
+		isFalling = true;
+
+	if (isFalling)
+	{
+		if (y > targetY - 30)
+		{
+			isDeleted = true;
+
+			CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+			CPoint* point = new CPoint(x, y, 100);
+			scene->AddObject(point);
+		}
+		else
+			y += 0.1f * dt;
+	}
+
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
