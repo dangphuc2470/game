@@ -834,12 +834,40 @@ void CMario::Render()
 	//DebugOutTitle(L"Coins: %d", coin);
 }
 
-void CMario::SetGuideObject()
+void CMario::StartSpinning()
 {
-	this->guideObject = new CGuideObjectMario(this);
+	DebugOutTitle(L"Start spinning");
+
+	float fireball_Speed = MARIO_FIREBALL_SPEED;
+	float fireball_X;
+	if (isFacingRight)
+	{
+		fireball_X = x;
+	}
+	else
+	{
+		fireball_Speed = -fireball_Speed;
+		fireball_X = x;
+	}
+	/*CGameObject* newObj = new CFireBall(x, y, fireball_Speed, 0, this);*/
+	CGameObject* newObj = new CFireballnew(x, y, fireball_Speed, 0);
 	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
-	scene->AddObject(guideObject);
+	newObj->SetPosition(fireball_X, y);
+	scene->AddObject(newObj);
+
+	if (isSpinning)
+		return;
+	isSpinning = true;
+	spinning_start = GetTickCount64();
 }
+
+//void CMario::SetGuideObject()
+//{
+//
+//
+//	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+//	scene->AddObject(guideObject);
+//}
 
 void CMario::SetState(int state)
 {

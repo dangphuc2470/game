@@ -30,6 +30,16 @@ public:
     
     virtual void OnCollisionWith(LPCOLLISIONEVENT e)
     {
+        if (!e->obj->IsBlocking()) return;
+		if (dynamic_cast<CMario*> (e->obj))
+		{
+			DebugOutTitle(L"Fireball Collision Mario");
+			return;
+		}
+		if (e->ny != 0)
+		{
+			vy = 0;
+		}
     };
 
     virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = nullptr) override {
@@ -60,7 +70,7 @@ public:
             isDeleted = true;
         }
         CGameObject::Update(dt);
-        //CCollision::GetInstance()->Process(this, dt, coObjects);
+        CCollision::GetInstance()->Process(this, dt, coObjects);
     }
 
     virtual void Render() override {

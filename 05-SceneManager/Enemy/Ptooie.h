@@ -257,7 +257,12 @@ public:
 		CGameObject::SetState(state);
 		this->state = state;
 		lastMoveTime = GetTickCount64(); 
-		
+		if (state == PTOOIE_STATE_DIE)
+		{
+			isDeleted = true;
+			return;
+		}
+
 
 		if (state == PTOOIE_STATE_RETRACT)
 		{
