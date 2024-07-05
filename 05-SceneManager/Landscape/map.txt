@@ -5,4 +5,4 @@
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
-341	342	500	343	500	344	500
+341	342	500	343	500	344	500	343	500

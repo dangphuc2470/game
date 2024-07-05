@@ -68,3 +68,66 @@ public:
         }*/
     };
 };
+
+
+class CGuideObjectMario : public CGameObject
+{
+    float ax;
+    float ay;
+    CMario* mario;
+    public:
+    CGuideObjectMario(CMario* mario)
+	{
+		this->mario = mario;
+        SetBlocking(true);
+        SetCollidable(true);
+	}
+    virtual void Render()
+	{
+		//CSprites::GetInstance()->Get(ID_SPRITE_CLOUD_MIDDLE)->Draw(x, y);
+
+		RenderBoundingBox();
+	}
+
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom)
+	{
+		left = x - GUIDE_BBOX_WIDTH / 2;
+		top = y - GUIDE_BBOX_HEIGHT / 2;
+		right = left + GUIDE_BBOX_WIDTH;
+		bottom = top + GUIDE_BBOX_HEIGHT;
+	};
+
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+
+	virtual void OnNoCollision(DWORD dt)
+	{
+	};	
+	
+	virtual int IsCollidable() { return 1; };
+	virtual int IsBlocking() { return 0; }
+
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e)
+	{
+        DebugOutTitle(L"GuideObject Collision Mario");
+
+		//if (!e->obj->IsBlocking()) return;
+		//
+
+		//if (dynamic_cast<CMario*> (e->obj))
+		//{
+		//	DebugOutTitle(L"GuideObject Collision Mario");
+		//	return;
+		//}
+
+		//if (e->ny != 0)
+		//{
+		//	vy = 0;
+		//}
+		///*else if (e->nx != 0)
+		//{
+		//	vx = -vx;
+		//}*/
+	};
+
+    };
+

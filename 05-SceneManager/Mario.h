@@ -119,7 +119,7 @@
 #define MARIO_BIG_BBOX_WIDTH  12
 #define MARIO_BIG_BBOX_HEIGHT 24
 #define MARIO_RACOON_BBOX_HEIGHT 24
-#define MARIO_RACOON_BBOX_WIDTH  20
+#define MARIO_RACOON_BBOX_WIDTH  12
 #define MARIO_BIG_SITTING_BBOX_WIDTH  12
 #define MARIO_BIG_SITTING_BBOX_HEIGHT 16
 
@@ -127,7 +127,7 @@
 #define MARIO_SIT_HEIGHT_ADJUST_RACOON ((MARIO_RACOON_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 #define MARIO_RACOON_HEIGHT_ADJUST ((MARIO_RACOON_BBOX_HEIGHT-MARIO_BIG_BBOX_HEIGHT)/2)
 #define MARIO_RACOON_SIT_HEIGHT_ADJUST ((MARIO_RACOON_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
-#define MARIO_SMALL_BBOX_WIDTH  13
+#define MARIO_SMALL_BBOX_WIDTH  12
 #define MARIO_SMALL_BBOX_HEIGHT 12
 
 #define MARIO_SPINNING_TIME 200
@@ -185,7 +185,7 @@ class CMario : public CGameObject
 	ULONGLONG getDownPipeStart = -1;
 	ULONGLONG getUpPipeStart = -1;
 	float targetX, targetY;
-
+	CGameObject* guideObject = NULL;
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -220,15 +220,16 @@ public:
 		isOnPlatform = false;
 		isFlying = false;
 		isFlyable = false;
-			one_second_count = GetTickCount64();
+		one_second_count = GetTickCount64();
 		this->coin = coin;
 		this->point = point;
 		this->live = live;
+		SetGuideObject();
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void SetState(int state);
-
+	void SetGuideObject();
 	void AppearPoint(int point);
 
 	int IsCollidable()
@@ -253,6 +254,8 @@ public:
 	}
 
 	void StartSpinning() {
+		if (isSpinning)
+			return;
 		isSpinning = true;
 		spinning_start = GetTickCount64();
 	}

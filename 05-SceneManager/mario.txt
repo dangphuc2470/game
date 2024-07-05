@@ -83,8 +83,8 @@
 #####  RACOON ############### know that left is smaller by 4 and right is bigger by 4, top smaller by 2 and bottom bigger by 2
 
 #IDLE
-14001	242	634	263	661	0
-14002	182	634	203	661	0
+14001	242	634	269	661	0
+14002	176	634	203	661	0
 
 #WALK RIGHT
 14101	271	634	294	661	0

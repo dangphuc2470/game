@@ -14,3 +14,34 @@ void CGuideObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 }
 
+void CGuideObjectMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+    DWORD currentTime = GetTickCount64();
+    int changeTime = 4000;
+    int timeMod = currentTime % changeTime;
+    float vx;
+    if (timeMod < changeTime/4) {
+        vx = -1.0f; // Move left in the first third
+    }
+    else if (timeMod < (changeTime/4) * 2) {
+        vx = 0.0f; // Stop in the middle third
+        float marioX, marioY;
+        mario->GetPosition(marioX, marioY);
+        SetPosition(marioX, marioY);
+    }
+    else if (timeMod < (changeTime / 4) * 3){
+        vx = 1.0f; // Move right in the last third
+    }
+	else {
+		vx = 0.0f; // Stop in the last third
+        float marioX, marioY;
+        mario->GetPosition(marioX, marioY);
+        SetPosition(marioX, marioY);
+	}
+
+    x += vx * dt;
+
+    DebugOutTitle(L"Vx: %f", vx);
+    CGameObject::Update(dt, coObjects);
+    CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+

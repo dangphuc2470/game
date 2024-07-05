@@ -834,6 +834,13 @@ void CMario::Render()
 	//DebugOutTitle(L"Coins: %d", coin);
 }
 
+void CMario::SetGuideObject()
+{
+	this->guideObject = new CGuideObjectMario(this);
+	CPlayScene* scene = (CPlayScene*)CGame::GetInstance()->GetCurrentScene();
+	scene->AddObject(guideObject);
+}
+
 void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed! 
@@ -1028,7 +1035,7 @@ void CMario::SetLevel(int l)
 	}
 	else if (this->level == MARIO_LEVEL_BIG && l == MARIO_LEVEL_RACOON)
 	{
-		y -= (MARIO_RACOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT) / 2;
+		y -= (MARIO_RACOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT) / 2  + 2;
 		//x -= (MARIO_RACOON_BBOX_WIDTH - MARIO_BIG_BBOX_WIDTH) / 2;
 	}
 
