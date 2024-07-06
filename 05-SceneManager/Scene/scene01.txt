@@ -265,9 +265,9 @@ Scene\info_bar.txt
 
 #spawn point
 #id	x	y	type	objX	objY
-230	680	100	2	900	150	#goomba
-230	680	100	2	950	150	
-230	680	100	7	1000	150	#goomba red
+230	655	100	2	900	150	#goomba
+230	655	100	2	950	150	
+230	655	100	7	1000	150	#goomba red
 230	357	100	3	550	150	#koopa red
 230	900	100	3	550	150
 

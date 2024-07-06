@@ -18,7 +18,7 @@ public:
 	}
 
 	void Render() {
-		//RenderBoundingBox();
+		RenderBoundingBox();
 	}
 	
 	virtual void Spawn(CGameObject* player);
