@@ -10,13 +10,17 @@ void CFireballnew::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		CGuideObject* guide = dynamic_cast<CGuideObject*>(e->obj);
 		guide->DeleteKoopa();
+		isDeleted = true;
+
 	}
-	
+
 	if (dynamic_cast<CKoopa*> (e->obj))
 	{
 		CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
-		koopa->SetState(KOOPA_STATE_FLASH);
-		koopa->SetCollidable(false);
+		if (koopa->GetState() != KOOPA_STATE_DIE)
+			koopa->SetState(KOOPA_STATE_DIE);
+		else
+			koopa->SetCollidable(false);
 		isDeleted = true;
 
 	}

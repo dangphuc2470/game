@@ -38,9 +38,9 @@ protected:
 	}
 	virtual void Render()
 	{
-		CAnimations::GetInstance()->Get(ID_ANI_FIREBALL)->Render(x, y);
+		//CAnimations::GetInstance()->Get(ID_ANI_FIREBALL)->Render(x, y);
 
-		RenderBoundingBox();
+		//RenderBoundingBox();
 	}
 
 	virtual int IsCollidable() { return 1; };

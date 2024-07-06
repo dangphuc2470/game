@@ -16,9 +16,12 @@ void CGuideObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CGuideObject::DeleteKoopa()
 {
-	//koopa->SetState(KOOPA_STATE_DIE_UP_SIDE_DOWN);
-	koopa->SetCollidable(false);
-	isDeleted = true;
+	if (koopa->GetState() != KOOPA_STATE_DIE)
+		koopa->SetState(KOOPA_STATE_DIE);
+	else
+		koopa->SetCollidable(false);
+	/*koopa->SetCollidable(false);
+	isDeleted = true;*/
 }
 //
 //void CGuideObjectMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
