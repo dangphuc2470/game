@@ -44,9 +44,7 @@ To ensure a smooth gameplay experience, familiarize yourself with the key contro
 - **Arrow Left/Right**: Walk left or right
 - **Arrow Down**: Make Mario sit or duck
 - **S Key**: Jump
-- **A Key (Hold)**: Run or accelerate Mario's movement
-- **Special Effects**: Various gameplay elements and interactions will trigger special effects. These are context-sensitive and will vary throughout the game.
-
+- **A Key (Hold)**: Accelerate Mario's movement and trigger special effect
 Start your adventure and enjoy the classic gameplay with these controls!
 
 ## Screenshot
